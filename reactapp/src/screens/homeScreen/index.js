@@ -12,6 +12,7 @@ import {
     Title
 } from '@mantine/core';
 import VaccinationResearch from "../../assests/VaccinationResearch .svg"
+import TwoPersonImage from "../../assests/Twoperson.png"
 
 
 export default function HomeScreen() {
@@ -21,17 +22,20 @@ export default function HomeScreen() {
                 <CustomHeader />
             </div>
            
+           
             <Grid pt="lg" m={0} px="md">
-                <Grid.Col xs={6} lg={6} style={{display:'flex',justifyContent:'center',flexDirection:'column',alignItem:'center'}} >
+              
+                <Grid.Col xs={6} lg={6} style={{display:'flex',justifyContent:'center',flexDirection:'column',alignItem:'center',height:'100vh'}} >
                     <Title mb="md">Welcome to our Hospital Management System</Title>
                     <Text>
                         Our system is designed to streamline hospital operations and improve patient care. With our user-friendly interface and comprehensive features, you can easily manage patient information, appointments, medical records, billing, and more.</Text>
                 </Grid.Col>
-                <Grid.Col xs={6} lg={6}>
-
-                    <Image width={500} height={500} src={VaccinationResearch} />
+               
+                <Grid.Col xs={6} lg={6} style={{display:'flex',justifyContent:'center',flexDirection:'column',alignItem:'center',height:'100vh'}}>
+                    <Image width={500} height={500} src={TwoPersonImage} />
 
                 </Grid.Col>
+                
                 <Grid.Col xs={6} lg={6} style={{ display: 'flex', justifyContent: 'center' }}>
                     <Image width={500} height={500} src={VaccinationResearch} />
                 </Grid.Col>
