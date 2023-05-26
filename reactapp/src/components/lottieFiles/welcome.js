@@ -6,7 +6,7 @@ export default function WelcomeLottie() {
     const defaultOptions = {
         loop: true,
         autoplay: true,
-        animationData: Welcome,
+        // animationData: Welcome,
         rendererSettings: {
             preserveAspectRatio: 'xMidYMid slice',
         },
