@@ -4,6 +4,7 @@ import { TextInput } from '@mantine/core';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import CustomHeader from './header';
 import HomeScreen from './screens/homeScreen';
+import SignUp from './screens/homeScreen/auth/signUp';
 
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<HomeScreen />} />
+      {/* <Route path="/signUp" element={<SignUp />} /> */}
       </Routes>
     </BrowserRouter>
     
