@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CustomHeader from "../../header";
+import CustomCarousel from "../../components/carousel";
 import {
     Text,
     Image,
@@ -55,6 +56,32 @@ export default function HomeScreen() {
 
                         We are your Social Media Marketing Agency.</Text>
                 </Grid.Col>
+                <Grid.Col xs={12} lg={12} style={{ height: '100vh' }}>
+                    <Text size={'30px'} style={{
+                        textAlign: 'center',
+                        textTransform: 'uppercase',
+                        paddingBottom: '20px',
+                        display: 'block',
+                        content: "",
+                        position: 'relative',
+                        marginTop: '25px',
+                    }}
+                    >Our Doctors</Text>
+                    <CustomCarousel/>
+                </Grid.Col>
+                <Grid.Col xs={12} lg={12} style={{ height: '100vh' }}>
+                <Text size={'30px'} style={{
+                        textAlign: 'center',
+                        textTransform: 'uppercase',
+                        paddingBottom: '20px',
+                        display: 'block',
+                        content: "",
+                        position: 'relative',
+                        marginTop: '25px',
+                    }}
+                    >Treatments</Text>
+                    <CustomCarousel/> 
+                 </Grid.Col>
                 <Grid.Col xs={12} lg={12}><Divider /></Grid.Col>
             </Grid>
 
