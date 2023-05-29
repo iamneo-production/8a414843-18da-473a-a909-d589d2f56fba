@@ -16,6 +16,7 @@ import {
 import VaccinationResearch from "../../assests/VaccinationResearch .svg"
 import TwoPersonImage from "../../assests/Twoperson.png"
 import CustomFooter from '../../components/footer/index'
+import SignUp from "./auth/signUp";
 
 
 export default function HomeScreen() {
@@ -28,6 +29,7 @@ export default function HomeScreen() {
             </div>
 
 
+            {active===1 &&
             <Grid pt="lg" m={0} px={0}>
 
                 <Grid.Col xs={6} lg={6} style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItem: 'center', height: '100vh' }} >
@@ -57,10 +59,15 @@ export default function HomeScreen() {
                 </Grid.Col>
                 <Grid.Col xs={12} lg={12}><Divider /></Grid.Col>
             </Grid>
+}
+{
+    active===6 && <SignUp/>
+}
 
             <div>
                 <CustomFooter setActive={setActive} active={active} />
             </div>
+            
 
         </>
 
