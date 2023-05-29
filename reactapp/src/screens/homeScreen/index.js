@@ -21,6 +21,7 @@ import VaccinationResearch from "../../assests/VaccinationResearch .svg"
 import TwoPersonImage from "../../assests/Twoperson.png"
 import CustomFooter from '../../components/footer/index'
 import SignUp from "./auth/signUp";
+import SignIn from "./auth/signIn";
 
 
 export default function HomeScreen() {
@@ -127,7 +128,7 @@ export default function HomeScreen() {
           <button style={{padding:"10px 20px",borderRadius:"7px",textDecoration:"none",borderColor:"rgba(139, 127, 194, 1)",color:"white",position:"relative",overflow:"hidden",background:"rgba(139, 127, 194, 1)",cursor:"pointer",left:"43%"}}>Send</button>
           </Container>
           </Grid.Col>
-          <Grid.Col xs={12} lg={12}><Divider /></Grid.Col>
+          {/* <Grid.Col xs={12} lg={12}><Divider /></Grid.Col> */}
         </Grid>
       </form>
                 </Grid.Col>
@@ -137,7 +138,10 @@ export default function HomeScreen() {
 {
     active===6 && <SignUp/>
 }
-
+{
+    active===5 && <SignIn/>
+}
+<Divider mt="md" />
             <div>
                 <CustomFooter setActive={setActive} active={active} />
             </div>
