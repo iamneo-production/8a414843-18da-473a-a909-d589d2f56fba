@@ -1664,6 +1664,13 @@
   "resolved" "https://registry.npmjs.org/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz"
   "version" "2.0.4"
 
+"@mantine/carousel@^6.0.11":
+  "integrity" "sha512-QKY0f96eFmRGsHcztp+qdPjsjx3rtXLGBzY9e5AmzBSYWRm30tZHVLISz5vcuMkJ3QtQwCAye69/hgjNYpvyPQ=="
+  "resolved" "https://registry.npmjs.org/@mantine/carousel/-/carousel-6.0.11.tgz"
+  "version" "6.0.11"
+  dependencies:
+    "@mantine/utils" "6.0.11"
+
 "@mantine/core@^6.0.11":
   "integrity" "sha512-S8koDsh1mlezqoOST7UfNfojKR0FWFIrzN3RkxoHlD7ggawrxeCPjHqk0bfUyKBvDOa2UiDpjWVYYSUtxZqpLw=="
   "resolved" "https://registry.npmjs.org/@mantine/core/-/core-6.0.11.tgz"
@@ -4186,6 +4193,18 @@
   "integrity" "sha512-tutLf+alr1/0YqJwKPdstVvDLmxmLb5xNyDLNS0RZmenHcEYk9qKfpKDCVZEKJ00JVbnayJm1MZAbYhYDFpcOw=="
   "resolved" "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.387.tgz"
   "version" "1.4.387"
+
+"embla-carousel-react@^7.0.0":
+  "integrity" "sha512-tbYRPRZSDNd2QLNqYDcArAakGIxtUbhS7tkP0dGXktXHGgcX+3ji3VrOUTOftBiujZrMV8kRxtrRUe/1soloIQ=="
+  "resolved" "https://registry.npmjs.org/embla-carousel-react/-/embla-carousel-react-7.1.0.tgz"
+  "version" "7.1.0"
+  dependencies:
+    "embla-carousel" "7.1.0"
+
+"embla-carousel@7.1.0":
+  "integrity" "sha512-Bh8Pa8NWzgugLkf8sAGexQlBCNDFaej5BXiKgQdRJ1mUC9NWBrw9Z23YVPVGkguWoz5LMjZXXFVGCobl3UPt/Q=="
+  "resolved" "https://registry.npmjs.org/embla-carousel/-/embla-carousel-7.1.0.tgz"
+  "version" "7.1.0"
 
 "emittery@^0.10.2":
   "integrity" "sha512-aITqOwnLanpHLNXZJENbOgjUBeHocD+xsSJmNrjovKBW5HbSpW3d1pEls7GFQPUWXiwG9+0P4GtHfEqC/4M0Iw=="
