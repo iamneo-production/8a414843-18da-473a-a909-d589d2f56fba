@@ -17,7 +17,7 @@ export default function CustomHeader(props) {
     return (
         <Box p="md" sx={{
             position: 'fixed', width: '100%',
-            // backgroundColor:'#ADD8E6',
+            backgroundColor:'#ADD8E6',
             zIndex: 2
         }}>
             {/* <Header height={60} px="md"> */}
@@ -40,7 +40,8 @@ export default function CustomHeader(props) {
                         setActive(4)
                     }} style={{ background: active === 4 ? "linear-gradient(#C5DCFF 100%,#C5DCFF 50%,#C4C4C4 0%)" : "", cursor: 'pointer', borderRadius: '5px' }}>Contact us</Text>
                 </div>
-                <div style={{ display: 'flex', }}>
+                <div style={{ display: 'flex', }}
+                >
                     <Button mr="md" size="xs" radius="10px"
                         sx={{
                             backgroundColor: "#ffffff", color: "#000000",
@@ -48,8 +49,16 @@ export default function CustomHeader(props) {
                                 backgroundColor: "#ffffff", color: "#000000",
                             }
                         }}
+                    
+                        onClick={()=>{
+                            setActive(5)
+                        }}
                     >SignIn</Button>
-                    <Button size="xs" radius="10px" style={{ background: "linear-gradient(#9083D5, #807593)" }}>SignUp</Button>
+                    <Button size="xs" radius="10px" style={{ background: "linear-gradient(#9083D5, #807593)" }}
+                    onClick={()=>{
+                        setActive(6)
+                    }}
+                    >SignUp</Button>
                 </div>
 
             </Flex>
