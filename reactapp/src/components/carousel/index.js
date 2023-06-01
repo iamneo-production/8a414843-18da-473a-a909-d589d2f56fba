@@ -80,7 +80,7 @@ export default function CustomCarousel() {
             e.stopPropagation();
           }} 
         loop
-        height={"55vh"}    
+        height={"65vh"}    
         withIndicators
         styles={{margin:'20px',slide:{padding:'15px'} ,indicator:{backgroundColor:'#9083D5'}}}
         slideSize="20.9888%"
