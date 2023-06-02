@@ -5,7 +5,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import CustomHeader from './header';
 import HomeScreen from './screens/homeScreen';
 import SignUp from './screens/homeScreen/auth/signUp';
-
+import DoctorDashbaord from '../src/screens/Doctor/Dashboard/index'
+import SignIn from './screens/homeScreen/auth/signIn';
 
 function App() {
   return (
@@ -20,3 +21,13 @@ function App() {
 }
 
 export default App;
+
+// function App(){
+//   return(
+//     <div style={{ backgroundColor: 'lightgrey' }}>
+//       <DoctorDashbaord/>
+//     </div>
+//   )
+// }
+// export default App;
+

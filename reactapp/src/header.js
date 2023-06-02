@@ -17,7 +17,7 @@ export default function CustomHeader(props) {
     return (
         <Box p="md" sx={{
             position: 'fixed', width: '100%',
-            // backgroundColor:'#ADD8E6',
+            backgroundColor:'#ADD8E6',
             zIndex: 2
         }}>
             {/* <Header height={60} px="md"> */}
