@@ -22,22 +22,14 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { Textarea } from "@mantine/core";
-// import "dayjs/locale/ru";
-import { DatePickerInput } from '@mantine/dates';
-import {
-  DatesProvider,
-  MonthPickerInput,
-  
-} from "@mantine/dates";
 
-import { useState } from "react";
+import { DatePickerInput } from '@mantine/dates';
+
 import { PasswordInput } from "@mantine/core";
 import person from "../../../assests/person.svg"
 
 export default function SignUp() {
-  const [selectedGender, setSelectedGender] = useState("");
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [value, setValue] = useState(null);
+ 
 
   const form = useForm({
     initialValues: {
@@ -50,7 +42,7 @@ export default function SignUp() {
       confirmPassword: "",
       nic: "",
       address: "",
-      dob: ""
+      dob: null
     },
     validate: {
       fname: (value) =>
@@ -66,8 +58,8 @@ export default function SignUp() {
         value !== values.password||value==="" ? "Passwords did not match" : null,
       nic: (value) => (value.length < 1 ? "NIC field cannot be blank" : null),
       address: (value) => (value.length < 1 ? "Address cannot be blank" : null),
-      dob: (value) => (value==="" ? "Add date of birth" : null),
-      gender: (value) =>(value===""? "Select gender":null)
+      dob: (value) => (!value ? "Please select date of birth" : null),
+      gender: (value) => (value === "" ? "Choose Gender" : null),
     },
   });
   return (
@@ -118,7 +110,7 @@ export default function SignUp() {
       </Grid.Col>
     </Grid>
 
-    {/* <Container size="lg" px="xs"  > */}
+    
     <form onSubmit={form.onSubmit(console.log)}>
     <Grid  pt="lg" m={0} px={0}>
       <Grid.Col
@@ -196,26 +188,22 @@ export default function SignUp() {
       
       placeholder="Date of Birth"
       radius="md"
-      value={value}
-      onChange={setValue}
+      
       required     
       
     />
       </Grid.Col>
       <Grid.Col xs={4} lg={4}>
       <Select
-      
-      placeholder="Gender"
-      required
-      radius="md"
-      data={[
-        { value: 'male', label: 'Male' },
-        { value: 'female', label: 'Female' },
-        { value: 'other', label: 'Other' },
-        {...form.getInputProps("gender")}
-        
-      ]}
-    />
+                placeholder="Gender"
+                {...form.getInputProps("gender")}
+                radius="md"
+                data={[
+                  { value: "male", label: "Male" },
+                  { value: "female", label: "Female" },
+                  { value: "other", label: "Other" },
+                ]}
+              />
       </Grid.Col>
       <Grid.Col xs={4} lg={4} >
         <PasswordInput
@@ -248,7 +236,7 @@ export default function SignUp() {
       </Grid.Col>
     </Grid>
     </form>
-    {/* </Container> */}
+    
     </>
   );
 }
