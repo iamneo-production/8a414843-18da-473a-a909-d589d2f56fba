@@ -58,7 +58,7 @@ function SignIn() {
                             placeholder="Password"
                             {...form.getInputProps('password')}
                         />
-                        <button style={{ padding: "10px 20px", borderRadius: "7px", textDecoration: "none", borderColor: "rgba(139, 127, 194, 1)", color: "white", position: "relative", overflow: "hidden", background: "rgba(139, 127, 194, 1)", cursor: "pointer", left: "42%" }}>Sign In</button>
+                        <button type='submit' style={{ padding: "10px 20px", borderRadius: "7px", textDecoration: "none", borderColor: "rgba(139, 127, 194, 1)", color: "white", position: "relative", overflow: "hidden", background: "rgba(139, 127, 194, 1)", cursor: "pointer", left: "42%" }}>Sign In</button>
                     </Container>
                 </Grid.Col>
                 <Grid.Col xs={6} lg={6}>

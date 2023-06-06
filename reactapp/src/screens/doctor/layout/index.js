@@ -12,6 +12,8 @@ import {
 } from '@tabler/icons-react';
 
 import LatestAppshell from '../../../components/appShell/latestAppshell'
+import DoctorDashboard from '../Dashboard/index';
+import ViewAppointments from '../TotalAppointments/index';
 
 
 const data = [
@@ -29,8 +31,8 @@ export default function DoctorLayout() {
     return (
         <Routes>
             <Route path='' element={<Navigate to='/doctor/home' />} />
-            <Route path='home' element={<LatestAppshell navData={data}><h1>Doctor Dashboard</h1> </LatestAppshell>} />
-            <Route path='viewappointment' element={<LatestAppshell navData={data}><h1>View Appointments</h1></LatestAppshell>} />
+            <Route path='home' element={<LatestAppshell navData={data}><DoctorDashboard/> </LatestAppshell>} />
+            <Route path='viewappointment' element={<LatestAppshell navData={data}><ViewAppointments/></LatestAppshell>} />
             <Route path='viewpharmacyinventory' element={<LatestAppshell navData={data}><h1>View Pharmacy and Inventory</h1></LatestAppshell>} />
         </Routes>
     )
