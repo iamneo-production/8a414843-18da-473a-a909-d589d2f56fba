@@ -1,0 +1,57 @@
+
+.left{
+    padding-left: 10%;
+    }
+ .center{
+     
+     border-left: 1px solid rgba(0, 0, 0, 0.25);
+     padding-left: 6%;
+ }
+ .right{
+     border-left: 1px solid rgba(0, 0, 0, 0.25);
+     padding-left: 6%;
+ }
+ .name{
+     display: flex;
+     width: 100vw;
+     font-size: 25px;
+     flex-direction: column;
+     align-items: center;   
+ }
+ 
+ h1{
+     font-size: 15px;
+ }
+ /* .date{
+     padding-left: 5%;
+    
+ } */
+ .future{
+     border-left: 1px solid rgba(0, 0, 0, 0.25);
+     padding-left: 4%;
+   
+ }
+ .doc{
+     border-left: 1px solid rgba(0, 0, 0, 0.25);
+     
+     padding-left: 4%;
+     
+ }
+ .plan{
+     border-left: 1px solid rgba(0, 0, 0, 0.25);
+     padding-left: 4%;
+ }
+ h2{
+     color: darkblue;
+ }
+ .head{
+     padding: 0%;
+ }
+ Tabs.Panel{
+     flex-direction: column;
+ }
+ .book{
+     display: flex;
+     flex-direction: column;
+     background-color: aliceblue;
+ }
