@@ -17,7 +17,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomeScreen />} />
-        {/* <Route path="/signUp" element={<SignUp />} /> */}
+        <Route path="/signUp" element={<SignUp />} />
         <Route element={<ProtectedRoutes element={{ data: 'patient' }} />}>
           <Route path="/patient/*" element={<PatientLayout />} />
         </Route>
