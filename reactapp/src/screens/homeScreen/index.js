@@ -23,6 +23,7 @@ import CustomFooter from '../../components/footer/index'
 import SignUp from "./auth/signUp";
 import SignIn from "./auth/signIn";
 import SampleTable from "../../components/customTable/sampleTable"
+import PatientLayout from "../patient/layout";
 
 
 export default function HomeScreen() {
@@ -42,8 +43,8 @@ export default function HomeScreen() {
     });
     return (
         <>
-
-            {/* <SampleTable /> */}
+            
+            
             <div>
                 <CustomHeader setActive={setActive} active={active} />
             </div>

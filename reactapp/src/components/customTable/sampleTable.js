@@ -135,7 +135,7 @@ export default function SampleTable() {
             status: "Offline",
         },
         { id: 3, campaign_name: "Campaign 3", date: "3/05/2023", status: "Active" },
-        {
+        { 
             id: 4,
             campaign_name: "Campaign 4",
             date: "1/05/2023",
