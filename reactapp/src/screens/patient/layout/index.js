@@ -13,6 +13,7 @@ import {
 
 import LatestAppshell from '../../../components/appShell/latestAppshell';
 import PatientDashboard from '../dashboard';
+import PatientAppointment from '../appointments';
 
 
 const data = [
@@ -31,7 +32,7 @@ export default function PatientLayout() {
         <Routes>
             <Route path='' element={<Navigate to='/patient/home' />} />
             <Route path='home' element={<LatestAppshell navData={data}><PatientDashboard/> </LatestAppshell>} />
-            <Route path='appointment' element={<LatestAppshell navData={data}><h1>Appointments</h1></LatestAppshell>} />
+            <Route path='appointment' element={<LatestAppshell navData={data}><PatientAppointment/></LatestAppshell>} />
             <Route path='medicalrecord' element={<LatestAppshell navData={data}><h1>Medical Records</h1></LatestAppshell>} />
         </Routes>
     )
