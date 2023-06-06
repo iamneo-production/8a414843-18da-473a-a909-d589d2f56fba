@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
 function useAuth(element) {
-    if (element === 'doctor') {
+    if (element === 'staff') {
         return true
     } else {
         return false
