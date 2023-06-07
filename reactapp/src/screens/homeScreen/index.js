@@ -23,6 +23,8 @@ import CustomFooter from '../../components/footer/index'
 import SignUp from "./auth/signUp";
 import SignIn from "./auth/signIn";
 import SampleTable from "../../components/customTable/sampleTable"
+import WelcomeLottie from "../../components/lottieFiles/welcome";
+import HomeLottie from "../../components/lottieFiles/homeLottie";
 import PatientLayout from "../patient/layout";
 
 
@@ -53,6 +55,7 @@ export default function HomeScreen() {
             {active === 1 &&
                 <Grid pt="lg" m={0} px={0}>
 
+
                     <Grid.Col xs={6} lg={6} style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItem: 'center', height: '100vh' }} >
                         <Title fz={50} mb="md">Welcome to our Hospital Management System</Title>
                         <Text>
@@ -61,7 +64,9 @@ export default function HomeScreen() {
 
                     <Grid.Col xs={6} lg={6} style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItem: 'center', height: '100vh' }}>
 
-                        <Image pb={100} height={700} src={TwoPersonImage} />
+                        {/* <Image pb={100} height={700} src={TwoPersonImage} /> */}
+                        <HomeLottie />
+                        {/* <WelcomeLottie /> */}
 
                     </Grid.Col>
 
@@ -78,7 +83,7 @@ export default function HomeScreen() {
 
                             We are your Social Media Marketing Agency.</Text>
                     </Grid.Col>
-                    <Grid.Col xs={12} lg={12} style={{ height: '100vh' }}>
+                    <Grid.Col xs={12} lg={12} style={{ height: '100vh', overflow: 'hidden' }}>
                         <Text size={'30px'} style={{
                             textAlign: 'center',
                             textTransform: 'uppercase',
@@ -91,7 +96,7 @@ export default function HomeScreen() {
                         >Our Doctors</Text>
                         <CustomCarousel />
                     </Grid.Col>
-                    <Grid.Col xs={12} lg={12} style={{ height: '100vh' }}>
+                    <Grid.Col xs={12} lg={12} style={{ height: '100vh', overflow: 'hidden' }}>
                         <Text size={'30px'} style={{
                             textAlign: 'center',
                             textTransform: 'uppercase',

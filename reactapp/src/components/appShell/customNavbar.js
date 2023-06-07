@@ -141,9 +141,17 @@ export default function CustomNavbar(props) {
                     <span>Change account</span>
                 </a> */}
 
-                <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+                <a href="#" className={classes.link} onClick={(event) => {
+                    event.preventDefault()
+                    localStorage.clear()
+                    navigate('/')
+                }
+                }>
                     <IconLogout className={classes.linkIcon} stroke={1.5} />
-                    <span>Logout</span>
+                    <span onClick={() => {
+                        // localStorage.clear()
+                        // navigate('/')
+                    }}>Logout</span>
                 </a>
             </Navbar.Section>
         </Navbar>

@@ -12,7 +12,7 @@ import TodayAppointments from './todaysappointments';
 
 export default function DoctorDashboard() {
   return (
-    <div style={{ backgroundColor: 'lightgrey' }}>
+    <div style={{ backgroundColor: 'lightgrey' }}>  
     <Grid grow gutter='sm' >
       <Grid.Col style={{fontWeight: "bold", }} span={12}>Welcome Doctor</Grid.Col>
       <Grid.Col span={4}>
