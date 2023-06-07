@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
 function useAuth(element) {
-    if (element === 'staff') {
+    if (element === 'admin') {
         return true
     } else {
         return false

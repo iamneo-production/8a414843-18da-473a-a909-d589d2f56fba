@@ -12,6 +12,7 @@ import {
 } from '@tabler/icons-react';
 
 import LatestAppshell from '../../../components/appShell/latestAppshell'
+import Payroll from '../payroll/index'
 
 
 const data = [
@@ -32,7 +33,7 @@ export default function AdminLayout() {
             <Route path='users' element={<LatestAppshell navData={data}><h1>Manage Users</h1></LatestAppshell>} />
             <Route path='pharmacy' element={<LatestAppshell navData={data}><h1>Pharmacy</h1></LatestAppshell>} />
             <Route path='inventory' element={<LatestAppshell navData={data}><h1>Inventory</h1></LatestAppshell>} />
-            <Route path='payroll' element={<LatestAppshell navData={data}><h1>Pay Roll</h1></LatestAppshell>} />
+            <Route path='payroll' element={<LatestAppshell navData={data}><Payroll /></LatestAppshell>} />
         </Routes>
     )
 }
