@@ -16,9 +16,9 @@ function SignIn() {
             password: '',
             Role: '',
         },
-        // validate: {
-        //     email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-        // },
+        validate: {
+            email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+        },
     });
     return (
         <form onSubmit={form.onSubmit((values) => {
