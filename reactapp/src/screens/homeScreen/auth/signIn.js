@@ -4,20 +4,40 @@ import { Grid, Title } from '@mantine/core';
 import { Text } from '@mantine/core';
 import SignInimage from "../../../assests/signIniamge.svg"
 import person from "../../../assests/person.svg"
+import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
+
+    const navigate=useNavigate()
+
     const form = useForm({
         initialValues: {
             email: '',
             password: '',
             Role: '',
         },
-        validate: {
-            email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-        },
+        // validate: {
+        //     email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+        // },
     });
     return (
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <form onSubmit={form.onSubmit((values) => {
+            console.log(values)
+            if(values?.Role==="Patient"){
+                localStorage.setItem('Role','patient')
+                navigate('/patient/home')
+            }else if(values?.Role==="Doctor"){
+                localStorage.setItem('Role','doctor')
+                navigate('/doctor/home')
+            }else if(values?.Role==="Staff"){
+                localStorage.setItem('Role','staff')
+                navigate('/staff/home')
+            }else if(values?.Role==="Admin"){
+                localStorage.setItem('Role','admin')
+                navigate('/admin/home')
+            }
+            
+            })}>
              <Grid pt="lg" m={0} px={0}>
     <Grid.Col xs={6} lg={6} style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItem: 'center', height: '100vh' }} >
                     <Title mb="md">We Help People to get Appointment in Online</Title>
