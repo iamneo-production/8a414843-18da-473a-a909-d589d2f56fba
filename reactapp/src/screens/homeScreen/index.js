@@ -25,6 +25,7 @@ import SignIn from "./auth/signIn";
 import SampleTable from "../../components/customTable/sampleTable"
 import WelcomeLottie from "../../components/lottieFiles/welcome";
 import HomeLottie from "../../components/lottieFiles/homeLottie";
+import PatientLayout from "../patient/layout";
 
 
 export default function HomeScreen() {
@@ -44,8 +45,8 @@ export default function HomeScreen() {
     });
     return (
         <>
-
-            {/* <SampleTable /> */}
+            
+            
             <div>
                 <CustomHeader setActive={setActive} active={active} />
             </div>
