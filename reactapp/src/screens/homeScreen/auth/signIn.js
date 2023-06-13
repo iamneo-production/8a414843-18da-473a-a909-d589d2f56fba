@@ -5,10 +5,13 @@ import { Text } from '@mantine/core';
 import SignInimage from "../../../assests/signIniamge.svg"
 import person from "../../../assests/person.svg"
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logins } from '../../../provider/features/userSlice';
 
 function SignIn() {
 
     const navigate=useNavigate()
+    const dispatch=useDispatch()
 
     const form = useForm({
         initialValues: {
@@ -24,6 +27,7 @@ function SignIn() {
         <form onSubmit={form.onSubmit((values) => {
             console.log(values)
             if(values?.Role==="Patient"){
+                dispatch(logins('patient'))
                 localStorage.setItem('Role','patient')
                 navigate('/patient/home')
             }else if(values?.Role==="Doctor"){

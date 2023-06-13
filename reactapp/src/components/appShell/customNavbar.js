@@ -12,6 +12,8 @@ import {
     IconLogout,
 } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logouts } from '../../provider/features/userSlice';
 // import { MantineLogo } from '@mantine/ds';
 
 const useStyles = createStyles((theme) => ({
@@ -108,6 +110,7 @@ export default function CustomNavbar(props) {
     const navigate = useNavigate()
     const { classes, cx } = useStyles();
     const [active, setActive] = useState('Billing');
+    const dispatch = useDispatch()
 
     const links = data.map((item) => (
         <a
@@ -141,9 +144,10 @@ export default function CustomNavbar(props) {
                     <span>Change account</span>
                 </a> */}
 
-                <a href="#" className={classes.link} onClick={(event) => {
+                <div className={classes.link} onClick={(event) => {
                     event.preventDefault()
                     localStorage.clear()
+                    dispatch(logouts({}))
                     navigate('/')
                 }
                 }>
@@ -152,7 +156,7 @@ export default function CustomNavbar(props) {
                         // localStorage.clear()
                         // navigate('/')
                     }}>Logout</span>
-                </a>
+                </div>
             </Navbar.Section>
         </Navbar>
     );

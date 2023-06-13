@@ -2,7 +2,8 @@ import Lottie from 'lottie-react';
 import Home from "../../assests/Lottiefiles/Home.json"
 
 
-export default function HomeLottie() {
+export default function HomeLottie(props) {
+    const{height,width, animationData}=props
 
     const defaultOptions = {
         loop: true,
@@ -16,8 +17,8 @@ export default function HomeLottie() {
         <div className="controlled" style={{ display: 'flex', justifyContent: 'center' }}>
             <Lottie
                 //  options={defaultOptions}
-                style={{ height: '400px', width: '400px' }}
-                animationData={Home}
+                style={{ height: height, width: width }}
+                animationData={animationData}
                 loop={true}
                 autoplay={true}
             />
