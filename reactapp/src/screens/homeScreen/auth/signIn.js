@@ -28,16 +28,19 @@ function SignIn() {
             console.log(values)
             if(values?.Role==="Patient"){
                 dispatch(logins('patient'))
-                localStorage.setItem('Role','patient')
+                // localStorage.setItem('Role','patient')
                 navigate('/patient/home')
             }else if(values?.Role==="Doctor"){
-                localStorage.setItem('Role','doctor')
+                dispatch(logins('doctor'))
+                // localStorage.setItem('Role','doctor')
                 navigate('/doctor/home')
             }else if(values?.Role==="Staff"){
-                localStorage.setItem('Role','staff')
+                dispatch(logins('staff'))
+                // localStorage.setItem('Role','staff')
                 navigate('/staff/home')
             }else if(values?.Role==="Admin"){
-                localStorage.setItem('Role','admin')
+                dispatch(logins('admin'))
+                // localStorage.setItem('Role','admin')
                 navigate('/admin/home')
             }
             
