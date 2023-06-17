@@ -13,24 +13,27 @@ import { useForm } from "@mantine/form";
 import { Textarea } from "@mantine/core";
 import { DatePickerInput } from "@mantine/dates";
 import { useState } from "react";
+import _ from 'lodash';
 
 import { TimeInput } from "@mantine/dates";
 import { IconCalendar, IconClock2 } from "@tabler/icons-react";
 
 export default function AppointmentModal(props) {
-  const { open, close } = props;
+  const { open, close, rowData, setRowData, editData } = props;
+ 
   const form = useForm({
+    
     initialValues: {
-      name: "",
-      mobile: "",
-      email: "",
-      dob: null,
-      gender: "",
-      appointmentDate: null,
-      time: "",
-      dept: "",
-      doctor: "",
-      address: "",
+      name: !_.isEmpty(editData)?editData?.name:"",
+      mobile:  _.isEmpty(editData)?"":editData?.mobile,
+      email:  _.isEmpty(editData)?"":editData?.email,
+      dob:  _.isEmpty(editData)?null:editData?.dob,
+      gender:  _.isEmpty(editData)?"":editData?.gender,
+      date:  _.isEmpty(editData)?null:editData?.date,
+      time:  _.isEmpty(editData)?"":editData?.time,
+      dept:  _.isEmpty(editData)?"":editData?.dept,
+      doctor:  _.isEmpty(editData)?"":editData?.doctor,
+      address:  _.isEmpty(editData)?"":editData?.address,
     },
     validate: {
       name: (value) =>
@@ -46,12 +49,28 @@ export default function AppointmentModal(props) {
       doctor: (value) => (value === "" ? "Choose Doctor" : null),
       address: (value) => (value.length < 1 ? "Address cannot be blank" : null),
     },
+    
   });
+  console.log("edit",form.values, editData);
+
+
+
+  // console.log("val", form.values)
   return (
     <>
       <Modal size="lg" opened={open} onClose={close}>
         <div>
-          <form onSubmit={form.onSubmit(console.log)}>
+          <form onSubmit={form.onSubmit((values) => {
+            let prevData=[...rowData];
+            let data=prevData[prevData.length-1];
+          values.id=data?.id+1;
+            console.log("data", data);
+            prevData.push(values);
+            setRowData(prevData);
+            form.reset();
+            close();
+            
+            })}>
             <Grid m={0} px={10}>
               <Grid.Col xs={12} lg={12}>
                 <div style={{ display: "flex", color: "grey" }}>
