@@ -6,7 +6,7 @@ import CustomHeader from './header';
 import HomeScreen from './screens/homeScreen';
 import SignUp from './screens/homeScreen/auth/signUp';
 import ProtectedRoutes from './protectedRoutes';
-import PatientLayout from './screens/patient/layout';
+import PatientLayout from '../src/screens/Patient/layout/index';
 import DoctorLayout from './screens/doctor/layout';
 import StaffLayout from './screens/staff/layout';
 import AdminLayout from './screens/admin/layout';
