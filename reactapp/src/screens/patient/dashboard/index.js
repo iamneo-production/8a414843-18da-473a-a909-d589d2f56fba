@@ -1,13 +1,19 @@
-import { Card, Image, Text, Badge, Button, Group, Tabs, Select } from '@mantine/core';
+import { Card, Image, Text, Badge, Button, Group, Tabs, Select, Center, Autocomplete } from '@mantine/core';
 import { Grid } from '@mantine/core';
 import classes from './index.css';
+import {useState} from 'react';
 import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react'
 // import { Calendar } from '@mantine/dates';
+
+
 export default function PatientDashboard() {
   return (
-    <Grid>
-      <Grid.Col xs={3} lg={3}>
-        <Card shadow="sm" padding="lg" radius="md" withBorder height={500}>
+    <Center h={700}> 
+    <Grid grow gutter='sm'>
+
+      <Grid.Col xs={4} lg={4}>
+      
+        <Card shadow="sm" padding="lg" radius="md" withBorder h={400} style={{minHeight:400}}>
           {/* <Card.Section > */}
             <Image
               src="https://thumbs.dreamstime.com/z/flat-style-character-avatar-icon-vector-flat-style-character-avatar-icon-female-107139893.jpg"
@@ -16,102 +22,34 @@ export default function PatientDashboard() {
             />
           {/* </Card.Section> */}
 
-          <Group position="below" mt="md" mb="xs"  >
+          <Group  mt="md" mb="xs"  >
+          
           <div className={classes.name}>
          
-          <Text weight={500}>Bess Willis</Text>
-          <Text weight={500}>27years, California</Text>
+          
+          <Text weight={800}>Bess Willis</Text>
+          <Text weight={800}>27years,California</Text>
+          
           </div>
           
           
           </Group>
           <Group position="below" mt="md" mb="lg" >
           
-                              <div className={classes.left} >
-                                <text>Weight</text>
-                                <h2>60kg</h2>
-                            </div>
-                            <div className={classes.center}>
+                             
+                            <text>Weight</text>
+                            <h2>60kg</h2>
                                 <text>Height</text>                        
                                 <h2>170cm</h2>
-                            </div>
-                            <div className={classes.right}>
                                 <text>Blood Group</text>
                                 <h2>O+</h2>
-                            </div>
           </Group>  
         </Card>
+       
       </Grid.Col>
-
-      {/* <Grid.Col xs={4.5} lg={4.5}>
-          <Card shadow="sm" padding="lg" radius="md" withBorder>
-
-           <Group mt="md" mb="xs"> 
-             <div className={classes.appointment}>
-                
-               <Badge color="pink" variant="light" size={50} > 
-                <h1 weight={1000}>Appointment</h1>
-               </Badge> 
-             </div> 
-           
-            </Group>
-
-             <Group position="below" mt="md" mb="lg">
-                            <div className={classes.date} >
-
-                                <text>10:00 - 11:00</text>
-                                <h2>5 June'22</h2>
-                            </div>
-                            <div className={classes.future}>
-                                <text>Upcoming Appointments</text>                       
-                                <h2>10/02/22</h2>
-                            </div>
-                            <div className={classes.plan}>
-                                <text>Diagnosis</text>
-                                <h2>Diabetis</h2>
-                            </div>
-                            <div className={classes.doc}>
-                                <text>Doctor</text>
-                                <h2>Dr. Ameen</h2>
-                            </div>
-             </Group>
-          </Card>
-      </Grid.Col> */}
-
-      {/* <Grid.Col xs={4} lg={4}>
-          <Card shadow="sm" padding="lg" radius="md" withBorder>
-          <Image
-              src="https://img.freepik.com/free-vector/stretching-exercises-concept-illustration_114360-8922.jpg?w=1380&t=st=1685703360~exp=1685703960~hmac=38760083836c1870fbc66e8d81bac770f773f80734a22cad42ab36f30d684320"
-              height={200} 
-            />
-           <Group mt="md" mb="xs">   
-               <Badge color="pink" variant="light" size={50} > 
-                <h1 weight={1000}>Activity Assigned </h1>
-               </Badge> 
-            </Group>
-
-             <Group position="below" mt="md" mb="lg">
-                            <div className={classes.date} >
-                                <h2>Walking</h2>
-                                <text>30 Mins a Day</text>
-                                
-                            </div>
-                            <div className={classes.future}>
-                                <h2>Meditation</h2>
-                                <text>10 Mins a day</text>                       
-                                
-                            </div>
-                            <div className={classes.plan}>
-                                <h2>Basic Exercise</h2>
-                                <text>30 Mins </text>                                
-                            </div>
-             </Group>
-
-          </Card>
-  
-      </Grid.Col>  */}
-    <Grid.Col xs={3} lg={3}>
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
+    <Grid.Col xs={4} lg={4} >
+    
+    <Card shadow="sm" padding="lg" radius="md" withBorder style={{minHeight:400}}>
       {/* <Card.Section > */}
       
         <Group position="center">
@@ -180,16 +118,19 @@ export default function PatientDashboard() {
   
         </Group>
     </Card>
+    
     </Grid.Col>
 
-    <Grid.Col xs={3} lg={3}>
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
+    <Grid.Col xs={4} lg={4}>
+   
+    <Card shadow="sm" padding="lg" radius="md" withBorder mx="auto" style={{minHeight:400}}>
       {/* <Card.Section > */}
       
         <Group position="center">
         <Badge color="pink" variant="light" size={50} > 
                 <h1 weight={1000}>Our Doctors</h1>
                </Badge> 
+               </Group>
           <Tabs variant="outline" defaultValue="Appointment">
             <Tabs.List>
               <Tabs.Tab value="Doctors"><h2>Doctor</h2></Tabs.Tab>
@@ -258,12 +199,14 @@ export default function PatientDashboard() {
             
           </Tabs>
   
-        </Group>
+        
     </Card>
+   
     </Grid.Col>
     
   
     </Grid>
+    </Center>
   );
 }
 
