@@ -1,4 +1,7 @@
 import React from 'react';
+import { Chart as ChartJS } from 'chart.js/auto';
+//import { Col, Grid, Card, Title } from '@mantine/core';
+import { Line } from 'react-chartjs-2';
 import { 
   Container,
   Grid,
@@ -42,28 +45,98 @@ const AdminDashboard = () => {
             email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
         },
     }); */
+
     const hospitalProfitData = [
-        { month: 'Jan', profit: 115000 },
-        { month: 'Feb', profit: 218000 },
-        { month: 'Mar', profit: 116000 },
-        { month: 'Apr', profit: 319000 },
-        { month: 'May', profit: 417500 },
-        { month: 'Jun', profit: 311000 },
-        { month: 'Jul', profit: 218500 },
-        { month: 'Aug', profit: 117000 },
-        { month: 'Sep', profit: 219500 },
-        { month: 'Oct', profit: 117200 },
-        { month: 'Nov', profit: 418500 },
-        { month: 'Dec', profit: 217800 },
-      ];
+      { month: 'Jul', profit: 218500 },
+      { month: 'Aug', profit: 117000 },
+      { month: 'Sep', profit: 219500 },
+      { month: 'Oct', profit: 117200 },
+      { month: 'Nov', profit: 418500 },
+      { month: 'Dec', profit: 217800 },
+      { month: 'Jan', profit: 115000 },
+      { month: 'Feb', profit: 218000 },
+      { month: 'Mar', profit: 116000 },
+      { month: 'Apr', profit: 319000 },
+      { month: 'May', profit: 417500 },
+      { month: 'Jun', profit: 311000 },
+    ];
+  
+    const chartData = {
+      labels: hospitalProfitData.map((data) => data.month),
+      datasets: [
+        {
+          label: 'Hospital Profit',
+          data: hospitalProfitData.map((data) => data.profit),
+          fill: true,
+          backgroundColor: 'rgba(136, 132, 216, 0.2)',
+          borderColor: 'rgba(136, 132, 216, 1)',
+          pointBackgroundColor: 'rgba(136, 132, 216, 1)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(136, 132, 216, 1)',
+          tension: 0.4,
+        },
+      ],
+    };
+  
+    const chartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          grid: {
+            color: 'rgba(0, 0, 0, 0)',
+          },
+          ticks: {
+            font: {
+              weight: 600,
+            },
+            color: '#888',
+          },
+        },
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: (value) => `$${value}`,
+            font: {
+              weight: 600,
+            },
+            color: '#888',
+          },
+          grid: {
+            color: 'rgba(0, 0, 0, 0.05)',
+            borderDash: [3, 3],
+          },
+        },
+      },
+      plugins: {
+        legend: {
+          display: false,
+        },
+        tooltip: {
+          backgroundColor: 'rgba(136, 132, 216, 1)',
+          titleColor: '#fff',
+          bodyColor: '#fff',
+          titleFont: {
+            size: 14,
+            weight: 600,
+          },
+          bodyFont: {
+            size: 14,
+            weight: 500,
+          },
+          displayColors: false,
+          callbacks: {
+            label: (context) => `$${context.parsed.y}`,
+          },
+        },
+      },
+    };
     return (
       <Grid gutter="lg" 
       style={{fontFamily:"sans-serif",}} >
-        <Col span={1}>
-
-        </Col>
-        <Col span={10}>
-          <Card shadow="md" m="md">
+        <Col span={12}>
+          <Card shadow="sm" m="md">
           <div style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{ flex: '0 0 auto', marginRight: '16px' }}>
               <Image src={man} width={50}></Image>
@@ -75,32 +148,40 @@ const AdminDashboard = () => {
           </div>
           </Card>
           </Col>
-          <Col span={1}>
-
-          </Col>
-          <Col span={1}>
-
-          </Col>
-          <Col span={10}>
-          <Card shadow="md" m="md">
-            <Title order={2} m="md" style={{position:"relative",left:"39%"}}>
+          <Col span={12}>
+          <Card shadow="sm" m="md">
+            <Title order={2}
+            style={{
+              marginBottom: '1rem',
+              textAlign: 'center',
+              fontWeight: 600,
+              fontSize: '1.5rem',
+              color: '#333',
+            }}>
               Hospital Activity
             </Title>
             <Grid gutter="md">
               <Col span={3}>
-                <Card shadow="md" m="xs">
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <div style={{ flex: '0 0 auto', marginRight: '16px' }}>
+                <Card shadow="sm" m="xs">
+                  <div 
+                  style={{ 
+                  display: 'flex', 
+                  alignItems: 'center' }}>
+                    <div 
+                    style={{ 
+                      flex: '0 0 auto', 
+                      marginRight: '16px' 
+                      }}>
                       <Image
                       src={appointment} // Replace with the actual image URL
                       alt="Image"
-                      width={90}
+                      width={100}
                       height={100}
                       radius="md"
                       />
                     </div>
                     <div style={{ flex: '1 1 auto' }}>
-                      <Title order={4}>Today Appointments</Title>
+                      <Title order={4} style={{fontWeight:600}} >Today Appointments</Title>
                       <Text size="sm" color="gray">
                        80
                       </Text>
@@ -109,19 +190,28 @@ const AdminDashboard = () => {
                 </Card>
               </Col>
               <Col span={3}>
-                <Card shadow="md" m="xs">
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <div style={{ flex: '0 0 auto', marginRight: '16px' }}>
+                <Card shadow="sm" m="xs">
+                  <div 
+                  style={{ 
+                    display: 'flex', 
+                    alignItems: 'center' 
+                    }}>
+                    <div 
+                    style=
+                    {{ 
+                      flex: '0 0 auto', 
+                      marginRight: '16px' }}
+                    >
                       <Image
                       src={patient} // Replace with the actual image URL
                       alt="Image"
-                      width={75}
+                      width={100}
                       height={100}
                       radius="md"
                       />
                     </div>
                     <div style={{ flex: '1 1 auto' }}>
-                      <Title order={4}>Patients Active</Title>
+                      <Title order={4} style={{fontWeight:600}} >Patients Active</Title>
                       <Text size="sm" color="gray">
                        80
                       </Text>
@@ -130,7 +220,7 @@ const AdminDashboard = () => {
                 </Card>
               </Col>
               <Col span={3}>
-                <Card shadow="md" m="xs">
+                <Card shadow="sm" m="xs">
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <div style={{ flex: '0 0 auto', marginRight: '16px' }}>
                       <Image
@@ -142,7 +232,7 @@ const AdminDashboard = () => {
                       />
                     </div>
                     <div style={{ flex: '1 1 auto' }}>
-                      <Title order={4}>Total Doctors</Title>
+                      <Title order={4} style={{fontWeight:600}} >Total Doctors</Title>
                       <Text size="sm" color="gray">
                        80
                       </Text>
@@ -151,7 +241,7 @@ const AdminDashboard = () => {
                 </Card>
               </Col>
               <Col span={3}>
-                <Card shadow="md" m="xs">
+                <Card shadow="sm" m="xs">
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <div style={{ flex: '0 0 auto', marginRight: '16px' }}>
                       <Image
@@ -163,7 +253,7 @@ const AdminDashboard = () => {
                       />
                     </div>
                     <div style={{ flex: '1 1 auto' }}>
-                      <Title order={4}>Active Doctors</Title>
+                      <Title order={4} style={{fontWeight:600}} >Active Doctors</Title>
                       <Text size="sm" color="gray">
                        80
                       </Text>
@@ -172,7 +262,7 @@ const AdminDashboard = () => {
                 </Card>
               </Col>
               <Col span={3}>
-                <Card shadow="md" m="xs">
+                <Card shadow="sm" m="xs">
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <div style={{ flex: '0 0 auto', marginRight: '16px' }}>
                       <Image
@@ -184,7 +274,7 @@ const AdminDashboard = () => {
                       />
                     </div>
                     <div style={{ flex: '1 1 auto' }}>
-                      <Title order={4}>Total Staffs</Title>
+                      <Title order={4} style={{fontWeight:600}} >Total Staffs</Title>
                       <Text size="sm" color="gray">
                        80
                       </Text>
@@ -193,7 +283,7 @@ const AdminDashboard = () => {
                 </Card>
               </Col>
               <Col span={3}>
-                <Card shadow="md" m="xs">
+                <Card shadow="sm" m="xs">
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <div style={{ flex: '0 0 auto', marginRight: '16px' }}>
                       <Image
@@ -205,7 +295,7 @@ const AdminDashboard = () => {
                       />
                     </div>
                     <div style={{ flex: '1 1 auto' }}>
-                      <Title order={4}>Active Staffs</Title>
+                      <Title order={4} style={{fontWeight:600}} >Active Staffs</Title>
                       <Text size="sm" color="gray">
                        80
                       </Text>
@@ -214,7 +304,7 @@ const AdminDashboard = () => {
                 </Card>
               </Col>
               <Col span={3}>
-                <Card shadow="md" m="xs">
+                <Card shadow="sm" m="xs">
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <div style={{ flex: '0 0 auto', marginRight: '16px' }}>
                       <Image
@@ -226,7 +316,7 @@ const AdminDashboard = () => {
                       />
                     </div>
                     <div style={{ flex: '1 1 auto' }}>
-                      <Title order={4}>Total Revenue</Title>
+                      <Title order={4} style={{fontWeight:600}} >Total Revenue</Title>
                       <Text size="sm" color="gray">
                        80
                       </Text>
@@ -235,7 +325,7 @@ const AdminDashboard = () => {
                 </Card>
               </Col>
               <Col span={3}>
-                <Card shadow="md" m="xs">
+                <Card shadow="sm" m="xs">
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <div style={{ flex: '0 0 auto', marginRight: '16px' }}>
                       <Image
@@ -247,7 +337,7 @@ const AdminDashboard = () => {
                       />
                     </div>
                     <div style={{ flex: '1 1 auto' }}>
-                      <Title order={4}>Total Expenses</Title>
+                      <Title order={4} style={{fontWeight:600}}>Total Expenses</Title>
                       <Text size="sm" color="gray">
                        80
                       </Text>
@@ -258,8 +348,32 @@ const AdminDashboard = () => {
             </Grid>
           </Card>
         </Col>
-        <Col span={1}>
-
+        <Col span={12}>
+        <Card
+          shadow="sm"
+          m="md"
+          style={{
+            borderRadius: '12px',
+            overflow: 'hidden',
+            height: '500px',
+          }}
+        >
+          <Title
+            order={2}
+            style={{
+              marginBottom: '1rem',
+              textAlign: 'center',
+              fontWeight: 600,
+              fontSize: '1.5rem',
+              color: '#333',
+            }}
+          >
+            Hospital Profit (Last 12 Months)
+          </Title>
+          <div style={{ height: 'calc(100% - 3rem)' }}>
+            <Line data={chartData} options={chartOptions} />
+          </div>
+        </Card>
         </Col>
         {/* <Col span={3}>
           <Card shadow="md" m="md">
@@ -300,7 +414,7 @@ const AdminDashboard = () => {
             </Grid>
           </Card>
     </Col>*/}
-        <Col span={1}></Col>
+
         {/* <Col span={10}>
             <Card shadow="md" m="md">
                 <Title order={2} m="xl" 
@@ -323,7 +437,7 @@ const AdminDashboard = () => {
                 </LineChart>
             </Card>
         </Col> */}
-        <Col span={1}></Col>
+
         {/* <Col span={3}>
             <Card shadow='md' m="md" style={{bottom:"40%"}}>
                 <Title order={2} m="xl" style={{position:"relative",overflow:"hidden",left:"11%"}}>SEND MESSAGE</Title>
