@@ -4,8 +4,15 @@ import { Grid, Title } from '@mantine/core';
 import { Text } from '@mantine/core';
 import SignInimage from "../../../assests/signIniamge.svg"
 import person from "../../../assests/person.svg"
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logins } from '../../../provider/features/userSlice';
 
 function SignIn() {
+
+    const navigate=useNavigate()
+    const dispatch=useDispatch()
+
     const form = useForm({
         initialValues: {
             email: '',
@@ -17,7 +24,27 @@ function SignIn() {
         },
     });
     return (
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <form onSubmit={form.onSubmit((values) => {
+            console.log(values)
+            if(values?.Role==="Patient"){
+                dispatch(logins('patient'))
+                // localStorage.setItem('Role','patient')
+                navigate('/patient/home')
+            }else if(values?.Role==="Doctor"){
+                dispatch(logins('doctor'))
+                // localStorage.setItem('Role','doctor')
+                navigate('/doctor/home')
+            }else if(values?.Role==="Staff"){
+                dispatch(logins('staff'))
+                // localStorage.setItem('Role','staff')
+                navigate('/staff/home')
+            }else if(values?.Role==="Admin"){
+                dispatch(logins('admin'))
+                // localStorage.setItem('Role','admin')
+                navigate('/admin/home')
+            }
+            
+            })}>
              <Grid pt="lg" m={0} px={0}>
     <Grid.Col xs={6} lg={6} style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItem: 'center', height: '100vh' }} >
                     <Title mb="md">We Help People to get Appointment in Online</Title>

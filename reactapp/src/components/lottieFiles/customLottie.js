@@ -1,12 +1,14 @@
 import Lottie from 'lottie-react';
+import Home from "../../assests/Lottiefiles/Home.json"
 
 
-export default function WelcomeLottie() {
+export default function HomeLottie(props) {
+    const{height,width, animationData}=props
 
     const defaultOptions = {
         loop: true,
         autoplay: true,
-        // animationData: Welcome,
+        animationData: Home,
         rendererSettings: {
             preserveAspectRatio: 'xMidYMid slice',
         },
@@ -15,8 +17,8 @@ export default function WelcomeLottie() {
         <div className="controlled" style={{ display: 'flex', justifyContent: 'center' }}>
             <Lottie
                 //  options={defaultOptions}
-                style={{ height: '200px', width: '200px' }}
-                // animationData={Welcome}
+                style={{ height: height, width: width }}
+                animationData={animationData}
                 loop={true}
                 autoplay={true}
             />

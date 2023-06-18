@@ -18,6 +18,7 @@ import { IconSettings } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 // import HospitalLogo from "../../assests/hospitalLogo.svg"
 import HospitalSvg from "../../components/svg/hospitalLogoSvg"
+import ProfileDetailModal from "../profileDetails/profileDetails";
 
 
 const useStyles = createStyles((theme) => ({
@@ -41,6 +42,7 @@ export default function CustomHeader(props) {
     const [notificationList, setNotificationList] = useState([]);
     const nav = useNavigate();
     const { className, drawerOpened, setDrawerOpened } = props;
+    const [modalOpen, setModalOpen] = useState(false);
 
     return (
         // <Header height={{ base: 50, md: 70 }} p="md">
@@ -118,10 +120,12 @@ export default function CustomHeader(props) {
                             >
                                 Settings
                             </Menu.Item>
+                            <Menu.Item icon={<IconSettings />} onClick={()=> setModalOpen(true)}> Profile </Menu.Item>
                         </Menu.Dropdown>
                     </Menu>
                 </div>
             </div>
+            <ProfileDetailModal open={modalOpen} close={()=> setModalOpen(false)}/>
         </Header>
     );
 }

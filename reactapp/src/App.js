@@ -7,10 +7,9 @@ import HomeScreen from './screens/homeScreen';
 import SignUp from './screens/homeScreen/auth/signUp';
 import ProtectedRoutes from './protectedRoutes';
 import PatientLayout from './screens/patient/layout';
-import DoctorLayout from './screens/Doctor//layout/index';
 import StaffLayout from './screens/staff/layout';
 import AdminLayout from './screens/admin/layout';
-
+import DoctorLayout from './screens/Doctor/layout/index'
 
 function App() {
   return (
