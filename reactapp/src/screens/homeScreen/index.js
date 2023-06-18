@@ -24,6 +24,9 @@ import SignUp from "./auth/signUp";
 import SignIn from "./auth/signIn";
 import SampleTable from "../../components/customTable/sampleTable"
 import PatientLayout from "../patient/layout";
+import CustomLottie from '../../components/lottieFiles/customLottie'
+import DoctorLottie from '../../assests/Lottiefiles/doctor.json'
+import HomeLottie from '../../assests/Lottiefiles/Home.json'
 
 
 export default function HomeScreen() {
@@ -51,7 +54,9 @@ export default function HomeScreen() {
 
 
             {active === 1 &&
+            <Container size={1400}>
                 <Grid pt="lg" m={0} px={0}>
+
 
                     <Grid.Col xs={6} lg={6} style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItem: 'center', height: '100vh' }} >
                         <Title fz={50} mb="md">Welcome to our Hospital Management System</Title>
@@ -61,24 +66,26 @@ export default function HomeScreen() {
 
                     <Grid.Col xs={6} lg={6} style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItem: 'center', height: '100vh' }}>
 
-                        <Image pb={100} height={700} src={TwoPersonImage} />
+                    <CustomLottie width="500px" height='400px' animationData={HomeLottie} />
+
 
                     </Grid.Col>
 
-                    <Grid.Col xs={6} lg={6} style={{ display: 'flex', justifyContent: 'center', height: '100vh' }}>
+                    <Grid.Col xs={6} lg={6} style={{ height: '100vh' }}>
+                        {/* <CustomLottie  animationData={DoctorLottie} /> */}
                         <Image height={500} src={VaccinationResearch} />
                     </Grid.Col>
-                    <Grid.Col xs={6} lg={6} style={{ height: '100vh' }}>
-                        <Text pt={30} size="md" my="sm">Biography</Text>
+                    <Grid.Col xs={6} lg={6} style={{display: 'flex', flexDirection:"column", justifyContent: '', height: '100vh' }}>
+                        <Text size="md" my="sm">Biography</Text>
                         <Text fw={500} fz={20} size="xl">Who We Are</Text>
-                        <Text size="md" my="sm" style={{ width: '80%' }}>Lorem Media is a full-service social media agency. We offer businesses innovative solutions that deliver the right type of audience to you in the most effective strategies possible. We strive to develop a community around your business, polishing your branding, and improving your public relations.
+                        <Text size="md" my="sm" style={{ width: '100%' }}>Lorem Media is a full-service social media agency. We offer businesses innovative solutions that deliver the right type of audience to you in the most effective strategies possible. We strive to develop a community around your business, polishing your branding, and improving your public relations.
                             Social Media is now one of the most powerful marketing tools with the ability to communicate with a target audience in real time.
 
                             It's 2019: time to sink or swim.
 
                             We are your Social Media Marketing Agency.</Text>
                     </Grid.Col>
-                    <Grid.Col xs={12} lg={12} style={{ height: '100vh' }}>
+                    <Grid.Col xs={12} lg={12} style={{ height: '100vh', overflow: 'hidden' }}>
                         <Text size={'30px'} style={{
                             textAlign: 'center',
                             textTransform: 'uppercase',
@@ -91,7 +98,7 @@ export default function HomeScreen() {
                         >Our Doctors</Text>
                         <CustomCarousel />
                     </Grid.Col>
-                    <Grid.Col xs={12} lg={12} style={{ height: '100vh' }}>
+                    <Grid.Col xs={12} lg={12} style={{ height: '100vh', overflow: 'hidden' }}>
                         <Text size={'30px'} style={{
                             textAlign: 'center',
                             textTransform: 'uppercase',
@@ -137,6 +144,7 @@ export default function HomeScreen() {
                         </form>
                     </Grid.Col>
                 </Grid>
+                </Container>
 
             }
             {

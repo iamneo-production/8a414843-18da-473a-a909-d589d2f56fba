@@ -13,7 +13,9 @@ import {
 
 import LatestAppshell from '../../../components/appShell/latestAppshell'
 import Inventory from '../inventory';
-
+import DashBoard from '../Dashboard';
+import Pharmacy from '../pharmacyManagement/Pharmacy'
+import Billing from '../billing';
 
 const data = [
     { link: '/staff/home', label: 'Dashboard', icon: IconBellRinging },
@@ -30,9 +32,9 @@ export default function StaffLayout() {
     return (
         <Routes>
             <Route path='' element={<Navigate to='/staff/home' />} />
-            <Route path='home' element={<LatestAppshell navData={data}><h1>Staff Dashboard</h1> </LatestAppshell>} />
-            <Route path='billing' element={<LatestAppshell navData={data}><h1>Billing</h1></LatestAppshell>} />
-            <Route path='pharmacy' element={<LatestAppshell navData={data}><h1>Pharmacy</h1></LatestAppshell>} />
+            <Route path='home' element={<LatestAppshell navData={data}><DashBoard /></LatestAppshell>} />
+            <Route path='billing' element={<LatestAppshell navData={data}><Billing/></LatestAppshell>} />
+            <Route path='pharmacy' element={<LatestAppshell navData={data}><Pharmacy /></LatestAppshell>} />
             <Route path='inventory' element={<LatestAppshell navData={data}><Inventory/></LatestAppshell>} />
 
         </Routes>

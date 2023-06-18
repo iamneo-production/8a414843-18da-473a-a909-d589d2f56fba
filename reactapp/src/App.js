@@ -7,10 +7,9 @@ import HomeScreen from './screens/homeScreen';
 import SignUp from './screens/homeScreen/auth/signUp';
 import ProtectedRoutes from './protectedRoutes';
 import PatientLayout from './screens/patient/layout';
-import DoctorLayout from './screens/doctor/layout';
 import StaffLayout from './screens/staff/layout';
 import AdminLayout from './screens/admin/layout';
-
+import DoctorLayout from './screens/doctor/layout/index'
 
 function App() {
   return (
@@ -37,3 +36,13 @@ function App() {
 }
 
 export default App;
+
+// function App(){
+//   return(
+//     <div style={{ backgroundColor: 'lightgrey' }}>
+//       <DoctorDashbaord/>
+//     </div>
+//   )
+// }
+// export default App;
+
