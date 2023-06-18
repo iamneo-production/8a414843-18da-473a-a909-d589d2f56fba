@@ -237,7 +237,7 @@ export default function ManageStaffDoctor() {
         },
         { 
             id: 2382348, 
-            employee_Name: "Employee3",
+            employee_Name: "Employee4",
             gender: "male", 
             department: "Staff",  
             salary: "56098",
@@ -246,7 +246,7 @@ export default function ManageStaffDoctor() {
         },
         { 
             id: 64277234, 
-            employee_Name: "Employee3",
+            employee_Name: "Employee5",
             gender: "male", 
             department: "Staff",  
             salary: "56098",
@@ -255,7 +255,7 @@ export default function ManageStaffDoctor() {
         },
         { 
             id: 32793998, 
-            employee_Name: "Employee3",
+            employee_Name: "Employee6",
             gender: "male", 
             department: "Staff",  
             salary: "56098",
@@ -263,8 +263,8 @@ export default function ManageStaffDoctor() {
             status:"Online",
         },
         { 
-            id: 4537848, 
-            employee_Name: "Employee3",
+            id: 45378486, 
+            employee_Name: "Employee7",
             gender: "male", 
             department: "Staff",  
             salary: "56098",
@@ -272,8 +272,8 @@ export default function ManageStaffDoctor() {
             status:"Offline",
         },
         { 
-            id: 2472493, 
-            employee_Name: "Employee3",
+            id: 247249366, 
+            employee_Name: "Employee8",
             gender: "male", 
             department: "Staff",  
             salary: "56098",
@@ -281,8 +281,8 @@ export default function ManageStaffDoctor() {
             status:"Offline",
         },
         { 
-            id: 3442372, 
-            employee_Name: "Employee3",
+            id: 344237212, 
+            employee_Name: "Employee9",
             gender: "male", 
             department: "Staff",  
             salary: "56098",
@@ -290,8 +290,8 @@ export default function ManageStaffDoctor() {
             status:"Online",
         },
         { 
-            id: 3442372, 
-            employee_Name: "Employee3",
+            id: 344237232, 
+            employee_Name: "Employee10",
             gender: "male", 
             department: "Staff",  
             salary: "56098",
@@ -299,8 +299,8 @@ export default function ManageStaffDoctor() {
             status:"Online",
         },
         { 
-            id: 3442372, 
-            employee_Name: "Employee3",
+            id: 344237222, 
+            employee_Name: "Employee11",
             gender: "male", 
             department: "Staff",  
             salary: "56098",
@@ -308,8 +308,8 @@ export default function ManageStaffDoctor() {
             status:"Online",
         },
         { 
-            id: 3442372, 
-            employee_Name: "Employee3",
+            id: 344231172, 
+            employee_Name: "Employee12",
             gender: "male", 
             department: "Staff",  
             salary: "56098",
@@ -317,8 +317,8 @@ export default function ManageStaffDoctor() {
             status:"Online",
         },
         { 
-            id: 3442372, 
-            employee_Name: "Employee3",
+            id: 3442172, 
+            employee_Name: "Employee13",
             gender: "male", 
             department: "Staff",  
             salary: "56098",
@@ -329,19 +329,11 @@ export default function ManageStaffDoctor() {
     return(
         <Box m="md">
             <Grid>
-                <Grid.Col xs={2} lg={2}>
-                    {/* <Card m="md" shadow="xl" p={10} 
-                    style={{fontFamily:"unset",
-                    borderRadius:"15px",
-                    background:"rgba(139, 127, 194, 1)", 
-                    color:"white",
-                    textAlign:"center"}}>
-                        STAFFS & DOCTORS
-                    </Card> */}
+                <Grid.Col xs={2} lg={2} style={{height:"13vh"}} >
                 </Grid.Col>
                 <Grid.Col xs={8} lg={8}></Grid.Col>
                 <Grid.Col xs={2} lg={2}>
-                <Button  style={{borderRadius:"15px",top:"13%",textDecoration:"none",
+                <Button  style={{borderRadius:"15px",textDecoration:"none",
                 borderColor: "rgba(139, 127, 194, 1)", 
                 color: "white", position: "relative", 
                 overflow: "hidden", 

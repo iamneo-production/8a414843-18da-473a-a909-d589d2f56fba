@@ -111,7 +111,7 @@ export default function HomeScreen() {
                         >Treatments</Text>
                         <CustomCarousel />
                     </Grid.Col>
-                    <Grid.Col xs={12} lg={12}><Divider /></Grid.Col>
+                    <Grid.Col xs={12} lg={12}></Grid.Col>
                     <Grid.Col xs={12} lg={12}>
                         <form onSubmit={form.onSubmit((values) => console.log(values))}>
                             <Grid pt="lg" m={0} px={0}>
