@@ -1,88 +1,4 @@
-// import { Card, Image, Text, Badge, Button, Group, Input ,ActionIcon,Table} from '@mantine/core';
-// import { Grid } from '@mantine/core';
-// import classes from './patientcard.module.css'
-// import { Select } from '@mantine/core';
-// import InventoryTable from './InventoryTable';
-
-// export default function Patientcard() {
-    
-    
-//   return (
-    
-
-    
-//     <Grid>
-//       <Grid.Col xs={9} lg={9} spacing={10}>
-//           <Card shadow="sm" padding="lg" radius="md" > 
-//           <Group position="apart" mt="md" mb="xs" > 
-//              <div className={classes.appointment}>
-//                 <h2>Inventory List</h2>
-//     {/* <ActionIcon>
-//       <IconHttpDelete size="1.125rem" />
-//     </ActionIcon> */}
-  
-               
-//              </div> 
-           
-//             </Group>
-//             <div className={classes.head}>
-//              <Group>    
-                          
-//                 <Input.Wrapper  label="Product Name"  mx="auto">
-//                      <Input placeholder="Search"/>
-//                 </Input.Wrapper>
-                               
-                           
-//                 <Select
-//                     label="Manufacturer"
-//                     placeholder=""
-//                     data={[
-//                                         { value: 'Vensitro Biotech', label: 'Vensitro Biotech' },
-//                                         { value: 'Novartis', label: 'Novartis' },
-//                                         { value: 'Rouche', label: 'Rouche' },
-//                                         { value: 'Sanofi', label: 'Sanofi' },
-//                     ]}
-//                                     />
-//                 <Input.Wrapper  label="Item Number"  >
-//                     <Input placeholder="" />
-//                 </Input.Wrapper>
-//                             <Select
-//                                     label="Problem/Condition"
-//                                     placeholder=""
-                                    
-//                                     data={[
-//                                         // { value: 'react', label: 'React' },
-//                                         // { value: 'ng', label: 'Angular' },
-//                                         // { value: 'svelte', label: 'Svelte' },
-//                                         // { value: 'vue', label: 'Vue' },
-//                                     ]}
-//                                     />
-//                             <Select
-//                                     label="Category"
-//                                     placeholder=""
-//                                     data={[
-//                                         // { value: 'react', label: 'React' },
-//                                         // { value: 'ng', label: 'Angular' },
-//                                         // { value: 'svelte', label: 'Svelte' },
-//                                         // { value: 'vue', label: 'Vue' },
-//                                     ]}
-//                                     />
-//                                 <Button  color='blue'> Apply Filter</Button>
-//                                 <Button  color='gray'> Intake</Button>
-                               
-                     
-//              </Group>
-//              </div> 
-//           </Card>
-//       </Grid.Col>  
-//      </Grid>
-     
-     
-//   );
-// }
-
-
-
+// Inventory
 import{
     Box,
     Button,
@@ -97,8 +13,9 @@ import{
     ActionIcon,
     Menu,
     Title,
-    Loader,
+    Loader,Badge
   } from "@mantine/core";
+//   import { IconSearch, IconPlus, IconTrash, IconEdit } from "@tabler/icons-react";
   import { Modal} from '@mantine/core';
   import { useForm } from "@mantine/form";
   import { useDisclosure } from "@mantine/hooks";
@@ -107,18 +24,30 @@ import{
   import { useState } from "react";
   import { useEffect } from "react";
   import {
-    IconDotsVertical,
     IconEdit,
     IconEye,
     IconSearch,
     IconTrash,
+    IconPlus
   } from "@tabler/icons-react";
- 
-  
+ import ModifyAndCreateModal from "./Modal/index";
   //import CustomTable from ".";
   
-  export default function Inventory() {
-    const [opened, { open, close }] = useDisclosure(false);
+  export default function Inventory(props) {
+  const [opened, { open, close }] = useDisclosure(false);
+//   const { products, fetching, } = props
+  const [editRecordId, setEditRecordId] = useState(null);
+  const [addRecord, setAddRecord] = useState(null);
+  const [recordss,setRecords] = useState();
+  const [searchValue, setSearchValue] = useState("");
+
+
+  const handleInputChange = (event) => {
+     const value = event.target.value;
+ 
+
+  };
+  
     const form = useForm({
         initialValues: {
             ProductName:'',
@@ -138,7 +67,32 @@ import{
         //     payment :(value) => (/^\S+$/.test(value) ? null : 'Select one value'),
         // },
     });
-    // const [selectedRecords, setSelectedRecords] = useState<any>([]);
+
+
+    function handleDelete(data){
+        const modified = recordss.filter((item)=>{
+            return item!==data;
+        })
+        setRecords(modified);
+    }
+    const handleCreateNewRow = (values) => {
+        records.push(values);
+        setRecords([...recordss]);
+    };
+
+
+    const handleSaveEdit = (editedData) => {
+        const updatedRecords = recordss.map((record) => {
+            if (record.id === editRecordId.id) {
+              return { ...record, ...editedData };
+            }
+            return record;
+        });
+        console.log(updatedRecords);
+        setEditRecordId(null);
+        setRecords(updatedRecords);
+    };
+    
     const colDef = [
         {
             accessor: "productname",
@@ -238,72 +192,25 @@ import{
         },
     },
     {
-      accessor: "ExpiryDate",
-      title: "Expiry Date",
-      titleStyle: { color: "" },
-      textAlignment: "center",
-      render: (data) => {
-          return(
-          <Group position="center">
-              <Text>{data?.ExpiryDate}</Text>
-          </Group>
-          );
+        accessor: 'actions',
+        title: <Text mr="xs">Row actions</Text>,
+        textAlignment: 'center',
+        render: (data) => (
+            <Group spacing={4} position="center" noWrap>
+                <ActionIcon color="blue" onClick={() => setEditRecordId(data)}>
+                    <IconEdit size={16} />
+                </ActionIcon>
+                <ActionIcon color="red" 
+                // onClick={() => handleDelete(data)
+                // }
+                >
+                    <IconTrash size={16} />
+                </ActionIcon>
+            </Group>
+        ),
       },
-  },
-        {
-            accessor: "actions",
-            title: <Text mr="xs">Actions</Text>,
-            textAlignment: "center",
-            render: (data) => {
-                console.log("data", data);
-                return (
-                    <Menu position="bottom-start" shadow="xl" width={160}>
-                        <Menu.Target>
-                            <Button
-                                radius="md"
-                                variant="subtle"
-                            // sx={{ height: "20px", width: "45%" }}
-                            >
-                                <IconDotsVertical />
-                            </Button>
-                        </Menu.Target>
-                        <Menu.Dropdown>
-                            {/* <Menu.Item
-                                icon={<IconEye size={19} style={{ color: "#081226" }} />}
-                                style={{
-                                    color: "black",
-                                    fontSize: 15,
-                                    fontWeight: "500",
-                                }}
-                            >
-                                View
-                            </Menu.Item> */}
-                            <Menu.Item
-                                icon={<IconEdit size={17} style={{ color: "#081226" }} />}
-                                style={{
-                                    color: "black",
-                                    fontSize: 15,
-                                    fontWeight: "500",
-                                }}
-                            >
-                                Available
-                            </Menu.Item>
-  
-                            <Menu.Item
-                                icon={<IconTrash color="red" size={16} />}
-                                style={{
-                                    color: "black",
-                                    fontSize: 15,
-                                    fontWeight: "500",
-                                }}
-                            >
-                                Not Available
-                            </Menu.Item>
-                        </Menu.Dropdown>
-                    </Menu>
-                );
-            },
-        },
+    
+        
     ];
   
     const records = [
@@ -411,58 +318,69 @@ import{
     ];
     return(
         <Box m="md">
-            <Grid>
-                <Grid.Col xs={2} lg={2}>
-                    <Card m="md" shadow="xl" p={20} 
-                     style={{fontFamily:"unset",
-                     borderRadius:"15px",
-                     background:"rgba(139, 127, 194, 1)",
-                      color:"white",
-                      textAlign:"center"}}>
-                        INVENTORY MANAGEMENT
-                    </Card>
+            <Grid grow gutter='sm'>
+                <Grid.Col xs={2} lg={2}>  
+                <Badge  variant="light" size={50} h={50}  style={{cursor: "pointer"}} > 
+                <h1 weight={1000}>Inventory Management</h1>
+               </Badge> 
                 </Grid.Col>
-                <Grid.Col xs={8} lg={8}></Grid.Col>
+                {/* <Grid.Col xs={8} lg={8}></Grid.Col> */}
+                <Group>
                 <Grid.Col xs={2} lg={2}>
-                    <Button p={30} left="46%" style={{borderRadius:"15px",top:"13%",textDecoration:"none",
-                borderColor: "rgba(139, 127, 194, 1)", 
-                color: "white", position: "relative", 
-                overflow: "hidden",
-                background: "rgba(139, 127, 194, 1)", cursor: "pointer",left:"38%" }} onClick={open}  >Add New Medicine</Button>
+                <Badge  variant="light" size={50} h={50} onClick={open} style={{cursor: "pointer"}} > 
+                <h1 weight={1000}>Add New Record</h1>
+               </Badge> 
                 </Grid.Col>
+                </Group>
             </Grid>
-            <Modal opened={opened} onClose={close} title="Add New Medicine" centered>
+            <TextInput
+              my="md"
+                radius="md"
+                placeholder="Search..."
+                icon={<IconSearch />}
+                value={searchValue}
+                onChange={handleInputChange}
+                // onIconClick={handleIconClick}
+                // style={{ borderBlockColor: "transparent" }}
+              />
+               <Modal opened={addRecord !== null} onClose={() => setAddRecord(null)} title="Add New Product" centered>
+                <ModifyAndCreateModal onClose={() => setAddRecord(null)} onSubmit={handleCreateNewRow}/>
+            </Modal>
+              <Modal opened={editRecordId !== null} onClose={() => setEditRecordId(null)} title="Edit Record" centered>
+                <ModifyAndCreateModal records={editRecordId} onClose={() => setEditRecordId(null)} onSubmit={handleSaveEdit}/>
+            </Modal>
+            <Modal opened={opened} onClose={close} title="Add New Record" centered>
                 <form onSubmit={form.onSubmit((values) => console.log(values))}>
                 <TextInput mt="md" 
-                placeholder="Product Name"
+                placeholder="Product Name" label="Product Name"
                 {...form.getInputProps('ProductName')}
                 />
-                <TextInput mt="md"
+                <TextInput mt="md" label="Item Number"
                     placeholder="Item Number"
                     {...form.getInputProps('ItemNumber')}
                 />
-               
-                <TextInput mt="md"
+                
+                <TextInput mt="md" label="Usage"
                     placeholder="Usage"
-                    {...form.getInputProps('Usage')}
+                    {...form.getInputProps('Usage')} 
                 />
-                <TextInput mt="md"
+                <TextInput mt="md" label="Manufacturer"
                     placeholder="Manufacturer"
                     {...form.getInputProps('Manufacturer')}
                 />
-                <TextInput mt="md"
+                <TextInput mt="md" label="Category"
                     placeholder="Category"
                     {...form.getInputProps('Category')}
                 />
-                <TextInput mt="md"
+                <TextInput mt="md" label="Price"
                     placeholder="Price"
                     {...form.getInputProps('Price')}
                 />
-                <TextInput mt="md"
+                <TextInput mt="md" label="Quantity"
                     placeholder="Quantity"
                     {...form.getInputProps('Quantity')}
                 />
-                <TextInput mt="md"
+                <TextInput mt="md" label="Expiry Date"
                     placeholder="Expiry Date"
                     {...form.getInputProps('"Expiry Date')}
                 />
@@ -476,7 +394,7 @@ import{
                 borderColor: "rgba(139, 127, 194, 1)", 
                 color: "white", position: "relative", 
                 overflow: "hidden", 
-                background: "rgba(139, 127, 194, 1)", cursor: "pointer",left:"38%"}}>Add
+                background: "rgba(139, 127, 194, 1)", cursor: "pointer",left:"38%"}} onClick={close}>Add
                 </Button>
                 </form>
             </Modal>
@@ -507,3 +425,8 @@ import{
     );
   }
   
+
+
+
+
+
