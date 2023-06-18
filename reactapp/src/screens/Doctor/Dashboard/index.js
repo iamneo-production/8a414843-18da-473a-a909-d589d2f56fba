@@ -1,4 +1,4 @@
-import { Card, Text, Avatar, Container, Grid, Divider, TextInput, Button} from '@mantine/core';
+import { Card, Text, Avatar, Container, Grid, Divider, TextInput, Button, Box, ScrollArea} from '@mantine/core';
 import Calendar from './calendar'
 import appointmentLogo from '../Dashboard/appointment-icon.png';
 import patientLogo from '../Dashboard/Pateint-icon.png';
@@ -12,7 +12,7 @@ import TodayAppointments from './todaysappointments';
 
 export default function DoctorDashboard() {
   return (
-    <div style={{ backgroundColor: 'lightgrey' }}>  
+    <div >
     <Grid grow gutter='sm' >
       <Grid.Col style={{fontWeight: "bold", }} span={12}>Welcome Doctor</Grid.Col>
       <Grid.Col span={4}>
@@ -56,17 +56,17 @@ export default function DoctorDashboard() {
       <Grid.Col span={4}>
         <DoctorCard/>
       </Grid.Col>
-      <Grid.Col span={4}>
+      <Grid.Col span={6}>
         {/* <Calendar/> */}
         <Card shadow="sm" padding="md" radius='lg'>
-        <text style={{fontWeight:'bold'}}>Appointment Requests</text>
-        <AppointmentRequest/>
+          <text style={{fontWeight:'bold'}}>Appointment Requests</text>
+          <AppointmentRequest/>
         </Card>
       </Grid.Col>
-      <Grid.Col span={6}>
+      <Grid.Col span={4}>
         <Card shadow="sm" padding="md" radius='lg'>
-          <text style={{fontWeight:'bold'}}>Today's Appointment</text>
-          <TodayAppointments/>
+            <text style={{fontWeight:'bold'}}>Today's Appointment</text>
+                <TodayAppointments/>
         </Card>
       </Grid.Col>
       {/* <Grid.Col span={4}>
@@ -78,3 +78,4 @@ export default function DoctorDashboard() {
     </div>
   );
 }
+
