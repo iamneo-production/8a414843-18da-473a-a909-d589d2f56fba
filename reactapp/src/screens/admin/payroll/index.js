@@ -8,6 +8,7 @@ import {
     Menu,
     Title,
     Card,
+    Tabs,
 } from "@mantine/core";
 import { useDisclosure } from '@mantine/hooks';
 import { Modal} from '@mantine/core';
@@ -422,6 +423,7 @@ export default function SampleTable() {
     ];
 
     const [active,setActive]=useState(1)
+    const [activeTab, setActiveTab] = useState('first');
     const [opened, { open, close }] = useDisclosure(false);
 
    
@@ -459,20 +461,9 @@ export default function SampleTable() {
 
         
         <Grid>
-        {/* <Grid.Col xs={1} lg={1}></Grid.Col> */}
-          <Grid.Col xs={3} lg={3} onClick={()=>{setActive(1)}}>
-                <Card shadow="xl" m="lg" padding="xl" withBorder style={{background: "rgba(139, 127, 194, 1)", background: active === 1 ? "rgba(139, 127, 194, 1)" :"rgb(255, 255, 255)" , textDecoration: "none", borderColor: "rgba(139, 127, 194, 1)",  position: "relative", overflow: "hidden", cursor: "pointer",  borderRadius: "10px", }} >
-                    <Title style={{ fontSize: "20px", textAlign: "center"}} >Doctor Payroll {<IconMoneybag size={20} style={{ color: "#081226" }} />}</Title>
-                                    
-                </Card>
-            </Grid.Col>
-            <Grid.Col xs={3} lg={3} onClick={()=>{setActive(2)}}>
-                <Card shadow="xl" m="lg" padding="xl" withBorder style={{background: "rgba(139, 127, 194, 1)", background: active === 2 ? "rgba(139, 127, 194, 1)" :"rgb(255, 255, 255)" , textDecoration: "none", borderColor: "rgba(139, 127, 194, 1)",  position: "relative", overflow: "hidden", cursor: "pointer",  borderRadius: "10px",}}>
-                    <Title style={{ fontSize: "20px", textAlign: "center"}}>Staffs Payroll {<IconMoneybag size={20} style={{ color: "#081226" }} />}</Title>
-                </Card>
-            </Grid.Col>
-            <Grid.Col xs={8} lg={8}></Grid.Col >
-            <Grid.Col xs={12} lg={12}> 
+           
+          
+          <Grid.Col xs={12} lg={12}>
             <Modal opened={opened} onClose={close} title="Salary Update" centered>
                 <form onSubmit={form.onSubmit(handlSalaryUpdate)}>
                     <TextInput
@@ -497,8 +488,18 @@ export default function SampleTable() {
             </Modal>
 
             <Box m="md">
-                <CustomTable coloumnDef={active===1?colDef:colDef2} records={active===1?records:records2} />
+            <Tabs value={activeTab} onTabChange={setActiveTab}>
+      <Tabs.List>
+        <Tabs.Tab value="first">Doctor</Tabs.Tab>
+        <Tabs.Tab value="second">Staff</Tabs.Tab>
+      </Tabs.List>
+      <Tabs.Panel value="first"><CustomTable coloumnDef={active===1?colDef:colDef2} records={active===1?records:records2} /></Tabs.Panel>
+      <Tabs.Panel value="second"><CustomTable coloumnDef={active===2?colDef:colDef2} records={active===2?records:records2} /></Tabs.Panel>
+        </Tabs>
+
+                {/* <CustomTable coloumnDef={active===1?colDef:colDef2} records={active===1?records:records2} /> */}
             </Box>
-        </Grid.Col></Grid>
+            </Grid.Col>
+        </Grid>
     );
 }
