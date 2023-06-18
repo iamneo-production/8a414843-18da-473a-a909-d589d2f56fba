@@ -30,14 +30,13 @@ import {
 
 } from "@mantine/dates";
 
-import { useState } from "react";
+// import { DatePickerInput } from '@mantine/dates';
+
 import { PasswordInput } from "@mantine/core";
 import person from "../../../assests/person.svg"
 
 export default function SignUp() {
-  const [selectedGender, setSelectedGender] = useState("");
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [value, setValue] = useState(null);
+ 
 
   const form = useForm({
     initialValues: {
@@ -50,7 +49,7 @@ export default function SignUp() {
       confirmPassword: "",
       nic: "",
       address: "",
-      dob: ""
+      dob: null
     },
     validate: {
       fname: (value) =>
@@ -98,7 +97,7 @@ export default function SignUp() {
         >
           <h1 pt={30} size="lg" mb="md" my="sm">Sign Up</h1>
           <h2 pt={30} size="lg" mb="md" my="sm">Please Sign Up To Continue</h2>
-          <Text>
+          <Text mb="md" my="sm">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nemo quasi
             delectus facilis, animi officia laboriosam incidunt qui temporibus
             nobis?
@@ -119,7 +118,7 @@ export default function SignUp() {
         </Grid.Col>
       </Grid> */}
 
-      <Container size="lg" px="xs"  >
+      <Container size="lg" px="xs"  mb="md" my="xl"  >
         <form onSubmit={form.onSubmit(console.log)}>
           <Grid pt="lg" m={0} px={0}>
             <Grid.Col
@@ -197,8 +196,8 @@ export default function SignUp() {
 
                 placeholder="Date of Birth"
                 radius="md"
-                value={value}
-                onChange={setValue}
+                // value={value}
+                // onChange={setValue}
                 required
 
               />
