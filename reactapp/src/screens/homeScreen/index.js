@@ -23,7 +23,7 @@ import CustomFooter from '../../components/footer/index'
 import SignUp from "./auth/signUp";
 import SignIn from "./auth/signIn";
 import SampleTable from "../../components/customTable/sampleTable"
-import PatientLayout from "../patient/layout";
+// import PatientLayout from "../patient/layout";
 import CustomLottie from '../../components/lottieFiles/customLottie'
 import DoctorLottie from '../../assests/Lottiefiles/doctor.json'
 import HomeLottie from '../../assests/Lottiefiles/Home.json'

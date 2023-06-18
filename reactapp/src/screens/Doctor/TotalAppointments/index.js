@@ -280,8 +280,6 @@ const ManagePatient = () => {
 
   const handlePrescriptionSubmit = (event) => {
     event.preventDefault();
-    // Replace with your prescription submission logic
-    // Retrieve the prescription details from the form inputs and perform any necessary actions
     setPrescriptionModalOpen(false);
   };
 
@@ -523,3 +521,8 @@ const ManagePatient = () => {
 };
 
 export default ManagePatient;
+
+
+
+
+
