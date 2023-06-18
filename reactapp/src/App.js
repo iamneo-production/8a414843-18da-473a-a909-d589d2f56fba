@@ -9,7 +9,7 @@ import ProtectedRoutes from './protectedRoutes';
 import PatientLayout from './screens/patient/layout';
 import StaffLayout from './screens/staff/layout';
 import AdminLayout from './screens/admin/layout';
-import DoctorLayout from './screens/Doctor/layout/index'
+import DoctorLayout from './screens/doctor/layout/index'
 
 function App() {
   return (
