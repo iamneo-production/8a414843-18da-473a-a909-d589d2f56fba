@@ -10,32 +10,32 @@ function useAuth(element) {
     // } else {
     //     return false
     // }
-    // const user = useSelector((s) => s?.user?.value)
-    // if (!_.isEmpty(user)) {
-    //     if (user === element) {
-    //         return true
-    //     } else {
-    //         return false
-    //     }
-    // } else {
-    //     return false
-    // }
-
-  //  console.log('sss',user);
-    const role = localStorage.getItem('Role')
-    if (role) {
-        // let data = JSON.stringify(role)
-        let data=role
-        if (data) {
-            if (data === element) {
-                console.log('trueee');
-                return true
-            }
+    const user = useSelector((s) => s?.user?.value)
+    if (!_.isEmpty(user)) {
+        if (user === element) {
+            return true
+        } else {
             return false
         }
+    } else {
         return false
     }
-    return false
+
+  //  console.log('sss',user);
+    // const role = localStorage.getItem('Role')
+    // if (role) {
+    //     // let data = JSON.stringify(role)
+    //     let data=role
+    //     if (data) {
+    //         if (data === element) {
+    //             console.log('trueee');
+    //             return true
+    //         }
+    //         return false
+    //     }
+    //     return false
+    // }
+    // return false
 }
 
 function ProtectedRoutes(props) {
