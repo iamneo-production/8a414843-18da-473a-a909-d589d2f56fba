@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.springapp.hmsapp.model.Staff;
-import com.springapp.hmsapp.service.StaffService;
+import com.example.springapp.model.Staff;
+import com.example.springapp.service.StaffService;
 
 @Controller
 public class StaffController {

@@ -2,7 +2,7 @@ package com.example.springapp.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.springapp.hmsapp.model.Patient;
+import com.example.springapp.model.Patient;
 
 public interface PatientRepository extends JpaRepository<Patient, Integer> {
 

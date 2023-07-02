@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.springapp.hmsapp.model.Pharmacy;
-import com.springapp.hmsapp.service.PharmacyService;
+import com.example.springapp.model.Pharmacy;
+import com.example.springapp.service.PharmacyService;
 
 @Controller
 public class PharmacyController {

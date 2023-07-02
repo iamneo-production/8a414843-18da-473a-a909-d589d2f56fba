@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.springapp.hmsapp.model.Patient;
-import com.springapp.hmsapp.service.PatientService;
+import com.example.springapp.model.Patient;
+import com.example.springapp.service.PatientService;
 
 @Controller
 public class PatientController {

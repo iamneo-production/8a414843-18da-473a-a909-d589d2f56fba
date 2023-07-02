@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.springapp.hmsapp.common.ResourceNotFoundException;
-import com.springapp.hmsapp.model.Pharmacy;
-import com.springapp.hmsapp.repository.PharmacyRepository;
+import com.example.springapp.common.ResourceNotFoundException;
+import com.example.springapp.model.Pharmacy;
+import com.example.springapp.repository.PharmacyRepository;
 
 @Service
 public class PharmacyService {

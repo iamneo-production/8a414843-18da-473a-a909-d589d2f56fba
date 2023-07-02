@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.springapp.hmsapp.model.Appointment;
-import com.springapp.hmsapp.service.AppointmentService;
+import com.example.springapp.model.Appointment;
+import com.example.springapp.service.AppointmentService;
 
 @Controller
 public class AppointmentController {

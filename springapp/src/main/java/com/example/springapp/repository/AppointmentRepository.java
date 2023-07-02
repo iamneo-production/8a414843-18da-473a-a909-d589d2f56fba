@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.springapp.hmsapp.model.Appointment;
+import com.example.springapp.model.Appointment;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
 	

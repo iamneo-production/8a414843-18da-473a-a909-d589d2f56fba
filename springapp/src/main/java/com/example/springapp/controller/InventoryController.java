@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.springapp.hmsapp.model.Inventory;
-import com.springapp.hmsapp.service.InventoryService;
+import com.example.springapp.model.Inventory;
+import com.example.springapp.service.InventoryService;
 
 @Controller
 public class InventoryController {

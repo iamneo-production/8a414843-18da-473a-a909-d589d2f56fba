@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.springapp.hmsapp.model.Billing;
-import com.springapp.hmsapp.service.BillingService;
+import com.example.springapp.model.Billing;
+import com.example.springapp.service.BillingService;
 
 @Controller
 public class BillingController {

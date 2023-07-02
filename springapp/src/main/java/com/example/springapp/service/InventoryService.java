@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.springapp.hmsapp.common.ResourceNotFoundException;
-import com.springapp.hmsapp.model.Inventory;
-import com.springapp.hmsapp.repository.InventoryRepository;
+import com.example.springapp.common.ResourceNotFoundException;
+import com.example.springapp.model.Inventory;
+import com.example.springapp.repository.InventoryRepository;
 
 @Service
 public class InventoryService {

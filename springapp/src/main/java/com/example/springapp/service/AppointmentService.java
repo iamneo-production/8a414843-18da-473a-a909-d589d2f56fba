@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.springapp.hmsapp.common.ResourceNotFoundException;
-import com.springapp.hmsapp.model.Appointment;
-import com.springapp.hmsapp.repository.AppointmentRepository;
+import com.example.springapp.common.ResourceNotFoundException;
+import com.example.springapp.model.Appointment;
+import com.example.springapp.repository.AppointmentRepository;
 
 @Service
 public class AppointmentService {

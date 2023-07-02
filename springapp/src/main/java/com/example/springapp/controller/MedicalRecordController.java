@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.springapp.hmsapp.model.MedicalRecord;
-import com.springapp.hmsapp.service.MedicalRecordService;
+import com.example.springapp.model.MedicalRecord;
+import com.example.springapp.service.MedicalRecordService;
 
 @Controller
 public class MedicalRecordController {

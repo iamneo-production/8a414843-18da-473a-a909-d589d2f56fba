@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.springapp.hmsapp.common.ResourceNotFoundException;
-import com.springapp.hmsapp.model.Staff;
-import com.springapp.hmsapp.repository.StaffRepository;
+import com.example.springapp.common.ResourceNotFoundException;
+import com.example.springapp.model.Staff;
+import com.example.springapp.repository.StaffRepository;
 
 @Service
 public class StaffService {
