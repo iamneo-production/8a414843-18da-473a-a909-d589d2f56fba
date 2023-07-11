@@ -193,6 +193,7 @@ export default function PatientDashboard() {
                   <h5>Dr.Priya</h5>
                   <h5>Neurologist</h5>
                   </Group>
+                  
                 </Card>
             </Tabs.Panel>
 
