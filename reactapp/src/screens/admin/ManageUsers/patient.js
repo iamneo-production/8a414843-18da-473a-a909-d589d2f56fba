@@ -326,7 +326,7 @@ export default function Managepatient() {
     return(
         <Box m="md">
             <Grid>
-                <Grid.Col xs={2} lg={2}>
+                <Grid.Col xs={2} lg={2} style={{height:"13vh"}}>
                     {/* <Card m="md" shadow="xl" p={10} 
                     style={{fontFamily:"unset",
                     borderRadius:"15px",
