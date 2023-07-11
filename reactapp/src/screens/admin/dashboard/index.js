@@ -1,6 +1,7 @@
 import React from 'react';
 import { Chart as ChartJS } from 'chart.js/auto';
 //import { Col, Grid, Card, Title } from '@mantine/core';
+
 import { Line } from 'react-chartjs-2';
 import { 
   Container,
