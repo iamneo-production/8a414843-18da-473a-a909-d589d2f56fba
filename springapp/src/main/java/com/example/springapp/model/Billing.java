@@ -13,21 +13,31 @@ public class Billing {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
+	private Long patientId;
     private LocalDate date;
-    private BigDecimal amount;
+    private Long amount;
     private String treatmentDescription;
-    private int patientId;
+    
     
     public Billing() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getId() {
+	public Billing(Long id,Long patientId, LocalDate date,  String treatmentDescription,Long amount) {
+		
+		this.id = id;
+		this.date = date;
+		this.amount = amount;
+		this.treatmentDescription = treatmentDescription;
+		this.patientId = patientId;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -39,11 +49,11 @@ public class Billing {
 		this.date = date;
 	}
 
-	public BigDecimal getAmount() {
+	public Long getAmount() {
 		return amount;
 	}
 
-	public void setAmount(BigDecimal amount) {
+	public void setAmount(Long amount) {
 		this.amount = amount;
 	}
 
@@ -55,11 +65,11 @@ public class Billing {
 		this.treatmentDescription = treatmentDescription;
 	}
 
-	public int getPatientId() {
+	public Long getPatientId() {
 		return patientId;
 	}
 
-	public void setPatientId(int patientId) {
+	public void setPatientId(Long patientId) {
 		this.patientId = patientId;
 	}
 }

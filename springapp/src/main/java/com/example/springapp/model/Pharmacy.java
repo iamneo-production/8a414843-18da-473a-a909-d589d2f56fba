@@ -11,22 +11,33 @@ import javax.persistence.Id;
 public class Pharmacy {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String medicationName;
     private String dosage;
     private LocalDate refillDate;
-    private int prescriptionNumber;
-    private int patientId;
+    private Long prescriptionNumber;
+    private Long patientId;
     
     public Pharmacy() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getId() {
+	public Pharmacy(Long id, Long patientId, String medicationName, String dosage, LocalDate refillDate,
+			Long prescriptionNumber) {
+		super();
+		this.id = id;
+		this.patientId = patientId;
+		this.medicationName = medicationName;
+		this.dosage = dosage;
+		this.refillDate = refillDate;
+		this.prescriptionNumber = prescriptionNumber;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -54,19 +65,19 @@ public class Pharmacy {
 		this.refillDate = refillDate;
 	}
 
-	public int getPrescriptionNumber() {
+	public Long getPrescriptionNumber() {
 		return prescriptionNumber;
 	}
 
-	public void setPrescriptionNumber(int prescriptionNumber) {
+	public void setPrescriptionNumber(Long prescriptionNumber) {
 		this.prescriptionNumber = prescriptionNumber;
 	}
 
-	public int getPatientId() {
+	public Long getPatientId() {
 		return patientId;
 	}
 
-	public void setPatientId(int patientId) {
+	public void setPatientId(Long patientId) {
 		this.patientId = patientId;
 	}
     

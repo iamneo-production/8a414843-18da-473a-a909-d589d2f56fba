@@ -33,12 +33,12 @@ public class InventoryController {
     @PutMapping("/inventory")
     public ResponseEntity<Inventory> updateInventoryItem(@RequestBody Inventory inventory) {
         Inventory updatedInventoryItem = inventoryService.updateInventoryItem(inventory);
-        return ResponseEntity.ok(updatedInventoryItem);
+        return ResponseEntity.status(201).body(updatedInventoryItem);
     }
 
     // Endpoint to delete an inventory item
     @DeleteMapping("/inventory/{id}")
-    public ResponseEntity<String> deleteInventoryItem(@PathVariable int id) {
+    public ResponseEntity<String> deleteInventoryItem(@PathVariable Long id) {
         inventoryService.deleteInventoryItem(id);
         return ResponseEntity.ok("Deleted Successfully");
     }
@@ -52,7 +52,7 @@ public class InventoryController {
 
     // Endpoint to retrieve an inventory item by ID
     @GetMapping("/inventory/{id}")
-    public ResponseEntity<Inventory> getInventoryItemById(@PathVariable int id) {
+    public ResponseEntity<Inventory> getInventoryItemById(@PathVariable Long id) {
         Inventory inventoryItem = inventoryService.getInventoryItemById(id);
         return ResponseEntity.ok(inventoryItem);
     }

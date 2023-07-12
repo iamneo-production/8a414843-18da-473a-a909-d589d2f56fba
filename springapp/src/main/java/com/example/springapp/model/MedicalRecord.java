@@ -12,23 +12,34 @@ public class MedicalRecord {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
     private LocalDate date;
     private String diagnosis;
     private String prescription;
     private String notes;
-    private int doctorId;
-    private int patientId;
+    private Long doctorId;
+    private Long patientId;
     
     public MedicalRecord() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getId() {
+	public MedicalRecord(Long id, Long patientId, Long doctorId, LocalDate date, String diagnosis, String prescription,
+			String notes) {
+		this.id = id;
+		this.patientId = patientId;
+		this.doctorId = doctorId;
+		this.date = date;
+		this.diagnosis = diagnosis;
+		this.prescription = prescription;
+		this.notes = notes;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -64,19 +75,19 @@ public class MedicalRecord {
 		this.notes = notes;
 	}
 
-	public int getDoctorId() {
+	public Long getDoctorId() {
 		return doctorId;
 	}
 
-	public void setDoctorId(int doctorId) {
+	public void setDoctorId(Long doctorId) {
 		this.doctorId = doctorId;
 	}
 
-	public int getPatientId() {
+	public Long getPatientId() {
 		return patientId;
 	}
 
-	public void setPatientId(int patientId) {
+	public void setPatientId(Long patientId) {
 		this.patientId = patientId;
 	}
 }

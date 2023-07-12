@@ -38,7 +38,7 @@ public class PharmacyController {
 
     // Endpoint to delete a pharmacy record
     @DeleteMapping("/pharmacy/{id}")
-    public ResponseEntity<String> deletePharmacyRecord(@PathVariable int id) {
+    public ResponseEntity<String> deletePharmacyRecord(@PathVariable Long id) {
         pharmacyService.deletePharmacyRecord(id);
         return ResponseEntity.ok("Deleted Successfully");
     }
@@ -52,7 +52,7 @@ public class PharmacyController {
 
     // Endpoint to retrieve a pharmacy record by ID
     @GetMapping("/pharmacy/{id}")
-    public ResponseEntity<Pharmacy> getPharmacyRecordById(@PathVariable int id) {
+    public ResponseEntity<Pharmacy> getPharmacyRecordById(@PathVariable Long id) {
         Pharmacy pharmacyRecord = pharmacyService.getPharmacyRecordById(id);
         return ResponseEntity.ok(pharmacyRecord);
     }

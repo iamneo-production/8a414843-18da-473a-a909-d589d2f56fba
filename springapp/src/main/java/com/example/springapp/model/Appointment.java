@@ -13,39 +13,49 @@ public class Appointment {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-    private int patientId;
-    private int doctorId;
+	private Long id;
+    private Long patientId;
+    private Long doctorId;
     private LocalDate date;
     private LocalTime time;
     private String duration;
     private String status;
     
     public Appointment() {
-		// TODO Auto-generated constructor stub
 	}
 
-	public int getId() {
+	public Appointment(long id, long patientId, long doctorId, LocalDate date, LocalTime time, String duration,
+			String status) {
+		this.id = id;
+		this.patientId = patientId;
+		this.doctorId = doctorId;
+		this.date = date;
+		this.time = time;
+		this.duration = duration;
+		this.status = status;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public int getPatientId() {
+	public Long getPatientId() {
 		return patientId;
 	}
 
-	public void setPatientId(int patientId) {
+	public void setPatientId(Long patientId) {
 		this.patientId = patientId;
 	}
 
-	public int getDoctorId() {
+	public Long getDoctorId() {
 		return doctorId;
 	}
 
-	public void setDoctorId(int doctorId) {
+	public void setDoctorId(Long doctorId) {
 		this.doctorId = doctorId;
 	}
 

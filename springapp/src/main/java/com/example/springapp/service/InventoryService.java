@@ -24,11 +24,11 @@ public class InventoryService {
             inventory.setId(inventory.getId());
             return inventoryRepository.save(inventory);
         } else {
-            throw new ResourceNotFoundException("Inventory item not found with ID: " + inventory.getId());
+            return createInventoryItem(inventory);
         }
     }
 
-    public void deleteInventoryItem(int id) {
+    public void deleteInventoryItem(Long id) {
         if (inventoryRepository.existsById(id)) {
             inventoryRepository.deleteById(id);
         } else {
@@ -40,7 +40,7 @@ public class InventoryService {
         return inventoryRepository.findAll();
     }
 
-    public Inventory getInventoryItemById(int id) {
+    public Inventory getInventoryItemById(Long id) {
         return inventoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Inventory item not found with ID: " + id));
     }

@@ -29,7 +29,7 @@ public class PatientService {
         }
     }
 
-    public void deletePatient(int id) {
+    public void deletePatient(Long id) {
         // Check if the patient with the given ID exists
         if (patientRepository.existsById(id)) {
             patientRepository.deleteById(id);
@@ -42,7 +42,7 @@ public class PatientService {
         return patientRepository.findAll();
     }
 
-    public Patient getPatientById(int id) {
+    public Patient getPatientById(Long id) {
         return patientRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found with ID: " + id));
     }

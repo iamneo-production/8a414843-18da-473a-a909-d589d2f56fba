@@ -1,6 +1,7 @@
 package com.example.springapp.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class MedicalRecordService {
         }
     }
 
-    public void deleteMedicalRecord(int id) {
+    public void deleteMedicalRecord(Long id) {
         if (medicalRecordRepository.existsById(id)) {
             medicalRecordRepository.deleteById(id);
         } else {
@@ -40,9 +41,9 @@ public class MedicalRecordService {
         return medicalRecordRepository.findAll();
     }
 
-    public MedicalRecord getMedicalRecordById(int id) {
-        return medicalRecordRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Medical record not found with ID: " + id));
+    public Optional<MedicalRecord> getMedicalRecordById(Long id) {
+        return medicalRecordRepository.findById(id);
+               
     }
 
 }

@@ -39,7 +39,7 @@ public class BillingController {
 
     // Endpoint to delete a billing record
     @DeleteMapping("/billing/{id}")
-    public ResponseEntity<String> deleteBilling(@PathVariable int id) {
+    public ResponseEntity<String> deleteBilling(@PathVariable Long id) {
         billingService.deleteBilling(id);
         return ResponseEntity.ok("Deleted Successfully");
     }
@@ -53,7 +53,7 @@ public class BillingController {
 
     // Endpoint to retrieve a billing record by ID
     @GetMapping("/billing/{id}")
-    public ResponseEntity<Billing> getBillingRecordById(@PathVariable int id) {
+    public ResponseEntity<Billing> getBillingRecordById(@PathVariable Long id) {
         Billing billingRecord = billingService.getBillingRecordById(id);
         return ResponseEntity.ok(billingRecord);
     }

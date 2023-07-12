@@ -28,7 +28,7 @@ public class AppointmentService {
         }
     }
 
-    public void deleteAppointment(int id) {
+    public void deleteAppointment(Long id) {
         if (appointmentRepository.existsById(id)) {
             appointmentRepository.deleteById(id);
         } else {
@@ -40,11 +40,11 @@ public class AppointmentService {
         return appointmentRepository.findAll();
     }
 
-    public List<Appointment> getAppointmentsByDoctorId(int doctorId) {
+    public List<Appointment> getAppointmentsByDoctorId(Long doctorId) {
         return appointmentRepository.findByDoctorId(doctorId);
     }
 
-    public List<Appointment> getAppointmentsByPatientId(int patientId) {
+    public List<Appointment> getAppointmentsByPatientId(Long patientId) {
         return appointmentRepository.findByPatientId(patientId);
     }
 

@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.springapp.model.Appointment;
 
-public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
+public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 	
-	List<Appointment> findByDoctorId(int doctorId);
-    List<Appointment> findByPatientId(int patientId);
+	List<Appointment> findByDoctorId(Long doctorId);
+    List<Appointment> findByPatientId(Long patientId);
 
 }

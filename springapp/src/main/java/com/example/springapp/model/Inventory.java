@@ -13,21 +13,31 @@ public class Inventory {
 	@Id
 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
     private String name;
-    private int quantity;
+    private Long quantity;
     private String category;
-    private BigDecimal price;
+    private Long price;
     private String supplier;
     
     public Inventory() {
 		// TODO Auto-generated constructor stub
 	}
+
+	public Inventory(Long id, String name, Long quantity, String category, Long price, String supplier) {
+		
+		this.id = id;
+		this.name = name;
+		this.quantity = quantity;
+		this.category = category;
+		this.price = price;
+		this.supplier = supplier;
+	}
     
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -36,10 +46,10 @@ public class Inventory {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getQuantity() {
+	public Long getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(int quantity) {
+	public void setQuantity(Long quantity) {
 		this.quantity = quantity;
 	}
 	public String getCategory() {
@@ -48,10 +58,10 @@ public class Inventory {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public BigDecimal getPrice() {
+	public Long getPrice() {
 		return price;
 	}
-	public void setPrice(BigDecimal price) {
+	public void setPrice(Long price) {
 		this.price = price;
 	}
 	public String getSupplier() {

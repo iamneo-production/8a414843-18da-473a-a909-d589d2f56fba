@@ -10,9 +10,9 @@ public class Patient {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
     private String name;
-    private int age;
+    private Long age;
     private String gender;
     private String address;
     private String phone;
@@ -24,11 +24,25 @@ public class Patient {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getId() {
+	public Patient(Long id, String name, Long age, String gender, String address, String phone, String email,
+			String medicalHistory, String treatmentPlan) {
+		
+		this.id = id;
+		this.name = name;
+		this.age = age;
+		this.gender = gender;
+		this.address = address;
+		this.phone = phone;
+		this.email = email;
+		this.medicalHistory = medicalHistory;
+		this.treatmentPlan = treatmentPlan;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -40,11 +54,11 @@ public class Patient {
 		this.name = name;
 	}
 
-	public int getAge() {
+	public Long getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(Long age) {
 		this.age = age;
 	}
 

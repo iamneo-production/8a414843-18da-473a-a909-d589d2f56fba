@@ -1,6 +1,7 @@
 package com.example.springapp.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class StaffService {
         return staffRepository.save(staff);
     }
 
-    public void deleteStaff(int id) {
+    public void deleteStaff(Long id) {
         if (!staffRepository.existsById(id)) {
             throw new ResourceNotFoundException("Staff member not found with id: " + id);
         }
@@ -38,9 +39,8 @@ public class StaffService {
         return staffRepository.findAll();
     }
 
-    public Staff getStaffById(int id) {
-        return staffRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Staff member not found with id: " + id));
+    public Optional<Staff> getStaffById(Long id) {
+        return staffRepository.findById(id);
     }
 
 }

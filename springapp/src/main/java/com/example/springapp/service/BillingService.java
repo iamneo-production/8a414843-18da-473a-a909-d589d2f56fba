@@ -28,7 +28,7 @@ public class BillingService {
         }
     }
 
-    public void deleteBilling(int id) {
+    public void deleteBilling(Long id) {
         if (billingRepository.existsById(id)) {
             billingRepository.deleteById(id);
         } else {
@@ -40,7 +40,7 @@ public class BillingService {
         return billingRepository.findAll();
     }
 
-    public Billing getBillingRecordById(int id) {
+    public Billing getBillingRecordById(Long id) {
         return billingRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Billing record not found with ID: " + id));
     }

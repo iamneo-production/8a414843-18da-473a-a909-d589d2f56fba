@@ -12,26 +12,41 @@ public class Staff {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
     private String name;
-    private int age;
+    private Long age;
     private String gender;
     private String address;
     private String phone;
     private String jobTitle;
     private String email;
-    private BigDecimal salary;
+    private Long salary;
     private String benefits;
     
     public Staff() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getId() {
+	public Staff(Long id, String name, Long age, String gender, String address, String phone, String jobTitle,
+	String email, Long salary, String benefits) {
+
+this.id = id;
+this.name = name;
+this.age = age;
+this.gender = gender;
+this.address = address;
+this.phone = phone;
+this.jobTitle = jobTitle;
+this.email = email;
+this.salary = salary;
+this.benefits = benefits;
+}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -43,11 +58,11 @@ public class Staff {
 		this.name = name;
 	}
 
-	public int getAge() {
+	public Long getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(Long age) {
 		this.age = age;
 	}
 
@@ -91,11 +106,11 @@ public class Staff {
 		this.email = email;
 	}
 
-	public BigDecimal getSalary() {
+	public Long getSalary() {
 		return salary;
 	}
 
-	public void setSalary(BigDecimal salary) {
+	public void setSalary(Long salary) {
 		this.salary = salary;
 	}
 

@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.springapp.model.Billing;
 
-public interface BillingRepository extends JpaRepository<Billing, Integer>{
+public interface BillingRepository extends JpaRepository<Billing, Long>{
 
 }

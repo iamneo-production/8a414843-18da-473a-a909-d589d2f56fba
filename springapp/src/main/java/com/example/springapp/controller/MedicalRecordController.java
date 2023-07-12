@@ -1,6 +1,8 @@
 package com.example.springapp.controller;
 
 import java.util.List;
+import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,7 +41,7 @@ public class MedicalRecordController {
 
     // Endpoint to delete a medical record
     @DeleteMapping("/medical-records/{id}")
-    public ResponseEntity<String> deleteMedicalRecord(@PathVariable int id) {
+    public ResponseEntity<String> deleteMedicalRecord(@PathVariable Long id) {
         medicalRecordService.deleteMedicalRecord(id);
         return ResponseEntity.ok("Deleted Successfully");
     }
@@ -53,8 +55,8 @@ public class MedicalRecordController {
 
     // Endpoint to retrieve a medical record by ID
     @GetMapping("/medical-records/{id}")
-    public ResponseEntity<MedicalRecord> getMedicalRecordById(@PathVariable int id) {
-        MedicalRecord medicalRecord = medicalRecordService.getMedicalRecordById(id);
+    public ResponseEntity<Optional<MedicalRecord>> getMedicalRecordById(@PathVariable Long id) {
+        Optional<MedicalRecord> medicalRecord = medicalRecordService.getMedicalRecordById(id);
         return ResponseEntity.ok(medicalRecord);
     }
 

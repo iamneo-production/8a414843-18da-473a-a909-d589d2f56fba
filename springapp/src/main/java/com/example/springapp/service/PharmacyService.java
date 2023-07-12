@@ -28,7 +28,7 @@ public class PharmacyService {
         }
     }
 
-    public void deletePharmacyRecord(int id) {
+    public void deletePharmacyRecord(Long id) {
         if (pharmacyRepository.existsById(id)) {
             pharmacyRepository.deleteById(id);
         } else {
@@ -40,7 +40,7 @@ public class PharmacyService {
         return pharmacyRepository.findAll();
     }
 
-    public Pharmacy getPharmacyRecordById(int id) {
+    public Pharmacy getPharmacyRecordById(Long id) {
         return pharmacyRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Pharmacy record not found with ID: " + id));
     }

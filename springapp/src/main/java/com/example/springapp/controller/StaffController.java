@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Optional;
 import com.example.springapp.model.Staff;
 import com.example.springapp.service.StaffService;
 
@@ -36,7 +37,7 @@ public class StaffController {
     }
 
     @DeleteMapping("/staff/{id}")
-    public ResponseEntity<String> deleteStaff(@PathVariable int id) {
+    public ResponseEntity<String> deleteStaff(@PathVariable Long id) {
         staffService.deleteStaff(id);
         return ResponseEntity.ok("Deleted Successfully");
     }
@@ -48,8 +49,8 @@ public class StaffController {
     }
 
     @GetMapping("/staff/{id}")
-    public ResponseEntity<Staff> getStaffById(@PathVariable int id) {
-        Staff staff = staffService.getStaffById(id);
+    public ResponseEntity<Optional<Staff>> getStaffById(@PathVariable Long id) {
+        Optional<Staff> staff = staffService.getStaffById(id);
         return ResponseEntity.ok(staff);
     }
 

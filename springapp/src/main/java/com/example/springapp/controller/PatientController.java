@@ -37,7 +37,7 @@ public class PatientController {
 
     // Endpoint to delete a patient
     @DeleteMapping("/patient/{id}")
-    public ResponseEntity<String> deletePatient(@PathVariable int id) {
+    public ResponseEntity<String> deletePatient(@PathVariable Long id) {
         patientService.deletePatient(id);
         return ResponseEntity.ok("Deleted Successfully");
     }
@@ -51,7 +51,7 @@ public class PatientController {
 
     // Endpoint to retrieve a patient record by ID
     @GetMapping("/patient/{id}")
-    public ResponseEntity<Patient> getPatientById(@PathVariable int id) {
+    public ResponseEntity<Patient> getPatientById(@PathVariable Long id) {
         Patient patient = patientService.getPatientById(id);
         return ResponseEntity.ok(patient);
     }

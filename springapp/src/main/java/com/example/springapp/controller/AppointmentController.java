@@ -1,7 +1,7 @@
 package com.example.springapp.controller;
 
 import java.util.List;
-
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +22,12 @@ public class AppointmentController {
 	
 	@Autowired
 	private AppointmentService appointmentService;
+
+    @DeleteMapping("/appointment")
+    public ResponseEntity<String> deleteAppointment(@RequestParam(value="id") Long id) {
+        // appointmentService.deleteAppointment(id);
+        return ResponseEntity.ok("Deleted Successfully");
+    }
 	
 	@PostMapping("/appointment")
     public ResponseEntity<Appointment> createAppointment(@RequestBody Appointment appointment) {
@@ -36,13 +42,6 @@ public class AppointmentController {
         return ResponseEntity.ok(updatedAppointment);
     }
 
-    // Endpoint to delete an appointment
-    @DeleteMapping("/appointment/{id}")
-    public ResponseEntity<String> deleteAppointment(@PathVariable int id) {
-        appointmentService.deleteAppointment(id);
-        return ResponseEntity.ok("Deleted Successfully");
-    }
-
     // Endpoint to retrieve all appointments
     @GetMapping("/appointment")
     public ResponseEntity<List<Appointment>> getAllAppointment() {
@@ -51,15 +50,15 @@ public class AppointmentController {
     }
 
     // Endpoint to retrieve appointments by doctorId
-    @GetMapping("/appointment/{doctorId}")
-    public ResponseEntity<List<Appointment>> getAppointmentsByDoctorId(@RequestParam int doctorId) {
+    @GetMapping("/appointment/doctor/{doctorId}")
+    public ResponseEntity<List<Appointment>> getAppointmentsByDoctorId(@RequestParam Long doctorId) {
         List<Appointment> appointments = appointmentService.getAppointmentsByDoctorId(doctorId);
         return ResponseEntity.ok(appointments);
     }
 
     // Endpoint to retrieve appointments by patientId
-    @GetMapping("/appointment/patientId")
-    public ResponseEntity<List<Appointment>> getAppointmentsByPatientId(@RequestParam int patientId) {
+    @GetMapping("/appointment/patient/{patientId}")
+    public ResponseEntity<List<Appointment>> getAppointmentsByPatientId(@RequestParam Long patientId) {
         List<Appointment> appointments = appointmentService.getAppointmentsByPatientId(patientId);
         return ResponseEntity.ok(appointments);
     }
