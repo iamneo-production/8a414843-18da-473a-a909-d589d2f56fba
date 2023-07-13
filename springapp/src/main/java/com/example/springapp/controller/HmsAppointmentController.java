@@ -1,5 +1,6 @@
 package com.example.springapp.controller;
 
+import com.example.springapp.exception.EntityNotFoundException;
 import com.example.springapp.model.HmsAppointment;
 
 import com.example.springapp.serviceImplementation.HmsAppointmentImpl;
@@ -37,6 +38,7 @@ public class HmsAppointmentController {
     @PutMapping("/api/appointment/{id}")
     public HmsAppointment updateAppointmentById(@PathVariable Long id, @RequestBody HmsAppointment updatedAppointment) {
         return impl.updateAppointmentById(id, updatedAppointment);
+
     }
 
     @DeleteMapping("/api/appointment/{id}")
