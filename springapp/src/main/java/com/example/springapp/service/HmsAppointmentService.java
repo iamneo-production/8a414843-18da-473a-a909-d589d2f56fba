@@ -6,7 +6,7 @@ import java.util.List;
 public interface HmsAppointmentService {
     public HmsAppointment saveAppointment(HmsAppointment appointment);
 
-    public HmsAppointment updateAppointment(HmsAppointment appointment);
+//    public HmsAppointment updateAppointment(HmsAppointment appointment);
 
     HmsAppointment updateAppointmentById(Long id, HmsAppointment updatedAppointment);
 

@@ -1,5 +1,6 @@
 package com.example.springapp.serviceImplementation;
 
+import com.example.springapp.exception.EntityNotFoundException;
 import com.example.springapp.model.HmsAppointment;
 import com.example.springapp.repository.HmsAppointmentRepository;
 import com.example.springapp.service.HmsAppointmentService;
@@ -18,10 +19,10 @@ public class HmsAppointmentImpl implements HmsAppointmentService {
         return appointmentRepository.save(appointment);
     }
 
-    @Override
-    public HmsAppointment updateAppointment(HmsAppointment appointment) {
-        return appointmentRepository.save(appointment);
-    }
+//    @Override
+//    public HmsAppointment updateAppointment(HmsAppointment appointment) {
+//        return appointmentRepository.save(appointment);
+//    }
 
     @Override
     public List<HmsAppointment> findAllAppointment(){
@@ -32,15 +33,21 @@ public class HmsAppointmentImpl implements HmsAppointmentService {
 
     @Override
     public void deleteAppointment(Long id) {
+        if(!appointmentRepository.existsById(id)) {
+            throw new EntityNotFoundException(id);
+        }
+
         appointmentRepository.deleteById(id);
     }
+
+
 
 //
 
     @Override
     public HmsAppointment updateAppointmentById(Long id, HmsAppointment updatedAppointment) {
         HmsAppointment existingAppointment = appointmentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Appointment not found with id: " + id));
+                .orElseThrow(()->new EntityNotFoundException(id));
 
         existingAppointment.setDoctorId(updatedAppointment.getDoctorId());
         existingAppointment.setDate(updatedAppointment.getDate());
@@ -50,15 +57,17 @@ public class HmsAppointmentImpl implements HmsAppointmentService {
         existingAppointment.setStatus(updatedAppointment.getStatus());
 
 
-        // Set other fields as needed
+
 
         return appointmentRepository.save(existingAppointment);
+
     }
 
     public HmsAppointment getAppointmentById(Long id) {
         // TODO Auto-generated method stub
         return appointmentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Appointment not found with id: " + id));
+                .orElseThrow(()->new EntityNotFoundException(id));
+
     }
 
 
