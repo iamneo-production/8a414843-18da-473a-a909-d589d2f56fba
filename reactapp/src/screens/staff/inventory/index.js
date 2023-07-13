@@ -1,6 +1,6 @@
 import { Box } from "@mantine/core";
 
-// import TableStructure from "./tableStructure"
+
 import InventoryTable from "./inventorytable";
 
 // Sending Records or Data to the table
