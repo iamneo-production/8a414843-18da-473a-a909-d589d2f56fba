@@ -75,7 +75,7 @@ public class User implements UserDetails {
     public void setGender(String gender){this.gender=gender;}
     public String getGender(){return gender;}
 
-    public void  setAge(){this.age=age;}
+    public void  setAge( ){this.age= this.age;}
     public Integer getAge(){return age;}
     public void setAddress(){this.address=address;}
     public String getAddress(){return address;}
@@ -159,5 +159,9 @@ public class User implements UserDetails {
     }
     public Long getId() {
         return id;
+    }
+
+    public String getRoles() {
+        return roles;
     }
 }
