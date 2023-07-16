@@ -1,5 +1,6 @@
 package com.example.springapp.controller;
 
+import com.example.springapp.dto.BaseResponseDto;
 import com.example.springapp.dto.UserLoginDto;
 import com.example.springapp.model.User;
 import com.example.springapp.service.UserService;
@@ -51,26 +52,6 @@ public class UserController {
 
     }
 
-//    @PostMapping("/api/auth/login")
-//    public BaseResponseDto loginUser(@RequestBody UserLoginDto loginDetails){
-//        if(userService.checkuserNameExists((loginDetails.getEmail()))){
-//            if(userService.verifyUser(loginDetails.getEmail(),loginDetails.getPassword())){
-//                Optional<User> user= userService.getIndividualUser(loginDetails.getEmail());
-//                String token=userService.generateToken(loginDetails.getEmail(),loginDetails.getPassword());
-//                Map<Object,Object> temp=new HashMap<>();
-//                temp.put("token",token);
-//                temp.put("data",user);
-//                return new BaseResponseDto("Success",temp);
-//            }
-//            else{
-//                return new BaseResponseDto("Password Invalid");
-//            }
-//        }
-//        else{
-//            return new BaseResponseDto("User Not Exists");
-//        }
-//    }
-
 
     @PostMapping("/api/auth/login")
     public ResponseEntity<?> loginUser(@RequestBody @Valid UserLoginDto loginDetails , BindingResult result) {
@@ -102,6 +83,28 @@ public class UserController {
         return null;
     }
 
+    @PostMapping("/api/role-list")
+    public ResponseEntity<?> getUserByRole(@RequestBody Map<String, String> requestBody){
+
+        try {
+            String role = requestBody.get("role");
+            List<User> data = userService.getUserByRole(role);
+            return ResponseEntity.ok(new BaseResponseDto("Success",data));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new BaseResponseDto("Something went Wrong"));
+        }
+
+    }
+
+    @GetMapping("/api/users")
+    public ResponseEntity<?>  getAllUsers(){
+        try {
+            List<User> data = userService.getAllUser();
+            return ResponseEntity.ok(new BaseResponseDto("Success",data));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something Went Wrong");
+        }
+    }
 
     @GetMapping("/api/patient/list")
     public String hospitalLists(){

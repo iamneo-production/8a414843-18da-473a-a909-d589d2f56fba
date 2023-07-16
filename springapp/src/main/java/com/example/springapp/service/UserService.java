@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -65,6 +66,15 @@ public class UserService implements UserDetailsService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token=tokenProvider.generateToken(authentication);
         return token;
+    }
+
+    public List<User> getAllUser(){
+        return userRepository.findAll();
+    }
+
+    public List<User> getUserByRole(String role){
+        System.out.println("Service"+role);
+        return userRepository.findByRoles(role);
     }
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
