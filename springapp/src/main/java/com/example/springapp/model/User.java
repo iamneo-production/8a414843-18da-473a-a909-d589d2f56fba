@@ -6,6 +6,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -42,7 +43,6 @@ public class User implements UserDetails {
     @UpdateTimestamp
     private Date updatedAt;
     private boolean status=true;
-
     public void setRoles(String roles){
         this.roles=roles;
     }

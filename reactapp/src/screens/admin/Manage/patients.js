@@ -16,8 +16,11 @@ function ManagePatientUser() {
     id: '',
     PatientName: '',
     Gender: '',
-    AdmittedDate: '',
-    DistarchedDate: '',
+    Email:'',
+    Age:'',
+    Address:'',
+    Phone:'',
+    Gender:'',
     Fees: '',
     Status:'',
   });
@@ -26,94 +29,127 @@ function ManagePatientUser() {
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [editData, setEditData] = useState(null);
+  /* private Long id;
+    private String name;
+    private String email;
+    private String password;
+    private String roles;
+    private Integer age;
+    private String gender;
+    private String address;
+    private Long phone;
+    private Long salary;
+    private String specialist;
+    private byte[] profileImage;
+    private boolean status; */
   const [tableData, setTableData] = useState([
     {
         id: 45,
         PatientName: 'John snow',
+        Email:'johnsnow@gmail.com',
+        Age:21,
+        Address:'2/1 chennai tambaram',
+        Phone:4342325,
         Gender: 'male',
-        AdmittedDate: '08-04-2002',
-        DistarchedDate: '08-04-2003',
         Fees: 23456,
         Status:'paid',
     },
     {
         id: 34,
         PatientName: 'John snow',
+        Email:'johnsnow@gmail.com',
+        Age:21,
+        Address:'2/1 chennai tambaram',
+        Phone:4342325,
         Gender: 'male',
-        AdmittedDate: '08-04-2002',
-        DistarchedDate: '08-04-2003',
         Fees: 23456,
         Status:'notpaid',
     },
     {
         id: 54,
         PatientName: 'John snow',
+        Email:'johnsnow@gmail.com',
+        Age:21,
+        Address:'2/1 chennai tambaram',
+        Phone:4342325,
         Gender: 'male',
-        AdmittedDate: '08-04-2002',
-        DistarchedDate: '08-04-2003',
         Fees: 23456,
         Status:'paid',
     },
     {
         id: 89,
         PatientName: 'John snow',
+        Email:'johnsnow@gmail.com',
+        Age:21,
+        Address:'2/1 chennai tambaram',
+        Phone:4342325,
         Gender: 'male',
-        AdmittedDate: '08-04-2002',
-        DistarchedDate: '08-04-2003',
         Fees: 23456,
         Status:'notpaid',
     },
     {
         id: 58,
         PatientName: 'John snow',
+        Email:'johnsnow@gmail.com',
+        Age:21,
+        Address:'2/1 chennai tambaram',
+        Phone:4342325,
         Gender: 'male',
-        AdmittedDate: '08-04-2002',
-        DistarchedDate: '08-04-2003',
         Fees: 23456,
         Status:'notpaid',
     },
     {
         id: 51,
         PatientName: 'John snow',
+        Email:'johnsnow@gmail.com',
+        Age:21,
+        Address:'2/1 chennai tambaram',
+        Phone:4342325,
         Gender: 'male',
-        AdmittedDate: '08-04-2002',
-        DistarchedDate: '08-04-2003',
         Fees: 23456,
         Status:'paid',
     },
     {
         id: 50,
         PatientName: 'John snow',
+        Email:'johnsnow@gmail.com',
+        Age:21,
+        Address:'2/1 chennai tambaram',
+        Phone:4342325,
         Gender: 'male',
-        AdmittedDate: '08-04-2002',
-        DistarchedDate: '08-04-2003',
         Fees: 23456,
         Status:'paid',
     },
     {
         id: 59,
         PatientName: 'John snow',
+        Email:'johnsnow@gmail.com',
+        Age:21,
+        Address:'2/1 chennai tambaram',
+        Phone:4342325,
         Gender: 'male',
-        AdmittedDate: '08-04-2002',
-        DistarchedDate: '08-04-2003',
         Fees: 23456,
         Status:'paid',
     },
     {
         id: 56,
         PatientName: 'John snow',
+        Email:'johnsnow@gmail.com',
+        Age:21,
+        Address:'2/1 chennai tambaram',
+        Phone:4342325,
         Gender: 'male',
-        AdmittedDate: '08-04-2002',
-        DistarchedDate: '08-04-2003',
         Fees: 23456,
         Status:'notpaid',
     },
     {
         id: 32,
         PatientName: 'John Rnow',
+        Email:'johnsnow@gmail.com',
+        Age:21,
+        Address:'2/1 chennai tambaram',
+        Phone:4342325,
         Gender: 'male',
-        AdmittedDate: '08-04-2002',
-        DistarchedDate: '08-04-2003',
         Fees: 23456,
         Status:'paid',
     },
@@ -132,9 +168,11 @@ function ManagePatientUser() {
     const newUser = {
       id: Number(formData.id),
       PatientName: formData.PatientName,
+      Email:formData.Email,
+      Age:formData.Age,
+      Address:formData.Address,
+      Phone:formData.Phone,
       Gender: formData.Gender,
-      AdmittedDate: Date(formData.AdmittedDate),
-      DistarchedDate:Date(formData.DistarchedDate),
       Fees:formData.Fees,
       Status: formData.Status,
     };
@@ -145,9 +183,11 @@ function ManagePatientUser() {
     setFormData({
       id: '',
       PatientName: '',
+      Email:'',
+      Age:'',
+      Address:'',
+      Phone:'',
       Gender: '',
-      AdmittedDate: '',
-      DistarchedDate: '',
       Fees:'',
       Status: '',
     });
@@ -248,6 +288,80 @@ function ManagePatientUser() {
             textAlignment:"center"
           },
           {
+            accessor: 'Email',
+            title: (
+              <>
+                E-Mail
+                <TextInput
+                  m="xs"
+                  size="xs"
+                  placeholder="Search E-mail"
+                  value={filters.Email || ''}
+                  onChange={(event) =>
+                    handleFilterChange('Email', event.target.value)
+                  }
+                />
+              </>
+            ),
+            textAlignment:"center",
+            width:"10%"
+          },
+          {
+            accessor: 'Age',
+            title: (
+              <>
+                Age
+                <TextInput
+                  m="xs"
+                  size="xs"
+                  placeholder="Search Age"
+                  value={filters.Age || ''}
+                  onChange={(event) =>
+                    handleFilterChange('Age', event.target.value)
+                  }
+                />
+              </>
+            ),
+            textAlignment:"center"
+          },
+          {
+            accessor: 'Address',
+            title: (
+              <>
+                Address
+                <TextInput
+                  m="xs"
+                  size="xs"
+                  placeholder="Search Address"
+                  value={filters.Address || ''}
+                  onChange={(event) =>
+                    handleFilterChange('Address', event.target.value)
+                  }
+                />
+              </>
+            ),
+            textAlignment:"center",
+            width:"15%"
+          },
+          {
+            accessor: 'Phone',
+            title: (
+              <>
+                Phone
+                <TextInput
+                  m="xs"
+                  size="xs"
+                  placeholder="Search Phone"
+                  value={filters.Phone || ''}
+                  onChange={(event) =>
+                    handleFilterChange('Phone', event.target.value)
+                  }
+                />
+              </>
+            ),
+            textAlignment:"center"
+          },
+          {
             accessor: 'Gender',
             title: (
               <>
@@ -262,38 +376,6 @@ function ManagePatientUser() {
               </>
             ),
 
-            textAlignment:"center"
-          },
-          {
-            accessor: 'AdmittedDate',
-            title: (
-              <>
-                Admitted Date
-                <TextInput
-                  m="xs"
-                  size="xs"
-                  placeholder="Admitted Date"
-                  value={filters.AdmittedDate || ''}
-                  onChange={(event) => handleFilterChange('AdmittedDate', event.target.value)}
-                />
-              </>
-            ),
-            textAlignment:"center"
-          },
-          {
-            accessor: 'DistarchedDate',
-            title: (
-              <>
-                Distarched Date
-                <TextInput
-                  m="xs"
-                  size="xs"
-                  placeholder="Distarched Date"
-                  value={filters.DistarchedDate || ''}
-                  onChange={(event) => handleFilterChange('DistarchedDate', event.target.value)}
-                />
-              </>
-            ),
             textAlignment:"center"
           },
           {
@@ -415,22 +497,34 @@ function ManagePatientUser() {
           onChange={(event) => setFormData({ ...formData, PatientName: event.target.value })}
         />
         <TextInput
+          label="Email"
+          required
+          value={formData.Email}
+          onChange={(event) => setFormData({ ...formData, Email: event.target.value })}
+        />
+        <TextInput
+          label="Age"
+          required
+          value={formData.Age}
+          onChange={(event) => setFormData({ ...formData, Age: event.target.value })}
+        />
+        <TextInput
+          label="Address"
+          required
+          value={formData.Address}
+          onChange={(event) => setFormData({ ...formData, Address: event.target.value })}
+        />
+        <TextInput
+          label="Phone"
+          required
+          value={formData.Phone}
+          onChange={(event) => setFormData({ ...formData, Phone: event.target.value })}
+        />
+        <TextInput
           label="Gender"
           required
           value={formData.Gender}
           onChange={(event) => setFormData({ ...formData, Gender: event.target.value })}
-        />
-        <TextInput
-          label="Admitted Date"
-          required
-          value={formData.AdmittedDate}
-          onChange={(event) => setFormData({ ...formData, AdmittedDate: event.target.value })}
-        />
-        <TextInput
-          label="Distarched Date"
-          required
-          value={formData.DistarchedDate}
-          onChange={(event) => setFormData({ ...formData, DistarchedDate: event.target.value })}
         />
         <TextInput
           label="Fees"
@@ -527,27 +621,43 @@ function ManagePatientUser() {
             }
           />
           <TextInput
+            label="E-mail"
+            required
+            value={editData?.Email}
+            onChange={(event) =>
+              setEditData((prevData) => ({ ...prevData, Email: event.target.value }))
+            }
+          />
+          <TextInput
+            label="Age"
+            required
+            value={editData?.Age}
+            onChange={(event) =>
+              setEditData((prevData) => ({ ...prevData, Age: event.target.value }))
+            }
+          />
+          <TextInput
+            label="Address"
+            required
+            value={editData?.Address}
+            onChange={(event) =>
+              setEditData((prevData) => ({ ...prevData, Address: event.target.value }))
+            }
+          />
+          <TextInput
+            label="Phone"
+            required
+            value={editData?.Phone}
+            onChange={(event) =>
+              setEditData((prevData) => ({ ...prevData, Phone: event.target.value }))
+            }
+          />
+          <TextInput
             label="Gender"
             required
             value={editData?.Gender}
             onChange={(event) =>
               setEditData((prevData) => ({ ...prevData, Gender: event.target.value }))
-            }
-          />
-          <TextInput
-            label="Admitted Date"
-            required
-            value={editData?.AdmittedDate}
-            onChange={(event) =>
-              setEditData((prevData) => ({ ...prevData, AdmittedDate: event.target.value }))
-            }
-          />
-          <TextInput
-            label="Distarched Date"
-            required
-            value={editData?.DistarchedDate}
-            onChange={(event) =>
-              setEditData((prevData) => ({ ...prevData, DistarchedDate: event.target.value }))
             }
           />
           <TextInput
