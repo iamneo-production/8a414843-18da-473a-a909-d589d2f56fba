@@ -6,7 +6,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -75,25 +74,25 @@ public class User implements UserDetails {
     public void setGender(String gender){this.gender=gender;}
     public String getGender(){return gender;}
 
-    public void  setAge( ){this.age= this.age;}
+    // public void  setAge( ){this.age= this.age;}
     public Integer getAge(){return age;}
-    public void setAddress(){this.address=address;}
+    public void setAddress( ){this.address= this.address;}
     public String getAddress(){return address;}
-    public void setPhone(){this.phone=phone;}
+    public void setPhone( ){this.phone= this.phone;}
     public Long getPhone(){return phone;}
     public void setCreatedAt(){this.createdAt=createdAt;}
     public Date getCreatedAt(){return createdAt;}
     public void setUpdatedAt(){this.updatedAt=updatedAt;}
     public Date getUpdatedAt(){return updatedAt;}
 
-    public void setSalary(){
-        this.salary=salary;
+    public void setSalary( ){
+        this.salary= this.salary;
     }
     public Long getSalary(){
         return salary;
     }
-    public void setSpecialist(){
-        this.specialist=specialist;
+    public void setSpecialist( ){
+        this.specialist= this.specialist;
     }
     public String getSpecialist(){
         return specialist;
@@ -163,5 +162,45 @@ public class User implements UserDetails {
 
     public String getRoles() {
         return roles;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhone(Long phone) {
+        this.phone = phone;
+    }
+
+    public void setSalary(Long salary) {
+        this.salary = salary;
+    }
+
+    public void setSpecialist(String specialist) {
+        this.specialist = specialist;
+    }
+
+    /*public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }*/
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
     }
 }

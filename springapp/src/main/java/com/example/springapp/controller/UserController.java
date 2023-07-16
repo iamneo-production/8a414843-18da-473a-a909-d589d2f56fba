@@ -1,6 +1,7 @@
 package com.example.springapp.controller;
 
 import com.example.springapp.dto.UserDto;
+import com.example.springapp.dto.BaseResponseDto;
 import com.example.springapp.dto.UserLoginDto;
 import com.example.springapp.model.User;
 import com.example.springapp.service.UserService;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -54,26 +56,6 @@ public class UserController {
 
     }
 
-//    @PostMapping("/api/auth/login")
-//    public BaseResponseDto loginUser(@RequestBody UserLoginDto loginDetails){
-//        if(userService.checkuserNameExists((loginDetails.getEmail()))){
-//            if(userService.verifyUser(loginDetails.getEmail(),loginDetails.getPassword())){
-//                Optional<User> user= userService.getIndividualUser(loginDetails.getEmail());
-//                String token=userService.generateToken(loginDetails.getEmail(),loginDetails.getPassword());
-//                Map<Object,Object> temp=new HashMap<>();
-//                temp.put("token",token);
-//                temp.put("data",user);
-//                return new BaseResponseDto("Success",temp);
-//            }
-//            else{
-//                return new BaseResponseDto("Password Invalid");
-//            }
-//        }
-//        else{
-//            return new BaseResponseDto("User Not Exists");
-//        }
-//    }
-
 
     @PostMapping("/api/auth/login")
     public ResponseEntity<?> loginUser(@RequestBody @Valid UserLoginDto loginDetails , BindingResult result) {
@@ -105,13 +87,57 @@ public class UserController {
         return null;
     }
 
+    @PostMapping("/api/role-list")
+    public ResponseEntity<?> getUserByRole(@RequestBody Map<String, String> requestBody){
+
+        try {
+            String role = requestBody.get("role");
+            List<User> data = userService.getUserByRole(role);
+            return ResponseEntity.ok(new BaseResponseDto("Success",data));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new BaseResponseDto("Something went Wrong"));
+        }
+
+    }
+
+    @GetMapping("/api/auth/users")
+    public ResponseEntity<?>  getAllUsers(){
+        try {
+            List<User> data = userService.getAllUser();
+            return ResponseEntity.ok(new BaseResponseDto("Success",data));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something Went Wrong");
+        }
+    }
+    /*@GetMapping("/api/auth/users")
+    public ResponseEntity<?> getAllUsers() {
+        try {
+            List<User> users = userService.getAllUser();
+            List<User> userDtos = new ArrayList<>();
+            for (User user : users) {
+                UserDto userDto = new UserDto(user);
+                userDto.setProfileImage(getProfileImage(user.getProfileImage()).getBytes());
+                userDtos.add(user);
+            }
+            return ResponseEntity.ok(new BaseResponseDto("Success", userDtos));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something Went Wrong");
+        }
+    }*/
+    private String getProfileImage(byte[] imageData) {
+        if (imageData != null && imageData.length > 0) {
+            String base64Image = Base64.getEncoder().encodeToString(imageData);
+            return "data:image/png;base64," + base64Image;
+        }
+        return null;
+    }
 
     @GetMapping("/api/patient/list")
     public String hospitalLists(){
         return "List of Patients";
     }
 
-    @GetMapping("/api/auth/users")
+    /* @GetMapping("/api/auth/users")
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<User> users = userService.getAllUsers();
         List<UserDto> userDtos = new ArrayList<>();
@@ -120,7 +146,7 @@ public class UserController {
             userDtos.add(userDto);
         }
         return ResponseEntity.ok(userDtos);
-    }
+    } */
 
     @GetMapping("/api/auth/users/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
@@ -143,38 +169,34 @@ public class UserController {
         }
     }
 
-    @PutMapping("/api/auth/users/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id, @RequestBody @Valid UserDto userDto,
-                                              BindingResult result) {
-        if (result.hasErrors()) {
-            Map<String, String> errorMap = new HashMap<>();
-            for (FieldError error : result.getFieldErrors()) {
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            }
-            return ResponseEntity.badRequest().body(userDto);
+    /*@PutMapping("/api/auth/users/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable("id") Long id, @RequestBody User user) {
+        User updatedUser = userService.updateUser(id, user);
+        if (updatedUser != null) {
+            return ResponseEntity.ok(updatedUser);
+        } else {
+            return ResponseEntity.notFound().build();
         }
+    }*/
 
-        Optional<User> existingUser = userService.getUserById(id);
-        if (existingUser.isPresent()) {
-            User user = existingUser.get();
-            user.setName(userDto.getName());
-            user.setEmail(userDto.getEmail());
-            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-            user.setRoles(userDto.getRoles());
-            //user.setAge(userDto.getAge());
-            user.setGender(userDto.getGender());
-            //user.setAddress(userDto.getAddress());
-            //user.setPhone(userDto.getPhone());
-            //user.setSalary(userDto.getSalary());
-            //user.setSpecialist(userDto.getSpecialist());
-            user.setProfileImage(userDto.getProfileImage());
-            //user.setStatus(userDto.getStatus());
-            // Update other fields as needed
-            User updatedUser = userService.updateUser(user);
+    @PutMapping("/api/auth/users/{id}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id, @RequestBody UserDto userDto) {
+        User updatedUser = userService.updateUser(id, userDto);
+        if (updatedUser != null) {
             UserDto updatedUserDto = new UserDto(updatedUser);
             return ResponseEntity.ok(updatedUserDto);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+    @PutMapping("/api/auth/profile/{id}")
+    public ResponseEntity<String> updateProfileImage(@PathVariable("id") Long id, @RequestParam("profileImage") MultipartFile profileImage) {
+        User updatedUser = userService.updateUserProfileImage(id, profileImage);
+        if (updatedUser != null) {
+            return ResponseEntity.ok("Profile image updated successfully");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

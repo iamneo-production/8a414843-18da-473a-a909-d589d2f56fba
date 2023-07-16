@@ -1,12 +1,10 @@
 package com.example.springapp.dto;
-
 import com.example.springapp.model.User;
-
 public class UserDto {
     private Long id;
     private String name;
     private String email;
-    private String password;
+    //private String password;
     private String roles;
     private Integer age;
     private String gender;
@@ -26,7 +24,7 @@ public class UserDto {
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
-        this.password = user.getPassword();
+        //this.password = user.getPassword();
         this.roles = user.getRoles();
         this.age = user.getAge();
         this.gender = user.getGender();
@@ -62,13 +60,13 @@ public class UserDto {
         this.email = email;
     }
 
-    public String getPassword() {
+    /*public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
+    }*/
 
     public String getRoles() {
         return roles;
