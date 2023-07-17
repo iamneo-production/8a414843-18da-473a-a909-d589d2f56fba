@@ -15,4 +15,6 @@ public interface HmsAppointmentService {
     public HmsAppointment getAppointmentById(Long id);
 
     public void deleteAppointment(Long id);
+
+    public List<HmsAppointment> doctorsAppointment(Long doctorId, String appointmentStatus);
 }
