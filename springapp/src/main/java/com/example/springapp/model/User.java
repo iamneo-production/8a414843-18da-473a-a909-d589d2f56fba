@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
@@ -27,11 +28,13 @@ public class User implements UserDetails {
     @NotNull(message = "Email Cannot be Null")
     @Email(message = "Should be a Valid Email")
     private String email;
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String roles;
     private Integer age;
     private String gender;
+
     private Date dob;
     private String address;
     private Long phone;
@@ -69,7 +72,6 @@ public class User implements UserDetails {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-
 
 
 	public String getEmail() {
@@ -223,5 +225,15 @@ public class User implements UserDetails {
 
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
+    }
+    public boolean hasSpecificRole() {
+        // Check if the user has a specific role (e.g., ROLE_STAFF, ROLE_DOCTOR, ROLE_ADMIN)
+        List<String> specificRoles = Arrays.asList("ROLE_STAFF", "ROLE_DOCTOR", "ROLE_ADMIN");
+        for (String role : specificRoles) {
+            if (roles.contains(role)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
