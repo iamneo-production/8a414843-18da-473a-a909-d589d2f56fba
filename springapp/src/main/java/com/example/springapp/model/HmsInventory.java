@@ -14,7 +14,6 @@ public class HmsInventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Long quantity;
     private Long price;
     private String medicineName;

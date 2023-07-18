@@ -1,8 +1,16 @@
 package com.example.springapp.dto;
 import com.example.springapp.model.User;
+import lombok.Data;
+
+import java.util.Date;
+
 public class UserDto {
     private Long id;
-    private String name;
+    private String firstName;
+
+    private String lastName;
+    private Date dob;
+
     private String email;
     //private String password;
     private String roles;
@@ -22,7 +30,9 @@ public class UserDto {
 
     public UserDto(User user) {
         this.id = user.getId();
-        this.name = user.getName();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.dob=user.getDob();
         this.email = user.getEmail();
         //this.password = user.getPassword();
         this.roles = user.getRoles();
@@ -44,13 +54,6 @@ public class UserDto {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getEmail() {
         return email;
@@ -138,5 +141,29 @@ public class UserDto {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
     }
 }

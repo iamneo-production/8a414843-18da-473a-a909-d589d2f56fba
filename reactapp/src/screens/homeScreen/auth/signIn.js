@@ -7,17 +7,46 @@ import person from "../../../assests/person.svg"
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logins } from '../../../provider/features/userSlice';
+import { post } from '../../../api';
+import EndPoints from '../../../api/endPoints';
+import {setRole} from '../../../provider/features/roleSlice';
 
 function SignIn() {
 
     const navigate=useNavigate()
     const dispatch=useDispatch()
 
+    const handleSubmit= async() =>{
+        await post(EndPoints.login,form.values).then(response=>{
+            console.log(response)
+            dispatch(logins(response.data))
+            if(response?.data?.roles==="ROLE_PATIENT"){
+                dispatch(setRole('patient'))
+                // localStorage.setItem('Role','patient')
+                navigate('/patient/home')
+            }else if(response?.data?.roles==="ROLE_DOCTOR"){
+                dispatch(setRole('doctor'))
+                // localStorage.setItem('Role','doctor')
+                navigate('/doctor/home')
+            }else if(response?.data?.roles==="ROLE_STAFF"){
+                dispatch(setRole('staff'))
+                // localStorage.setItem('Role','staff')
+                navigate('/staff/home')
+            }else if(response?.data?.roles==="ROLE_ADMIN"){
+                dispatch(setRole('admin'))
+                // localStorage.setItem('Role','admin')
+                navigate('/admin/home')
+            } 
+        }).catch(error =>{
+            console.log(error);
+          })
+    }
+
     const form = useForm({
         initialValues: {
             email: '',
             password: '',
-            Role: '',
+            //Role: '',
         },
         validate: {
             email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
@@ -26,24 +55,7 @@ function SignIn() {
     return (
         <form onSubmit={form.onSubmit((values) => {
             console.log(values)
-            if(values?.Role==="Patient"){
-                dispatch(logins('patient'))
-                // localStorage.setItem('Role','patient')
-                navigate('/patient/home')
-            }else if(values?.Role==="Doctor"){
-                dispatch(logins('doctor'))
-                // localStorage.setItem('Role','doctor')
-                navigate('/doctor/home')
-            }else if(values?.Role==="Staff"){
-                dispatch(logins('staff'))
-                // localStorage.setItem('Role','staff')
-                navigate('/staff/home')
-            }else if(values?.Role==="Admin"){
-                dispatch(logins('admin'))
-                // localStorage.setItem('Role','admin')
-                navigate('/admin/home')
-            }
-            
+            handleSubmit()
             })}>
              <Grid pt="lg" m={0} px={0}>
     <Grid.Col xs={6} lg={6} style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItem: 'center', height: '100vh' }} >
@@ -72,11 +84,12 @@ function SignIn() {
                         Lorem Ipsum has been the industry's standard dummy text ever since.
                     </Text>
                     <Container>
-                        <Select style={{ height: "6vh" }} placeholder="Pick Your Role" px="140px" data={[
+
+                        {/* <Select style={{ height: "6vh" }} placeholder="Pick Your Role" px="140px" data={[
                             { value: 'Patient', label: 'Patient' },
                             { value: 'Doctor', label: 'Doctor' },
                             { value: 'Staff', label: 'Staff' },
-                            { value: 'Admin', label: 'Admin' },]}{...form.getInputProps('Role')} />
+                            { value: 'Admin', label: 'Admin' },]}{...form.getInputProps('Role')} /> */}
                         <TextInput mt="md" px="140px" style={{ height: "6vh" }}
                             placeholder="Email"
                             {...form.getInputProps('email')}
