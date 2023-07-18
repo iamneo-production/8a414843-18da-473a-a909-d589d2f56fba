@@ -10,9 +10,10 @@ function useAuth(element) {
     // } else {
     //     return false
     // }
-    const user = useSelector((s) => s?.user?.value)
-    if (!_.isEmpty(user)) {
-        if (user === element) {
+    const role = useSelector((s) => s?.role?.value)
+    console.log("user",role)
+    if (!_.isEmpty(role)) {
+        if (role === element) {
             return true
         } else {
             return false
@@ -20,6 +21,7 @@ function useAuth(element) {
     } else {
         return false
     }
+    
 
   //  console.log('sss',user);
     // const role = localStorage.getItem('Role')

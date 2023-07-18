@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
@@ -20,7 +21,9 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String firstName;
+    private String lastName;
+    
     @Column(unique = true,nullable = false)
     @NotNull(message = "Email Cannot be Null")
     @Email(message = "Should be a Valid Email")
@@ -31,6 +34,8 @@ public class User implements UserDetails {
     private String roles;
     private Integer age;
     private String gender;
+
+    private Date dob;
     private String address;
     private Long phone;
     private Long salary;
@@ -52,15 +57,24 @@ public class User implements UserDetails {
         isEnabled = enabled;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getFirstName() {
+		return firstName;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public String getEmail() {
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+
+	public String getEmail() {
         return email;
     }
 
@@ -75,7 +89,15 @@ public class User implements UserDetails {
     public void setGender(String gender){this.gender=gender;}
     public String getGender(){return gender;}
 
-    // public void  setAge( ){this.age= this.age;}
+    public Date getDob() {
+		return dob;
+	}
+
+	public void setDob(Date dob) {
+		this.dob = dob;
+	}
+
+	// public void  setAge( ){this.age= this.age;}
     public Integer getAge(){return age;}
     public void setAddress( ){this.address= this.address;}
     public String getAddress(){return address;}
@@ -203,5 +225,15 @@ public class User implements UserDetails {
 
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
+    }
+    public boolean hasSpecificRole() {
+        // Check if the user has a specific role (e.g., ROLE_STAFF, ROLE_DOCTOR, ROLE_ADMIN)
+        List<String> specificRoles = Arrays.asList("ROLE_STAFF", "ROLE_DOCTOR", "ROLE_ADMIN");
+        for (String role : specificRoles) {
+            if (roles.contains(role)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

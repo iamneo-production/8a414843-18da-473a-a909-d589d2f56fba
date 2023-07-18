@@ -2,13 +2,14 @@ package com.example.springapp.service;
 
 import com.example.springapp.config.jwt.JwtTokenProvider;
 import com.example.springapp.dto.UserDto;
+import com.example.springapp.email.EmailService;
 import com.example.springapp.model.User;
 import com.example.springapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,14 +22,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Properties;
+import java.util.*;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -42,6 +39,8 @@ public class UserService implements UserDetailsService {
     @Autowired
     AuthenticationManager authenticationManager;
 
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     @Autowired
     private JwtTokenProvider tokenProvider;
@@ -53,25 +52,24 @@ public class UserService implements UserDetailsService {
     private String smtpPassword;
 
 
+
     public boolean verifyUser(String email,String password){
         User user=userRepository.findByEmail(email).orElseThrow();
-        return new BCryptPasswordEncoder().matches(password,user.getPassword());
+         return new BCryptPasswordEncoder().matches(password,user.getPassword());
     }
-
     public boolean checkuserNameExists(String email){
         return userRepository.findByEmail(email).isPresent();
     }
 
-    public boolean createUser(User user){
+    public User createUser(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         try {
             userRepository.save(user);
         } catch (Exception e) {
             throw new UsernameNotFoundException(e.getMessage());
         }
-        return true;
+        return user;
     }
-
     public Optional<User> getIndividualUser(String email){
         return userRepository.findByEmail(email);
     }
@@ -110,48 +108,17 @@ public class UserService implements UserDetailsService {
         }
         return false;
     }
-    /* @Override
-    public Department updateDepartment(Long departmentId, Department department) {
-       Department depDB=departmentRepository.findById(departmentId).get();
-       if(Objects.nonNull(department.getDepartmentName()) && !"".equalsIgnoreCase(department.getDepartmentName())){
-           depDB.setDepartmentName(department.getDepartmentName());
-       }
-        if(Objects.nonNull(department.getDepartmentCode()) && !"".equalsIgnoreCase(department.getDepartmentCode())){
-            depDB.setDepartmentCode(department.getDepartmentCode());
-        }
-        if(Objects.nonNull(department.getDeparmentAddress()) && !"".equalsIgnoreCase(department.getDeparmentAddress())){
-            depDB.setDeparmentAddress(department.getDeparmentAddress());
-        }
-        return departmentRepository.save(depDB);
-    } */
-    /*
-    public User updateUser(Long departmentId, User user) {
-        User userDB=userRepository.findById(departmentId).get();
-        if(Objects.nonNull(user.getName()) && !"".equalsIgnoreCase(user.getName())){
-            userDB.setName(user.getName());
-        }
-        if(Objects.nonNull(user.getEmail()) && !"".equalsIgnoreCase(user.getEmail())){
-            userDB.setEmail(user.getEmail());
-        }
-        if(Objects.nonNull(user.getRoles()) && !"".equalsIgnoreCase(user.getRoles())){
-            userDB.setRoles(user.getRoles());
-        }
-        if(Objects.nonNull(user.getAge()) && !"".equalsIgnoreCase(String.valueOf(user.getAge()))){
-            userDB.setAge(user.getAge());
-        }
-        if(Objects.nonNull(user.getGender()) && !"".equalsIgnoreCase(user.getGender())){
-            userDB.setGender(user.getGender());
-        }
-        if(Objects.nonNull(user.getAddress()) && !"".equalsIgnoreCase(user.getAddress())){
-            userDB.setAddress(user.getAddress());
-        }
-        return userRepository.save(userDB);
-    }*/
     public User updateUser(Long departmentId, UserDto userDto) {
         User userDB = userRepository.findById(departmentId).orElse(null);
         if (userDB != null) {
-            if (userDto.getName() != null && !userDto.getName().isEmpty()) {
-                userDB.setName(userDto.getName());
+            if (userDto.getFirstName() != null && !userDto.getFirstName().isEmpty()) {
+                userDB.setFirstName(userDto.getFirstName());
+            }
+            if (userDto.getLastName() != null && !userDto.getLastName().isEmpty()) {
+                userDB.setLastName(userDto.getLastName());
+            }
+            if (userDto.getDob() != null ){
+                userDB.setDob(userDto.getDob());
             }
             if (userDto.getEmail() != null && !userDto.getEmail().isEmpty()) {
                 userDB.setEmail(userDto.getEmail());
@@ -195,30 +162,42 @@ public class UserService implements UserDetailsService {
         }
         return null;
     }
-    public boolean sendEmail(String to, String subject, String message) {
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+    public void sendEmailWithPassword(String email, String password) {
+        // Implement your actual email sending logic here
+        String subject = "Registration Details";
+        String body = "Thank you for registering. Your password is: " + password;
 
-        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(fromEmail, smtpPassword);
-            }
-        });
-
+        // Replace the code below with your email sending implementation
         try {
-            Message emailMessage = new MimeMessage(session);
-            emailMessage.setFrom(new InternetAddress(fromEmail));
-            emailMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-            emailMessage.setSubject(subject);
-            emailMessage.setText(message);
-            Transport.send(emailMessage);
-            return true;
+            // Create a new email message
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(email);
+            helper.setSubject(subject);
+            helper.setText(body, true);
+
+            // Send the email
+            javaMailSender.send(message);
+
+            System.out.println("Email sent successfully to: " + email);
         } catch (MessagingException e) {
+            System.out.println("Failed to send email to: " + email);
             e.printStackTrace();
-            return false;
         }
+    }
+
+    public String generateRandomPassword() {
+        // Generate a random password
+        String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%/";
+        int passwordLength = 8;
+        Random random = new Random();
+        StringBuilder password = new StringBuilder();
+
+        for (int i = 0; i < passwordLength; i++) {
+            int index = random.nextInt(allowedChars.length());
+            password.append(allowedChars.charAt(index));
+        }
+
+        return password.toString();
     }
 }
