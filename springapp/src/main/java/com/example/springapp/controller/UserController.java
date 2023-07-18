@@ -41,25 +41,33 @@ public class UserController {
                 return new ResponseEntity<>(errMap,HttpStatus.BAD_REQUEST);
             }
         }
-        if (userService.createUser((newUser))) {
+        
+        User createdUser = userService.createUser(newUser);
 
-            List<String> prev2 = new ArrayList<>();
-            Map<Object, Object> temp = new HashMap<>();
-            List<String> prev1 = new ArrayList<>();
-            List<String> prev3 = new ArrayList<>();
-
-
-            return new ResponseEntity<>("User Created Successfully",HttpStatus.ACCEPTED);
+        if (createdUser != null) {
+            return ResponseEntity.ok(new BaseResponseDto("Success",createdUser));
         } else {
-            return new ResponseEntity<>("Catch Error",HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error Creating User");
         }
+//        if (userService.createUser((newUser))) {
+//
+//            List<String> prev2 = new ArrayList<>();
+//            Map<Object, Object> temp = new HashMap<>();
+//            List<String> prev1 = new ArrayList<>();
+//            List<String> prev3 = new ArrayList<>();
+//
+//
+//            return new ResponseEntity<>("User Created Successfully",HttpStatus.ACCEPTED);
+//        } else {
+//            return new ResponseEntity<>("Catch Error",HttpStatus.BAD_REQUEST);
+//        }
 
     }
 
 
     @PostMapping("/api/auth/login")
     public ResponseEntity<?> loginUser(@RequestBody @Valid UserLoginDto loginDetails , BindingResult result) {
-
+    	
         HashMap<String, String> errorMap = new HashMap<>();
         HashMap<String, Object> resMap = new HashMap<>();
 
@@ -76,7 +84,7 @@ public class UserController {
         if (userService.checkuserNameExists((loginDetails.getEmail()))) {
             if (userService.verifyUser(loginDetails.getEmail(), loginDetails.getPassword())) {
                 Optional<User> user = userService.getIndividualUser(loginDetails.getEmail());
-                String token = userService.generateToken(loginDetails.getEmail(), loginDetails.getPassword());
+            	String token = userService.generateToken(loginDetails.getEmail(), loginDetails.getPassword());
                 resMap.put("token",token);
                 resMap.put("data", user);
                 return new ResponseEntity<Object>(resMap, HttpStatus.ACCEPTED);
@@ -84,7 +92,7 @@ public class UserController {
 
         }
 
-        return null;
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials or role mismatch");
     }
 
     @PostMapping("/api/role-list")

@@ -51,14 +51,14 @@ public class UserService implements UserDetailsService {
         return userRepository.findByEmail(email).isPresent();
     }
 
-    public boolean createUser(User user){
+    public User createUser(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         try {
             userRepository.save(user);
         } catch (Exception e) {
             throw new UsernameNotFoundException(e.getMessage());
         }
-        return true;
+        return user;
     }
 
     public Optional<User> getIndividualUser(String email){
