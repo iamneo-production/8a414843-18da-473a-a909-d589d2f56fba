@@ -40,6 +40,10 @@ public class HmsAppointmentImpl implements HmsAppointmentService {
         appointmentRepository.deleteById(id);
     }
 
+    @Override
+    public List<HmsAppointment> doctorsAppointment(Long doctorId, String appointmentStatus) {
+        return appointmentRepository.findByDoctorIdAndAppointmentStatus(doctorId, appointmentStatus);
+    }
 
 
 //
@@ -53,6 +57,7 @@ public class HmsAppointmentImpl implements HmsAppointmentService {
         existingAppointment.setDate(updatedAppointment.getDate());
         existingAppointment.setTime(updatedAppointment.getTime());
         existingAppointment.setIssue(updatedAppointment.getIssue());
+        existingAppointment.setAppointmentStatus(updatedAppointment.getAppointmentStatus());
         existingAppointment.setPatientId(updatedAppointment.getPatientId());
         existingAppointment.setStatus(updatedAppointment.getStatus());
 

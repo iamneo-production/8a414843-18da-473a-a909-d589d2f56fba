@@ -82,7 +82,7 @@ public class UserController {
         }
 
         if (userService.checkuserNameExists((loginDetails.getEmail()))) {
-            if (userService.verifyUser(loginDetails.getRole(), loginDetails.getEmail(), loginDetails.getPassword())) {
+            if (userService.verifyUser(loginDetails.getEmail(), loginDetails.getPassword())) {
                 Optional<User> user = userService.getIndividualUser(loginDetails.getEmail());
             	String token = userService.generateToken(loginDetails.getEmail(), loginDetails.getPassword());
                 resMap.put("token",token);

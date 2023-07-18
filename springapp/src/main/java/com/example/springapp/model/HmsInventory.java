@@ -26,7 +26,7 @@ public class HmsInventory {
     private Date created;
     @UpdateTimestamp
     private Date updated;
-    private boolean status;
+    private boolean status=true;
 
 
     public Long getId() {
@@ -116,6 +116,7 @@ public class HmsInventory {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
     @Override
     public String toString() {
         return "HmsInventory{" +

@@ -42,6 +42,8 @@ public class HmsInventoryServiceImpl implements HmsInventoryService {
             existingInventory.setExpiryStatus(inventory.getExpiryStatus());
             existingInventory.setUpdated(inventory.getUpdated());
             existingInventory.setCreated(inventory.getCreated());
+            existingInventory.setStatus(inventory.isStatus());
+
 
             return inventoryRepository.save(existingInventory);
         }
