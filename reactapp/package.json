@@ -15,6 +15,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "add": "^2.0.6",
+    "axios": "^1.4.0",
     "chart.js": "^4.3.0",
     "dayjs": "^1.11.7",
     "embla-carousel-react": "^7.0.0",

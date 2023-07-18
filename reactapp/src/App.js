@@ -6,13 +6,29 @@ import CustomHeader from './header';
 import HomeScreen from './screens/homeScreen';
 import SignUp from './screens/homeScreen/auth/signUp';
 import ProtectedRoutes from './protectedRoutes';
-import PatientLayout from './screens/Patient/layout';
+import PatientLayout from './screens/patient/layout';
 import StaffLayout from './screens/staff/layout';
 import AdminLayout from './screens/admin/layout';
-import DoctorLayout from './screens/Doctor/layout';
+import DoctorLayout from './screens/doctor/layout';
+import {get} from '../src/api/index'
+import { useEffect } from 'react';
+import EndPoints from './api/endPoints';
 
+// const getMethod = await get("/api/users");
 
 function App() {
+  const getUsers =async() =>{
+    await get(EndPoints.usersList).then((response)=>{
+      console.log(response.data);
+  }).catch(error =>{
+      console.log(error);
+  })
+
+  }
+  useEffect(()=>{
+    getUsers()
+  },[])
+
   return (
     <BrowserRouter>
       <Routes>
