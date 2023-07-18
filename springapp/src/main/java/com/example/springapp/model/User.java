@@ -25,6 +25,7 @@ public class User implements UserDetails {
     @NotNull(message = "Email Cannot be Null")
     @Email(message = "Should be a Valid Email")
     private String email;
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String roles;

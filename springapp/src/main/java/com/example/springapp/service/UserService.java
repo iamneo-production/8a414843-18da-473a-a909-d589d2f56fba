@@ -5,7 +5,10 @@ import com.example.springapp.dto.UserDto;
 import com.example.springapp.model.User;
 import com.example.springapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,10 +21,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Properties;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -39,7 +46,11 @@ public class UserService implements UserDetailsService {
     @Autowired
     private JwtTokenProvider tokenProvider;
 
+    @Value("${spring.mail.username}")
+    private String fromEmail;
 
+    @Value("${spring.mail.password}")
+    private String smtpPassword;
 
 
     public boolean verifyUser(String email,String password){
@@ -183,5 +194,31 @@ public class UserService implements UserDetailsService {
             }
         }
         return null;
+    }
+    public boolean sendEmail(String to, String subject, String message) {
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(fromEmail, smtpPassword);
+            }
+        });
+
+        try {
+            Message emailMessage = new MimeMessage(session);
+            emailMessage.setFrom(new InternetAddress(fromEmail));
+            emailMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            emailMessage.setSubject(subject);
+            emailMessage.setText(message);
+            Transport.send(emailMessage);
+            return true;
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

@@ -28,7 +28,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping("/api/auth/register")
+    /*@PostMapping("/api/auth/register")
     public ResponseEntity<?> registerUser(@RequestBody @Valid User newUser, BindingResult result){
         HashMap<String,String> errMap=new HashMap<>();
         if(userService.checkuserNameExists(newUser.getEmail())) {
@@ -54,6 +54,35 @@ public class UserController {
             return new ResponseEntity<>("Catch Error",HttpStatus.BAD_REQUEST);
         }
 
+    }*/
+    @PostMapping("/api/auth/register")
+    public ResponseEntity<?> registerUser(@RequestBody @Valid User newUser, BindingResult result){
+        HashMap<String,String> errMap=new HashMap<>();
+        if(userService.checkuserNameExists(newUser.getEmail())) {
+            errMap.put(newUser.getEmail(),"User Already Exists");
+            return new ResponseEntity<>(errMap, HttpStatus.BAD_REQUEST);
+        }
+        if(result.hasErrors()){
+            for(FieldError error:result.getFieldErrors()){
+                errMap.put(error.getField(),error.getDefaultMessage());
+            }
+            return new ResponseEntity<>(errMap,HttpStatus.BAD_REQUEST);
+        }
+
+        if (userService.createUser(newUser)) {
+            // Send email with password
+            String subject = "Registration Confirmation";
+            String message = "Thank you for registering with us! Your password is: "+newUser.getId();
+            boolean emailSent = userService.sendEmail(newUser.getEmail(), subject,message);
+
+            if (emailSent) {
+                return new ResponseEntity<>("User Created Successfully",HttpStatus.ACCEPTED);
+            } else {
+                return new ResponseEntity<>("Failed to send email",HttpStatus.BAD_REQUEST);
+            }
+        } else {
+            return new ResponseEntity<>("Failed to create user",HttpStatus.BAD_REQUEST);
+        }
     }
 
 
@@ -198,5 +227,6 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
 
 }
