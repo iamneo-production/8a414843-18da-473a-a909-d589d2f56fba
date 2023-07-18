@@ -22,7 +22,7 @@ public class HmsAppointment {
     private LocalDate date;
     private LocalTime time;
     private String issue;
-    private String appointmentStatus="pending";
+    private String appointmentStatus;
     @CreationTimestamp
     private Date created;
     @UpdateTimestamp

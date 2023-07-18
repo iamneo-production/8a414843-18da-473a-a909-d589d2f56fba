@@ -20,7 +20,9 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String firstName;
+    private String lastName;
+    
     @Column(unique = true,nullable = false)
     @NotNull(message = "Email Cannot be Null")
     @Email(message = "Should be a Valid Email")
@@ -30,6 +32,7 @@ public class User implements UserDetails {
     private String roles;
     private Integer age;
     private String gender;
+    private Date dob;
     private String address;
     private Long phone;
     private Long salary;
@@ -42,7 +45,6 @@ public class User implements UserDetails {
     @UpdateTimestamp
     private Date updatedAt;
     private boolean status=true;
-
     public void setRoles(String roles){
         this.roles=roles;
     }
@@ -52,15 +54,25 @@ public class User implements UserDetails {
         isEnabled = enabled;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getFirstName() {
+		return firstName;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public String getEmail() {
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+
+
+	public String getEmail() {
         return email;
     }
 
@@ -75,25 +87,33 @@ public class User implements UserDetails {
     public void setGender(String gender){this.gender=gender;}
     public String getGender(){return gender;}
 
-    public void  setAge(){this.age=age;}
+    public Date getDob() {
+		return dob;
+	}
+
+	public void setDob(Date dob) {
+		this.dob = dob;
+	}
+
+	// public void  setAge( ){this.age= this.age;}
     public Integer getAge(){return age;}
-    public void setAddress(){this.address=address;}
+    public void setAddress( ){this.address= this.address;}
     public String getAddress(){return address;}
-    public void setPhone(){this.phone=phone;}
+    public void setPhone( ){this.phone= this.phone;}
     public Long getPhone(){return phone;}
     public void setCreatedAt(){this.createdAt=createdAt;}
     public Date getCreatedAt(){return createdAt;}
     public void setUpdatedAt(){this.updatedAt=updatedAt;}
     public Date getUpdatedAt(){return updatedAt;}
 
-    public void setSalary(){
-        this.salary=salary;
+    public void setSalary( ){
+        this.salary= this.salary;
     }
     public Long getSalary(){
         return salary;
     }
-    public void setSpecialist(){
-        this.specialist=specialist;
+    public void setSpecialist( ){
+        this.specialist= this.specialist;
     }
     public String getSpecialist(){
         return specialist;
@@ -159,5 +179,49 @@ public class User implements UserDetails {
     }
     public Long getId() {
         return id;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhone(Long phone) {
+        this.phone = phone;
+    }
+
+    public void setSalary(Long salary) {
+        this.salary = salary;
+    }
+
+    public void setSpecialist(String specialist) {
+        this.specialist = specialist;
+    }
+
+    /*public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }*/
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
     }
 }

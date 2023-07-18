@@ -48,5 +48,10 @@ public class HmsAppointmentController {
 
     }
 
+    @GetMapping("/api/doctor-appointment/{doctorId}")
+    public List<HmsAppointment> doctorsAppointment(@PathVariable Long doctorId, @RequestParam (required = false) String appointmentStatus){
+        return impl.doctorsAppointment(doctorId, appointmentStatus);
+    }
+
 
 }

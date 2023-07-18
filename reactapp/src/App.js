@@ -10,8 +10,25 @@ import PatientLayout from './screens/patient/layout';
 import StaffLayout from './screens/staff/layout';
 import AdminLayout from './screens/admin/layout';
 import DoctorLayout from './screens/doctor/layout';
+import {get} from '../src/api/index'
+import { useEffect } from 'react';
+import EndPoints from './api/endPoints';
+
+// const getMethod = await get("/api/users");
 
 function App() {
+  const getUsers =async() =>{
+    await get(EndPoints.usersList).then((response)=>{
+      console.log(response.data);
+  }).catch(error =>{
+      console.log(error);
+  })
+
+  }
+  useEffect(()=>{
+    getUsers()
+  },[])
+
   return (
     <BrowserRouter>
       <Routes>

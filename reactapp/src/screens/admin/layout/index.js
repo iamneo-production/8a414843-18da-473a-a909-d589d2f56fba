@@ -14,7 +14,7 @@ import {
 import LatestAppshell from '../../../components/appShell/latestAppshell'
 import Payroll from '../payroll/index'
 import AdminDashboard from '../dashboard/index';
-import ManageUserForm from '../ManageUsers/index';
+import DemoStaff from '../Manage';
 import Pharmacy from '../pharmacy/index';
 import Inventory from '../inventoryManagement/Inventory';
 const data = [
@@ -32,7 +32,7 @@ export default function AdminLayout() {
         <Routes>
             <Route path='' element={<Navigate to='/admin/home' />} />
             <Route path='home' element={<LatestAppshell navData={data}><AdminDashboard/></LatestAppshell>} />
-            <Route path='users' element={<LatestAppshell navData={data}><ManageUserForm/></LatestAppshell>} />
+            <Route path='users' element={<LatestAppshell navData={data}><DemoStaff/></LatestAppshell>} />
             <Route path='pharmacy' element={<LatestAppshell navData={data}><Pharmacy/></LatestAppshell>} />
             <Route path='inventory' element={<LatestAppshell navData={data}><Inventory /></LatestAppshell>} />
             <Route path='payroll' element={<LatestAppshell navData={data}><Payroll /></LatestAppshell>} />
