@@ -18,7 +18,7 @@ import DoctorPharmacyInvt from '../ViewPharmacyInventory/index';
 
 const data = [
     { link: '/doctor/home', label: 'Dashboard', icon: IconBellRinging },
-    { link: '/doctor/viewappointment', label: 'Manage Appointments', icon: IconReceipt2 },
+    { link: '/doctor/viewappointment', label: 'Schedule Appointments', icon: IconReceipt2 },
     { link: '/doctor/viewpharmacyinventory', label: 'Pharmacy Inventory', icon: IconFingerprint },
     // { link: '', label: 'SSH Keys', icon: IconKey },
     // { link: '', label: 'Databases', icon: IconDatabaseImport },
