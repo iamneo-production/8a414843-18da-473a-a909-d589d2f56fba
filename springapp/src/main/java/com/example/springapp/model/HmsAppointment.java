@@ -4,10 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -17,8 +14,14 @@ public class HmsAppointment {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    private Long patientId;
-    private Long doctorId;
+
+    @ManyToOne
+    @JoinColumn(name="patientId")
+    private User patient;
+
+    @ManyToOne
+    @JoinColumn(name="doctorId")
+    private User doctor;
     private LocalDate date;
     private LocalTime time;
     private String issue;
@@ -31,7 +34,14 @@ public class HmsAppointment {
     private String status="true";
 
 
-
+    public HmsAppointment(User patient, User doctor, LocalDate date, LocalTime time, String issue, String appointmentStatus) {
+        this.patient = patient;
+        this.doctor = doctor;
+        this.date = date;
+        this.time = time;
+        this.issue = issue;
+        this.appointmentStatus = appointmentStatus;
+    }
 
     public String getAppointmentStatus() {
         return appointmentStatus;
@@ -63,15 +73,21 @@ public class HmsAppointment {
     }
 
 
-    public Long getPatientId() {
-        return patientId;
+    public User getPatient() {
+        return patient;
     }
 
-
-    public void setPatientId(Long patientId) {
-        this.patientId = patientId;
+    public void setPatient(User patient) {
+        this.patient = patient;
     }
 
+    public User getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(User doctor) {
+        this.doctor = doctor;
+    }
 
     public Long getId() {
         return id;
@@ -83,14 +99,7 @@ public class HmsAppointment {
     }
 
 
-    public Long getDoctorId() {
-        return doctorId;
-    }
 
-
-    public void setDoctorId(Long doctorId) {
-        this.doctorId = doctorId;
-    }
 
 
     public LocalDate getDate() {
