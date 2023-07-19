@@ -273,7 +273,6 @@ public class UserController {
         String otp = requestBody.get("OTP");
         String newPassword = requestBody.get("newPassword");
 
-
         String storedOTP = userOtpMap.get(email);
 
         if (storedOTP != null && storedOTP.equals(otp)) {
