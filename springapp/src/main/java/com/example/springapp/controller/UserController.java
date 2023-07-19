@@ -21,6 +21,7 @@ import java.util.*;
 @RestController
 public class UserController {
 
+    private Map<String, String> userOtpMap = new HashMap<>();
     @Lazy
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -68,15 +69,15 @@ public class UserController {
         User createdUser;
         if (newUser.getRoles().contains("ROLE_PATIENT")) {
             createdUser = userService.createUser(newUser);
-            // Send email with entered password
-            userService.sendEmailWithPassword(createdUser.getEmail(), newUser.getPassword());
+
+            userService.sendEmailToPatient(createdUser.getEmail());
         } else {
-            // Generate a random password
+
             String randomPassword = userService.generateRandomPassword();
             newUser.setPassword(randomPassword);
             createdUser = userService.createUser(newUser);
-            // Send email with random password
-            userService.sendEmailWithPassword(createdUser.getEmail(), randomPassword);
+
+            userService.sendEmailWithPassword(createdUser.getEmail(), randomPassword, createdUser.getRoles());
         }
 
         if (createdUser != null) {
@@ -85,7 +86,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error Creating User");
         }
     }
-
 
 
     @PostMapping("/api/auth/login")
@@ -115,6 +115,33 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials or role mismatch");
     }
+    /*@PostMapping("/api/auth/login")
+    public ResponseEntity<?> loginUser(@RequestBody @Valid UserLoginDto loginDetails, BindingResult result) {
+        HashMap<String, String> errorMap = new HashMap<>();
+        HashMap<String, Object> resMap = new HashMap<>();
+
+        if (result.hasErrors()) {
+            for (FieldError error : result.getFieldErrors()) {
+                var key = error.getField();
+                var value = error.getDefaultMessage();
+                errorMap.put(key, value);
+            }
+
+            return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST);
+        }
+
+        if (userService.checkuserNameExists(loginDetails.getEmail())) {
+            if (userService.verifyUser(loginDetails.getEmail(), loginDetails.getPassword())) {
+                Optional<User> user = userService.getIndividualUser(loginDetails.getEmail());
+                String token = userService.generateToken(loginDetails.getEmail(), loginDetails.getPassword());
+                resMap.put("token", token);
+                resMap.put("data", user);
+                return new ResponseEntity<>(resMap, HttpStatus.ACCEPTED);
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials or role mismatch");
+    }*/
 
     @PostMapping("/api/role-list")
     public ResponseEntity<?> getUserByRole(@RequestBody Map<String, String> requestBody){
@@ -193,7 +220,77 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+    @PutMapping("/api/auth/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody @Valid User user, BindingResult result) {
+        HashMap<String, String> errMap = new HashMap<>();
 
+        if (result.hasErrors()) {
+            for (FieldError error : result.getFieldErrors()) {
+                errMap.put(error.getField(), error.getDefaultMessage());
+            }
+            return new ResponseEntity<>(errMap, HttpStatus.BAD_REQUEST);
+        }
+        // Check if the user exists
+        if (userService.checkuserNameExists(user.getEmail())) {
+            // the Password matches the user's current password
+            if (userService.verifyUser(user.getEmail(), user.getPassword())) {
+                // Update the user's password with the new password
+                boolean passwordResetSuccessful = userService.resetPassword(user.getEmail(), user.getNewPassword());
+
+                if (passwordResetSuccessful) {
+
+                    userService.sendEmailResetPassword(user.getEmail(), user.getNewPassword());
+                    return new  ResponseEntity<>("Password has been Successfully reset",HttpStatus.ACCEPTED);
+                } else {
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error resetting password");
+                }
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email");
+        }
+    }
+    @PostMapping("/api/auth/forget-password")
+    public ResponseEntity<?> sendForgetPasswordEmail(@RequestBody Map<String, String> requestBody) {
+        String email = requestBody.get("email");
+
+        if (userService.checkuserNameExists(email)) {
+            String otp = userService.generateRandomOTP();
+            userService.sendOTPEmail(email, otp);
+
+            // hash map is used to store the otp
+            userOtpMap.put(email, otp);
+
+            return new ResponseEntity<>("OTP sent successfully",HttpStatus.ACCEPTED);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found");
+        }
+    }
+    @PutMapping("/api/auth/reset-password-with-otp")
+    public ResponseEntity<?> resetPasswordWithOTP(@RequestBody Map<String, String> requestBody) {
+        String email = requestBody.get("email");
+        String otp = requestBody.get("OTP");
+        String newPassword = requestBody.get("newPassword");
+
+
+        String storedOTP = userOtpMap.get(email);
+
+        if (storedOTP != null && storedOTP.equals(otp)) {
+
+            boolean passwordResetSuccessful = userService.resetPassword(email, newPassword);
+
+            if (passwordResetSuccessful) {
+
+                userOtpMap.remove(email);
+                return new ResponseEntity<>("Password reset successfully",HttpStatus.ACCEPTED);
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error resetting password");
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid OTP");
+        }
+    }
 }
 /*if (userService.createUser((newUser))) {
 //
