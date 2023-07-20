@@ -15,6 +15,7 @@ import LatestAppshell from '../../../components/appShell/latestAppshell'
 import DoctorDashboard from '../Dashboard/index';
 import ViewAppointments from '../TotalAppointments/index';
 import DoctorPharmacyInvt from '../ViewPharmacyInventory/index';
+import NewAppointment from '../TotalAppointments/newAppointments'
 
 const data = [
     { link: '/doctor/home', label: 'Dashboard', icon: IconBellRinging },
