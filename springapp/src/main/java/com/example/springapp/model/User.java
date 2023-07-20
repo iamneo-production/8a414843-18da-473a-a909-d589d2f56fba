@@ -28,13 +28,13 @@ public class User implements UserDetails {
     @NotNull(message = "Email Cannot be Null")
     @Email(message = "Should be a Valid Email")
     private String email;
-
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String newPassword;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String roles;
     private Integer age;
     private String gender;
-
     private Date dob;
     private String address;
     private Long phone;
@@ -205,6 +205,14 @@ public class User implements UserDetails {
 
     public void setSpecialist(String specialist) {
         this.specialist = specialist;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 
     /*public void setCreatedAt(Date createdAt) {

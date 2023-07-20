@@ -55,34 +55,34 @@ const AppointmentRequest = () => {
 
   
 
-  
+  //console.log(records.patient?.firstName);
 
   return (
     <ScrollArea height={300}>
       <Box m="md" style={{ display: "flex", flexWrap: "wrap" }}>
-        {records.map((patient) => (
+        {records.map((data) => (
           <Card
-            key={patient.id}
+            key={data.id}
             shadow="md"
             style={{ marginBottom: "16px", marginRight: "16px", width: "300px" }}
           >
             <Box padding="md">
               <Text weight={500} style={{ marginBottom: "8px", fontSize: "18px" }}>
-                {patient?.Id}
+                {data.patient?.firstName} {data.patient?.lastName}
               </Text>
               <Group position="center">
                 <Text weight={500} style={{ marginRight: "8px" }}>
-                  Date: {patient.date}
+                  Date: {data.date}
                 </Text>
                 <Text weight={500} style={{ marginRight: "8px" }}>
-                  Time: {patient.time}
+                  Time: {data.time}
                 </Text>
               </Group>
               <Group position="center">
                 <Button
                   radius="md"
                   variant="subtle"
-                  onClick={() => handleAccept(patient.patientName)}
+                  onClick={() => handleAccept(data.patientName)}
                 >
                   Accept
                 </Button>
@@ -90,7 +90,7 @@ const AppointmentRequest = () => {
                   style={{ color: "red" }}
                   radius="md"
                   variant="subtle"
-                  onClick={() => handleReject(patient.patientName)}
+                  onClick={() => handleReject(data.patientName)}
                 >
                   Reject
                 </Button>
@@ -334,3 +334,9 @@ export default AppointmentRequest;
 // };
 
 // export default AppointmentRequest;
+
+
+//------------------------------------------------------------------------------------------------------------------
+
+
+

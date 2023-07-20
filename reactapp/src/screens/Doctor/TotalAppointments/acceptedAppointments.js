@@ -14,6 +14,7 @@ import {
   Notification,
   TextInput,
   Select,
+  Checkbox
 
 } from "@mantine/core";
 import { DataTable } from "mantine-datatable";
@@ -27,6 +28,7 @@ const ManagePatient = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedMedicine, setSelectedMedicine] = useState("");
   const [records, setRecords] = useState([]);
+  const [medicineId, setMedicineId] = useState("");
 
   const user = useSelector((s) => s?.user?.value)
     console.log(user);
@@ -38,6 +40,11 @@ const ManagePatient = () => {
   const handleAddPrescription = () => {
     setPrescriptionModalOpen(true);
   };
+
+  const handleMedicineChange = (value) => {
+    setMedicineId(value);
+  };
+
 
   const handlePrescriptionSubmit = (event) => {
     event.preventDefault();
@@ -52,9 +59,6 @@ const ManagePatient = () => {
     setSearchTerm(event.target.value);
   };
 
-  const handleMedicineChange = (value) => {
-        setSelectedMedicine(value);
-      };
 
     const [patient, setPatient] = useState({
       issue: "",
@@ -75,6 +79,7 @@ const ManagePatient = () => {
     };
 
     const [opened, { open, close }] = useDisclosure(false);
+    
 
 
     const getUsers =async() =>{
@@ -98,26 +103,26 @@ const ManagePatient = () => {
       textAlignment: "center",
     },
     {
-      accessor: "patientId",
+      accessor: "patient.firstName",
       title: "Patient Name",
       titleStyle: { color: "" },
       textAlignment: "center",
     },
     {
-      accessor: "doctorId",
+      accessor: "patient.age",
       title: "Age",
       titleStyle: { color: "" },
       textAlignment: "center",
     },
     {
-      accessor: "issue",
+      accessor: "patient.gender",
       title: "Gender",
       titleStyle: { color: "" },
       textAlignment: "center",
     },
     {
       accessor: "appointmentStatus",
-      title: "Weight",
+      title: "Status",
       titleStyle: { color: "" },
       textAlignment: "center",
     },
@@ -213,7 +218,7 @@ const ManagePatient = () => {
   // ];
 
   const filteredRecords = records.filter((record) =>
-  record?.patientName?.toLowerCase().includes(searchTerm.toLowerCase())
+  record.patient?.firstName.toLowerCase().includes(searchTerm.toLowerCase())
 );
 
 
@@ -248,20 +253,19 @@ const ManagePatient = () => {
         {selectedPatient && (
           <>
           <Modal opened={opened} onClose={close} title="Prescription">
-          {/* <Select
-              value={doctorId}
-              name="doctorId"
-              onChange={(value) =>
-                onInputChange({ target: { name: "doctorId", value } })
-              }
-              placeholder="Doctor Id"
+          <Select
+              value={medicineId}
+              name="medicineId"
+              onChange={handleMedicineChange}
+              placeholder="Medicine Id"
               radius="md"
               data={[
-                { value: "1", label: "1" },
-                { value: "2", label: "2" },
-                { value: "3", label: "3" },
+                { value: "1", label: "Medicine 1" },
+                { value: "2", label: "Medicine 2" },
+                { value: "3", label: "Medicine 3" },
               ]}
-            /> */}
+            />
+            
       </Modal>
 
       

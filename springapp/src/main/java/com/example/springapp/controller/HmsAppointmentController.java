@@ -1,8 +1,12 @@
 package com.example.springapp.controller;
 
+import com.example.springapp.dto.request.HmsAppointmentRequestDto;
 import com.example.springapp.exception.EntityNotFoundException;
 import com.example.springapp.model.HmsAppointment;
 
+import com.example.springapp.model.User;
+import com.example.springapp.repository.HmsAppointmentRepository;
+import com.example.springapp.repository.UserRepository;
 import com.example.springapp.serviceImplementation.HmsAppointmentImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +18,26 @@ public class HmsAppointmentController {
     @Autowired
     private HmsAppointmentImpl impl;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private HmsAppointmentRepository hmsAppointmentRepository;
+
     @PostMapping("/api/appointment")
-    public HmsAppointment saveAppointment(@RequestBody HmsAppointment appointment) {
-        impl.saveAppointment(appointment);
-        return appointment;
+    public HmsAppointment saveAppointment(@RequestBody HmsAppointmentRequestDto appointment) {
+        User doctor=userRepository.findById(appointment.getDoctorId()).orElseThrow();
+        User patient=userRepository.findById(appointment.getPatientId()).orElseThrow();
+        HmsAppointment hmsAppointment=new HmsAppointment(
+                patient,
+                doctor,
+                appointment.getDate(),
+                appointment.getTime(),
+                appointment.getIssue(),
+                appointment.getAppointmentStatus()
+        );
+
+        return impl.saveAppointment(hmsAppointment);
     }
 
     @GetMapping("/api/appointment")
@@ -36,7 +56,8 @@ public class HmsAppointmentController {
 //    }
 
     @PutMapping("/api/appointment/{id}")
-    public HmsAppointment updateAppointmentById(@PathVariable Long id, @RequestBody HmsAppointment updatedAppointment) {
+    public HmsAppointment updateAppointmentById(@PathVariable Long id, @RequestBody HmsAppointmentRequestDto updatedAppointment) {
+
         return impl.updateAppointmentById(id, updatedAppointment);
 
     }
