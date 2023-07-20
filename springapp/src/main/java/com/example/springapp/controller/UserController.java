@@ -291,15 +291,3 @@ public class UserController {
         }
     }
 }
-/*if (userService.createUser((newUser))) {
-//
-//            List<String> prev2 = new ArrayList<>();
-//            Map<Object, Object> temp = new HashMap<>();
-//            List<String> prev1 = new ArrayList<>();
-//            List<String> prev3 = new ArrayList<>();
-//
-//
-//            return new ResponseEntity<>("User Created Successfully",HttpStatus.ACCEPTED);
-//        } else {
-//            return new ResponseEntity<>("Catch Error",HttpStatus.BAD_REQUEST);
-//        }*/

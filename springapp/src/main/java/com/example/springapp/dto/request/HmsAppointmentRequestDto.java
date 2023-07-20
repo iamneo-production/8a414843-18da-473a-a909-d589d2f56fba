@@ -9,7 +9,6 @@ import java.time.LocalTime;
 
 public class HmsAppointmentRequestDto {
     private Long patientId;
-
     private Long doctorId;
     private LocalDate date;
     private LocalTime time;

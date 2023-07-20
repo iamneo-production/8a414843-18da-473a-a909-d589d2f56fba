@@ -31,7 +31,7 @@ public class HmsAppointment {
     @UpdateTimestamp
     private Date updated;
 
-    private String status="true";
+    private String status;
 
 
     public HmsAppointment(User patient, User doctor, LocalDate date, LocalTime time, String issue, String appointmentStatus) {
