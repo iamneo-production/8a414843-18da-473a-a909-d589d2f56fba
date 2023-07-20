@@ -6,11 +6,14 @@ import DoctorCard from './onlinestatus';
 import PatientCard from './patientdetails';
 import AppointmentRequest from './appointmentrequest';
 import TodayAppointments from './todaysappointments';
-
+import { useDispatch,useSelector } from 'react-redux';
 // import { UserIcon } from '@modulz/radix-icons';
 
 
 export default function DoctorDashboard() {
+ /*  const dispatch = useDispatch()
+  const user = useSelector((s) => s?.user?.value)
+  console.log("userdate",user); */
   return (
     <div >
     <Grid grow gutter='sm' >

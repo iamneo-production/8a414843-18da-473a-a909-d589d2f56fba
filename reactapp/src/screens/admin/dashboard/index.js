@@ -26,8 +26,11 @@ import man from "../../../assests/man1rhr.svg"
 import patient from "../../../assests/patientrhr.svg"
 import appointment from "../../../assests/appointmentrhr.svg"
 import { IconPhone } from '@tabler/icons-react';
+import { useDispatch,useSelector } from 'react-redux';
 const AdminDashboard = () => {
-
+  /* const dispatch = useDispatch()
+  const user = useSelector((s) => s?.user?.value)
+  console.log("userdate",user); */
     const hospitalProfitData = [
       { month: 'Jul', profit: 218500 },
       { month: 'Aug', profit: 117000 },
