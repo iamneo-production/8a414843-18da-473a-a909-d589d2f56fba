@@ -145,4 +145,20 @@ public class HmsAppointment {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "HmsAppointment{" +
+                "id=" + id +
+                ", patient=" + patient +
+                ", doctor=" + doctor +
+                ", date=" + date +
+                ", time=" + time +
+                ", issue='" + issue + '\'' +
+                ", appointmentStatus='" + appointmentStatus + '\'' +
+                ", created=" + created +
+                ", updated=" + updated +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

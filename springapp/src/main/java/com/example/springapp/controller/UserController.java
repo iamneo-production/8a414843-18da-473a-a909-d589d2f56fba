@@ -29,29 +29,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    /*@PostMapping("/api/auth/register")
-    public ResponseEntity<?> registerUser(@RequestBody @Valid User newUser, BindingResult result) {
-        HashMap<String, String> errMap = new HashMap<>();
-        if (userService.checkuserNameExists(newUser.getEmail())) {
-            errMap.put(newUser.getEmail(), "User Already Exist");
-            return new ResponseEntity<>(errMap, HttpStatus.BAD_REQUEST);
-        }
-        if (result.hasErrors()) {
-            for (FieldError error : result.getFieldErrors()) {
-                errMap.put(error.getField(), error.getDefaultMessage());
-                return new ResponseEntity<>(errMap, HttpStatus.BAD_REQUEST);
-            }
-        }
 
-        User createdUser = userService.createUser(newUser);
-
-        if (createdUser != null) {
-            //Send email with password
-            return ResponseEntity.ok(new BaseResponseDto("Success", createdUser));
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error Creating User");
-        }
-    }*/
     @PostMapping("/api/auth/register")
     public ResponseEntity<?> registerUser(@RequestBody @Valid User newUser, BindingResult result) {
         HashMap<String, String> errMap = new HashMap<>();
@@ -115,33 +93,7 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials or role mismatch");
     }
-    /*@PostMapping("/api/auth/login")
-    public ResponseEntity<?> loginUser(@RequestBody @Valid UserLoginDto loginDetails, BindingResult result) {
-        HashMap<String, String> errorMap = new HashMap<>();
-        HashMap<String, Object> resMap = new HashMap<>();
 
-        if (result.hasErrors()) {
-            for (FieldError error : result.getFieldErrors()) {
-                var key = error.getField();
-                var value = error.getDefaultMessage();
-                errorMap.put(key, value);
-            }
-
-            return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST);
-        }
-
-        if (userService.checkuserNameExists(loginDetails.getEmail())) {
-            if (userService.verifyUser(loginDetails.getEmail(), loginDetails.getPassword())) {
-                Optional<User> user = userService.getIndividualUser(loginDetails.getEmail());
-                String token = userService.generateToken(loginDetails.getEmail(), loginDetails.getPassword());
-                resMap.put("token", token);
-                resMap.put("data", user);
-                return new ResponseEntity<>(resMap, HttpStatus.ACCEPTED);
-            }
-        }
-
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials or role mismatch");
-    }*/
 
     @PostMapping("/api/role-list")
     public ResponseEntity<?> getUserByRole(@RequestBody Map<String, String> requestBody){
