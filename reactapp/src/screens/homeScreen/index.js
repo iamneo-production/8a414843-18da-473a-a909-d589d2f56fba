@@ -27,6 +27,7 @@ import SampleTable from "../../components/customTable/sampleTable"
 import CustomLottie from '../../components/lottieFiles/customLottie'
 import DoctorLottie from '../../assests/Lottiefiles/doctor.json'
 import HomeLottie from '../../assests/Lottiefiles/Home.json'
+import { FooterSocial } from "../../components/footer/footerSocial";
 
 
 export default function HomeScreen() {
@@ -156,6 +157,9 @@ export default function HomeScreen() {
             <Divider mt="md" />
             <div>
                 <CustomFooter setActive={setActive} active={active} />
+            </div>
+            <div>
+                <FooterSocial/>
             </div>
 
 

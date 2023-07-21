@@ -9,7 +9,9 @@ import {
     Title,
     Card,
     Tabs,
+    Notification
 } from "@mantine/core";
+// import {Notifications} form "@mantine/notifications";
 import { useDisclosure } from '@mantine/hooks';
 import { Modal} from '@mantine/core';
 import { useForm } from '@mantine/form'
@@ -19,6 +21,7 @@ import {
     IconEye,
     IconTrash,
     IconMoneybag,
+    IconSearch,
 } from "@tabler/icons-react";
 import { useState } from 'react';
 
@@ -31,46 +34,46 @@ export default function SampleTable() {
     const [records,setRecords] = useState([
         { doctor_id: 1, 
             doctor_name: "Campaign 1", 
-            specialization:"Dermatologist", 
+            Gender:"Male", 
             status: "Active", 
             salary:"20000" 
         },
         {
             doctor_id: 2,
             doctor_name: "Campaign 2",
-            specialization:"Dermatologist",
+            Gender:"Male",
             status: "Offline",
             salary:"20000"
         },
         { doctor_id: 3, 
             doctor_name: "Campaign 3", 
-            specialization:"Dermatologist", 
+            Gender:"Male", 
             status: "Active", 
             salary:"20000" 
         },
         {
             doctor_id: 4,
             doctor_name: "Campaign 4",
-            specialization:"Dermatologist",
+            Gender:"Female",
             status: "Offline",
             salary:"20000"
         },
         { doctor_id: 5, 
             doctor_name: "Campaign 5", 
-            specialization:"Dermatologist", 
+            Gender:"Female", 
             status: "Active", 
             salary:"20000" 
         },
         {
             doctor_id: 6,
             doctor_name: "Campaign 6",
-            specialization:"Dermatologist",
+            Gender:"Male",
             status: "Offline",
             salary:"20000"
         },
         { doctor_id: 7, 
             doctor_name: "Campaign 7", 
-            specialization:"Dermatologist", 
+            Gender:"Female", 
             status: "Active", 
             salary:"20000" 
         },
@@ -79,61 +82,63 @@ export default function SampleTable() {
     const [records2,setRecords2] =useState( [
         { staff_id: 1, 
             doctor_name: "staff_name 1", 
-            specialization:"Medico", 
+            Gender:"Medico", 
             status: "Active", 
             salary:"20000" 
         },
         {
             staff_id: 2,
             doctor_name: "staff_name 2",
-            specialization:"Medico",
+            Gender:"Medico",
             status: "Offline",
             salary:"20000"
         },
         { staff_id: 3, 
             doctor_name: "staff_name 3", 
-            specialization:"Medico", 
+            Gender:"Medico", 
             status: "Active", 
             salary:"20000" 
         },
         {
             staff_id: 4,
             doctor_name: "staff_name 4",
-            specialization:"Medico",
+            Gender:"Medico",
             status: "Offline",
             salary:"20000"
         },
         { staff_id: 5, 
             doctor_name: "staff_name 5", 
-            specialization:"Medico", 
+            Gender:"Medico", 
             status: "Active", 
             salary:"20000" 
         },
         {
             staff_id: 6,
             doctor_name: "staff_name 6",
-            specialization:"Medico",
+            Gender:"Medico",
             status: "Offline",
             salary:"20000"
         },
         { staff_id: 7, 
             doctor_name: "staff_name 7", 
-            specialization:"Medico", 
+            Gender:"Medico", 
             status: "Active", 
             salary:"20000" 
         },
     ]);
-
+   
     const colDef = [
         {
             accessor: "doctorid",
             title: "Doctor_id",
             titleStyle: { color: "" },
             textAlignment: "center",
+            
             render: (data) => (
                 <Group position="center">
                     <Text>{data?.doctor_id}</Text>
                 </Group>
+                
   
             ),
         },
@@ -152,12 +157,12 @@ export default function SampleTable() {
     
         {
             accessor: "specail",
-            title: "specialization",
+            title: "Gender",
             titleStyle: { color: "" },
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.specialization}</Text>
+                    <Text>{data?.Gender}</Text>
                 </Group>
             ),
             
@@ -227,7 +232,7 @@ export default function SampleTable() {
                             >
                                 View
                             </Menu.Item>
-                            <Menu.Item
+                            <Menu.Item  onClick={() => handlePayDoctor(data.doctor_id)}
                                 icon={<IconMoneybag size={19} style={{ color: "#081226" }} />}
                                 style={{
                                     color: "black",
@@ -273,7 +278,20 @@ export default function SampleTable() {
           prevRecords.filter((record) => record.doctor_id !== doctorId)
         );
       };
+      const [selectedNotification, setSelectedNotification] = useState(null);
 
+  const handlePay = (staffName) => {
+    setSelectedNotification({
+      color: 'green',
+      message: `Salary credited successfully for staff ${staffName}.`,
+    });
+  };
+  const handlePayDoctor = (Doctor_name) => {
+    setSelectedNotification({
+      color: 'green',
+      message: `Salary credited successfully for Doctor ${Doctor_name}.`,
+    });
+  };
     const colDef2 = [
         {
             accessor: "staffid",
@@ -302,12 +320,12 @@ export default function SampleTable() {
     
         {
             accessor: "specail",
-            title: "specialization",
+            title: "Gender",
             titleStyle: { color: "" },
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.specialization}</Text>
+                    <Text>{data?.Gender}</Text>
                 </Group>
                 
             ),
@@ -354,6 +372,7 @@ export default function SampleTable() {
             title: <Text mr="xs">Actions</Text>,
             textAlignment: "center",
             render: (data) => {
+    
                 console.log("data", data);
                 
 
@@ -381,7 +400,9 @@ export default function SampleTable() {
 
                             </Menu.Item>
                             
-                            <Menu.Item
+                            <Menu.Item 
+                            onClick={() => handlePay(data.staff_id)}
+                            
                                 icon={<IconMoneybag size={19} style={{ color: "#081226" }} />}
                                 style={{
                                     color: "black",
@@ -391,6 +412,7 @@ export default function SampleTable() {
                             >
                                 pay
                             </Menu.Item>
+                            
                             <Menu.Item  onClick={() => {
                                          setSelectedIndex2(data.staff_id);
                                         open();
@@ -421,6 +443,7 @@ export default function SampleTable() {
             },
         },
     ];
+  
 
     const [active,setActive]=useState(1)
     const [activeTab, setActiveTab] = useState('first');
@@ -455,13 +478,26 @@ export default function SampleTable() {
         setRecords2(updatedRecords);
         close();
       };
+      const [searchTerm, setSearchTerm] = useState('');
+      const [searchByStatus, setSearchByStatus] = useState('');
+      const [searchByGender, setSearchByGender] = useState('');
     
+      const filteredDoctorRecords = records.filter((record) =>
+        record.doctor_name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        record.status.toLowerCase().includes(searchByStatus.toLowerCase()) &&
+        record.Gender.toLowerCase().includes(searchByGender.toLowerCase())
+      );
+    
+      const filteredStaffRecords = records2.filter((record) =>
+        record.doctor_name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        record.status.toLowerCase().includes(searchByStatus.toLowerCase()) &&
+        record.Gender.toLowerCase().includes(searchByGender.toLowerCase())
+      );
 
     return (
 
         
         <Grid>
-           
           
           <Grid.Col xs={12} lg={12}>
             <Modal opened={opened} onClose={close} title="Salary Update" centered>
@@ -493,13 +529,70 @@ export default function SampleTable() {
         <Tabs.Tab value="first">Doctor</Tabs.Tab>
         <Tabs.Tab value="second">Staff</Tabs.Tab>
       </Tabs.List>
-      <Tabs.Panel value="first"><CustomTable coloumnDef={active===1?colDef:colDef2} records={active===1?records:records2} /></Tabs.Panel>
-      <Tabs.Panel value="second"><CustomTable coloumnDef={active===2?colDef:colDef2} records={active===2?records:records2} /></Tabs.Panel>
+      
+      {/* <Tabs.Panel value="first">
+      <CustomTable coloumnDef={active===1?colDef:colDef2} records={active===1?records:records2 } />
+      </Tabs.Panel>
+      <Tabs.Panel value="second">
+      <CustomTable coloumnDef={active===2?colDef:colDef2} records={active===2?records:records2 } />
+      </Tabs.Panel> */}
+      <Grid>
+      <Grid.Col xs={4} lg={4}>
+       <TextInput
+        placeholder="Search by Name"
+        icon={<IconSearch color="#BF94E4" size={16} />}
+        value={searchTerm}
+        onChange={(event) => setSearchTerm(event.target.value)}
+        mt="md"
+      />
+      </Grid.Col>
+      <Grid.Col xs={4} lg={4}>
+      <TextInput
+          placeholder="Search by Gender"
+          icon={<IconSearch color="#BF94E4" size={16} />}
+          value={searchByGender}
+          onChange={(event) => setSearchByGender(event.target.value)}
+          mt="md"
+        />
+    
+      </Grid.Col>
+      <Grid.Col xs={4} lg={4}>
+      <TextInput
+        placeholder="Search by Status"
+        icon={<IconSearch color="#BF94E4" size={16} />}
+        value={searchByStatus}
+        onChange={(event) => setSearchByStatus(event.target.value)}
+        mt="md"
+      />
+      </Grid.Col>
+      
+      </Grid>
+      <Grid.Col xs={12} lg={12}></Grid.Col>
+      <Tabs.Panel value="first">
+        <CustomTable coloumnDef={colDef} records={filteredDoctorRecords} />
+      </Tabs.Panel>
+      <Tabs.Panel value="second">
+        <CustomTable coloumnDef={colDef2} records={filteredStaffRecords} />
+      </Tabs.Panel>
+      
         </Tabs>
 
+
                 {/* <CustomTable coloumnDef={active===1?colDef:colDef2} records={active===1?records:records2} /> */}
+                {selectedNotification && (
+          <Notification
+            title="Salary Payment Status"
+            color={selectedNotification.color}
+            onClose={() => setSelectedNotification(null)}
+          >
+            {selectedNotification.message}
+          </Notification>
+        )}
             </Box>
+           
             </Grid.Col>
         </Grid>
     );
 }
+
+
