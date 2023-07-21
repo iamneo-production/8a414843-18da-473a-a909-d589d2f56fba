@@ -21,7 +21,8 @@ export default function CustomTable(props) {
             verticalAlignment="top"
             fetching={fetching}
             loaderVariant="bars"
-            minHeight="100vh"
+            height={500}
+            // minHeight="100vh"
             // height={window.innerHeight - 230}
             columns={coloumnDef}
             records={records}

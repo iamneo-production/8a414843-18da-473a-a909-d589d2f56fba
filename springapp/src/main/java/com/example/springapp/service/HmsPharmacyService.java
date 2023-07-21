@@ -1,5 +1,6 @@
 package com.example.springapp.service;
 
+import com.example.springapp.dto.request.HmsPharmacyRequestDto;
 import com.example.springapp.model.HmsPharmacy;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface HmsPharmacyService {
 
     public void deletePharmacy(Long pharmacyId);
 
-    public HmsPharmacy updatePharmacy(Long id, HmsPharmacy updatedPharmacy);
+    public List<HmsPharmacy> updatePharmacy(Long id, List<HmsPharmacyRequestDto> updatedPharmacy);
 
     public HmsPharmacy getPharmacyById(Long id);
 }

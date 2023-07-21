@@ -49,9 +49,9 @@ const imageStyle = {position:'absolute',top:'11%',left:'calc(100% - 218px)',widt
 
 export default function PatientDashboard() {
 
- /*    const dispatch = useDispatch()
+    const dispatch = useDispatch()
     const user = useSelector((s) => s?.user?.value)
-    console.log("userdate",user); */
+    console.log("userdate",user);
 
     const [record,setRecord] = useState(staffDetails);
 
@@ -65,7 +65,7 @@ export default function PatientDashboard() {
 
   return (
         <Paper style={container}>
-            <h2 style={{margin:'10px',textTransform:'uppercase'}}>Welcome {record.name},</h2>
+            <h2 style={{margin:'10px',textTransform:'uppercase'}}>Welcome {user?.firstName},</h2>
             <div style={content}>
                 
                 <Card style={cardStyle}>
@@ -83,13 +83,13 @@ export default function PatientDashboard() {
                     
                     <div style={cardContent2}>
                         <Text style={{fontSize:'1.5em',textTransform:'uppercase' }}>
-                            {record.name} 
+                            {user?.firstName} {user?.lastName} 
                         </Text>
                         <Text style={{fontSize:'1em',color:'#9e9e9e' }}>
-                            {record.designation}
+                            STAFF
                         </Text>
                         <Text style={{ margin: '10px' }}>
-                            {record.status ? (
+                            {user?.status ? (
                             <span style={{ fontWeight: 'bold', color: '#0eeb3a'}}>Active</span>
                             ) : (
                             <span style={{ fontWeight: 'bold', color: 'red' }}>Inactive</span>

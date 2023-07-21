@@ -31,7 +31,7 @@ public class HmsAppointment {
     @UpdateTimestamp
     private Date updated;
 
-    private String status="true";
+    private String status;
 
 
     public HmsAppointment(User patient, User doctor, LocalDate date, LocalTime time, String issue, String appointmentStatus) {
@@ -144,5 +144,21 @@ public class HmsAppointment {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "HmsAppointment{" +
+                "id=" + id +
+                ", patient=" + patient +
+                ", doctor=" + doctor +
+                ", date=" + date +
+                ", time=" + time +
+                ", issue='" + issue + '\'' +
+                ", appointmentStatus='" + appointmentStatus + '\'' +
+                ", created=" + created +
+                ", updated=" + updated +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

@@ -4,7 +4,12 @@ const EndPoints = {
     login:"/api/auth/login",
     forgetPassword:"/api/auth/forget-password",
     resetPasswordWithOtp:"/api/auth/reset-password-with-otp",
-    resetPassword:"/api/auth/reset-password"
+    resetPassword:"/api/auth/reset-password",
+    updateUserDetails:"/api/auth/users",
+    updateUserProfile:"/api/auth/profile",
+    doctorAppointment:"/api/doctor-appointment",
+    inventoryList:'/api/inventory',
+    createPharmacy:'/api/pharmacy',
 }
 
 export default EndPoints
