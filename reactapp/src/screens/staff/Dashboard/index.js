@@ -49,9 +49,9 @@ const imageStyle = {position:'absolute',top:'11%',left:'calc(100% - 218px)',widt
 
 export default function PatientDashboard() {
 
- /*    const dispatch = useDispatch()
+    const dispatch = useDispatch()
     const user = useSelector((s) => s?.user?.value)
-    console.log("userdate",user); */
+    console.log("userdate",user);
 
     const [record,setRecord] = useState(staffDetails);
 

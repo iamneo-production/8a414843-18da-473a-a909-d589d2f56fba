@@ -7,12 +7,14 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import Profile from '../../assests/man.png';
+import ResetPassword from '../password/ResetPassword';
+import { useDisclosure } from '@mantine/hooks';
 import { useSelector } from 'react-redux';
 import { put } from '../../api';
 import EndPoints from '../../api/endPoints';
 
 //style
-const imgContainer = { display: "flex",justifyContent: "center", alignItems: "center",height: "120px" }
+const imgContainer = { display: "flex",justifyContent: "center", alignItems: "center",height: "120px"}
 
 const imageStyle = { position:'absolute',top:'9%',left:'43%',width:'7em',height:'7em',borderRadius:'50%',objectFit:'cover' }
 
@@ -85,6 +87,7 @@ export default function ProfileDetailModal(props){
 
 
     return(
+        <>
         <Modal size={800} radius={20} opened={open} onClose={() => close()} title="Personal Details" centered>
             {/* <PersonalDetails details={record} onClose={() => close()} onSubmit={handleSaveEdit}/> */}
             <div style={imgContainer}>
@@ -139,7 +142,7 @@ export default function ProfileDetailModal(props){
                     <Button onClick={()=>close()} style={cancelButton}>Cancel</Button>
                 </form>
             </div>    
-
         </Modal>
+        </>
     )
 }

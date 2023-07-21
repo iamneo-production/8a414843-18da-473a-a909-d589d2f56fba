@@ -1,5 +1,6 @@
-import { TextInput, PasswordInput, Image, Container, Select } from '@mantine/core';
+import { TextInput, PasswordInput, Image, Container, Select, Box, Button } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { useState } from 'react';
 import { Grid, Title } from '@mantine/core';
 import { Text } from '@mantine/core';
 import SignInimage from "../../../assests/signIniamge.svg"
@@ -10,7 +11,16 @@ import { logins } from '../../../provider/features/userSlice';
 import { post } from '../../../api';
 import EndPoints from '../../../api/endPoints';
 import {setRole} from '../../../provider/features/roleSlice';
-
+import { Modal} from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import ResetPasswordWithOtp from '../../../components/password/ResetpasswordWithotp';
+import ResetPassword from '../../../components/password/ResetPassword';
+import ForgetPassword from '../../../components/password/ForgetPassword';
+const forgotPasswordButton = { marginTop:"20px", padding: "10px 20px", 
+                    borderRadius: "7px",border:"none",color: "white",   
+                    position: "relative", background: "rgba(139, 127, 194, 1)", 
+                    cursor: "pointer",
+                    }
 function SignIn() {
 
     const navigate=useNavigate()
@@ -41,7 +51,19 @@ function SignIn() {
             console.log(error);
           })
     }
+    const [forgetPasswordOpened, { open: openForgetPassword, close: closeForgetPassword }] = useDisclosure(false);
+    const [resetPasswordWithOtpOpened, { open: openResetPasswordWithOtp, close: closeResetPasswordWithOtp }] = useDisclosure(false);
 
+  // Function to handle ForgetPassword 
+  const handleForgetPasswordSubmit = () => {
+    openResetPasswordWithOtp(); // Open ResetPassword modal
+    closeForgetPassword(); // Close ForgetPassword modal
+  };
+
+  // Function to handle ResetPassword
+  const handleResetPasswordWithOtpSubmit = () => {
+    closeResetPasswordWithOtp(); // Close the reset Password modal
+  };
     const form = useForm({
         initialValues: {
             email: '',
@@ -53,12 +75,9 @@ function SignIn() {
         },
     });
     return (
-        <form onSubmit={form.onSubmit((values) => {
-            console.log(values)
-            handleSubmit()
-            })}>
+            <>
              <Grid pt="lg" m={0} px={0}>
-    <Grid.Col xs={6} lg={6} style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItem: 'center', height: '100vh' }} >
+                <Grid.Col xs={6} lg={6} style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItem: 'center', height: '100vh' }} >
                     <Title mb="md">We Help People to get Appointment in Online</Title>
                     <Text>
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Necessitatibus delectus nihil consequatur? Temporibus enim, vel id dolor minus nulla cum quod ipsa dicta quibusdam accusamus voluptatem dignissimos quos odit. Adipisci nisi neque repellat reiciendis vero expedita! Ratione tempora quia repellendus!
@@ -83,8 +102,7 @@ function SignIn() {
                         Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                         Lorem Ipsum has been the industry's standard dummy text ever since.
                     </Text>
-                    <Container>
-
+                    <form onSubmit={form.onSubmit((values) => { console.log(values); handleSubmit()})}>
                         {/* <Select style={{ height: "6vh" }} placeholder="Pick Your Role" px="140px" data={[
                             { value: 'Patient', label: 'Patient' },
                             { value: 'Doctor', label: 'Doctor' },
@@ -98,14 +116,39 @@ function SignIn() {
                             placeholder="Password"
                             {...form.getInputProps('password')}
                         />
-                        <button type='submit' style={{ padding: "10px 20px", borderRadius: "7px", textDecoration: "none", borderColor: "rgba(139, 127, 194, 1)", color: "white", position: "relative", overflow: "hidden", background: "rgba(139, 127, 194, 1)", cursor: "pointer", left: "42%" }}>Sign In</button>
-                    </Container>
+                        {/* marginTop:"20px", padding: "10px 20px", position:"relative",overflow:"hidden",
+                       borderRadius: "7px",border:"none",color: "white",   
+                       position: "relative", background: "rgba(139, 127, 194, 1)", 
+                       cursor: "pointer",left:"20%",bottom:"15%"
+                        */}
+                        <button type='submit' style={{ padding: "10px 20px",
+                            textDecoration: "none",color: "white", borderRadius:"7px",border:"none", 
+                            position: "relative", overflow: "hidden", background: "rgba(139, 127, 194, 1)", 
+                            cursor: "pointer",left:"45%",bottom:"7.8%"}}>Sign In</button>
+                        </form>
+                        <button style={{ padding: "10px 10px",
+                            textDecoration: "none",color: "white", borderRadius:"7px",border:"none", 
+                            position: "relative", overflow: "hidden", background: "rgba(139, 127, 194, 1)", 
+                            cursor: "pointer",left:"60%",bottom:"7.4%"}} onClick={() => {closeResetPasswordWithOtp(); // Close reset password modal if it's open
+                                                openForgetPassword(); // Open forget password modal
+                        }}>Forgot Password</button>
                 </Grid.Col>
                 <Grid.Col xs={6} lg={6}>
                     <Image fit="contain" src={SignInimage} />
                 </Grid.Col>
+                <Modal opened={forgetPasswordOpened} onClose={closeForgetPassword} centered>
+                    <ForgetPassword onSubmit={handleForgetPasswordSubmit} />
+                </Modal>
+
+                <Modal opened={resetPasswordWithOtpOpened} onClose={closeResetPasswordWithOtp} centered>
+                    <ResetPasswordWithOtp onSubmit={handleResetPasswordWithOtpSubmit} />
+                </Modal>
             </Grid>
-        </form>
+            </>
     );
 }
+/* style={{ padding: "10px 5px", borderRadius: "7px", 
+                            textDecoration: "none", borderColor: "rgba(139, 127, 194, 1)", color: "white", 
+                            position: "relative", overflow: "hidden", background: "rgba(139, 127, 194, 1)", 
+                            cursor: "pointer",left:"60%",bottom:"7.8%"}} */
 export default SignIn;

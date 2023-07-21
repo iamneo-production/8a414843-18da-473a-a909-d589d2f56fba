@@ -23,7 +23,6 @@ public class User implements UserDetails {
     private Long id;
     private String firstName;
     private String lastName;
-    
     @Column(unique = true,nullable = false)
     @NotNull(message = "Email Cannot be Null")
     @Email(message = "Should be a Valid Email")
@@ -99,24 +98,25 @@ public class User implements UserDetails {
 
 	// public void  setAge( ){this.age= this.age;}
     public Integer getAge(){return age;}
-    public void setAddress( ){this.address= this.address;}
+    /*public void setAddress( ){this.address= this.address;}*/
     public String getAddress(){return address;}
-    public void setPhone( ){this.phone= this.phone;}
+    /*public void setPhone()
+    {this.phone= this.phone;}*/
     public Long getPhone(){return phone;}
     public void setCreatedAt(){this.createdAt=createdAt;}
     public Date getCreatedAt(){return createdAt;}
     public void setUpdatedAt(){this.updatedAt=updatedAt;}
     public Date getUpdatedAt(){return updatedAt;}
 
-    public void setSalary( ){
+    /*public void setSalary(long salary){
         this.salary= this.salary;
-    }
+    }*/
     public Long getSalary(){
         return salary;
     }
-    public void setSpecialist( ){
+    /*public void setSpecialist(String specialist){
         this.specialist= this.specialist;
-    }
+    }*/
     public String getSpecialist(){
         return specialist;
     }
@@ -130,7 +130,7 @@ public class User implements UserDetails {
     }
 
 
-    public void setStatus(){this.status=status;}
+    public void setStatus(boolean status){this.status=status;}
     public boolean getStatus(){return status;}
 
     @Override
@@ -215,25 +215,17 @@ public class User implements UserDetails {
         this.newPassword = newPassword;
     }
 
-    /*public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }*/
-
-    public boolean isStatus() {
+    /*public boolean isStatus() {
         return status;
     }
 
     public void setStatus(boolean status) {
         this.status = status;
-    }
+    }*/
 
-    public void setEnabled(boolean enabled) {
+    /*public void setEnabled(boolean enabled) {
         isEnabled = enabled;
-    }
+    }*/
     public boolean hasSpecificRole() {
         // Check if the user has a specific role (e.g., ROLE_STAFF, ROLE_DOCTOR, ROLE_ADMIN)
         List<String> specificRoles = Arrays.asList("ROLE_STAFF", "ROLE_DOCTOR", "ROLE_ADMIN");
