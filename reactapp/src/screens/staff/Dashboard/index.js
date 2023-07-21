@@ -1,19 +1,12 @@
 import { 
-    Menu,
     Paper,
     Card, 
-     Text,
-     Button,
-     Modal, 
+     Text, 
      Avatar 
     } from '@mantine/core';
-
-import { useState } from "react";
 import Profile from '../../../assests/man.png';
 import React from 'react';
-import { useDispatch,useSelector } from 'react-redux';
-const staffDetails =  {name:'Andy', id:'001' , designation:'STAFF', status:true, gender:'Male', dob:'29/09/2003', age: '28',
-bloodGroup:'O+ve', email:'abcd@gmail.com', number:'123456XXX9', martialStatus: 'Unmarried', address:'London'}
+import { useSelector } from 'react-redux';
 
 //Styles
 
@@ -42,25 +35,16 @@ const cardContent1 = {padding:'2em',height:'7.5em',backgroundImage:'linear-gradi
 
 const cardContent2 = {color:'#565656',padding:'3.5em'}
 
-const menuStyle = {position:'absolute',top:'3%',right:'0%',background:'none',border:'none',outline:'none',padding:'3px'}
+// const menuStyle = {position:'absolute',top:'3%',right:'0%',background:'none',border:'none',outline:'none',padding:'3px'}
 
 const imageStyle = {position:'absolute',top:'11%',left:'calc(100% - 218px)',width:'7em',height:'7em',borderRadius:'50%',objectFit:'cover'}
 
 
 export default function PatientDashboard() {
 
- /*    const dispatch = useDispatch()
     const user = useSelector((s) => s?.user?.value)
-    console.log("userdate",user); */
+    console.log("userdate",user); 
 
-    const [record,setRecord] = useState(staffDetails);
-
-    const [modal, setModal] = useState(false);
-
-    const handleSaveEdit = (editedData) => {
-        setModal(false);
-        setRecord(editedData);
-    };
 
 
   return (
@@ -97,9 +81,6 @@ export default function PatientDashboard() {
                         </Text>
                     </div>
                 </Card>
-                {/* <Modal size={800} radius={20} opened={modal} onClose={() => setModal(false)} title="Personal Details" centered>
-                    <PersonalDetails details={record} onClose={() => setModal(false)} onSubmit={handleSaveEdit}/>
-                </Modal> */}
             </div>
         </Paper>
 
