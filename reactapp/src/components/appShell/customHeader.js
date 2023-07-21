@@ -115,11 +115,6 @@ export default function CustomHeader(props) {
                             />
                         </Menu.Target>
                         <Menu.Dropdown>
-                            <Menu.Item
-                                icon={<IconSettings />}
-                            >
-                                Settings
-                            </Menu.Item>
                             <Menu.Item icon={<IconSettings />} onClick={()=> setModalOpen(true)}> Profile </Menu.Item>
                         </Menu.Dropdown>
                     </Menu>
