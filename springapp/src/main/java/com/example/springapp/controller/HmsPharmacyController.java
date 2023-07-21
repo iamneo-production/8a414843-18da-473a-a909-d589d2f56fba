@@ -39,6 +39,7 @@ public class HmsPharmacyController {
     @PostMapping("/api/pharmacy")
     public ResponseEntity<?> savePharmacy(@RequestBody List<HmsPharmacyRequestDto> pharmacy) {
         try {
+        	System.out.println(pharmacy);
 
             List<HmsPharmacy> pharmacyList = new ArrayList<>();
 

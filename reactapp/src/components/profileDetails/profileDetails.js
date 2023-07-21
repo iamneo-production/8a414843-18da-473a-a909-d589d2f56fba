@@ -7,6 +7,9 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import Profile from '../../assests/man.png';
+import { useSelector } from 'react-redux';
+import { put } from '../../api';
+import EndPoints from '../../api/endPoints';
 
 //style
 const imgContainer = { display: "flex",justifyContent: "center", alignItems: "center",height: "120px" }
@@ -25,37 +28,59 @@ const cancelButton = { marginTop:"20px", padding: "10px 20px", borderRadius: "7p
 
 
 const details =  {name:'Andy', id:'001' , designation:'STAFF', status:true, gender:'Male', dob:'29/09/2003', age: '28',
-bloodGroup:'O+ve', email:'abcd@gmail.com', number:'123456XXX9', martialStatus: 'Unmarried', address:'London'}
+bloodGroup:'O+ve', email:'abcd@gmail.com', phone:'123456XXX9', martialStatus: 'Unmarried', address:'London'}
 
 export default function ProfileDetailModal(props){
     const{ open, close} = props;
+    const user = useSelector((s) => s?.user?.value)
+    console.log(user);
+
+    const handleSubmit = async() => {   
+        const data = form.values
+        await put(`${EndPoints.updateUserDetails}/${user?.id}`,data).then((response)=>{
+        console.log(response.data);
+        }).catch(error =>{
+        console.log(error);
+        })
+
+        close();
+    
+    }
 
     const form = useForm({
         initialValues: {
-            name: details?.name,
-            id: details?.id ,
-            designation: details.designation,
+            firstName: user?.firstName,
+            lastName: user?.lastName,
+            id: user?.id ,
             status:details.status,
-            gender: details?.gender,
-            dob: new Date(details?.dob),
-            age: details?.age,
-            bloodGroup:details?.bloodGroup,
-            email: details?.email,
-            number: details?.number,
-            martialStatus: details?.martialStatus,
-            address:details?.address,
+            gender: user?.gender,
+            dob: user?.dob,
+            age: user?.age,
+            email: user?.email,
+            phone: user?.phone,
+            address:user?.address,
         },
         validate: {
             email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-            number: (value) => (/^\d{10}$/.test(value) ? null : 'Please enter a valid phone number.')
+            phone: (value) => (/^\d{10}$/.test(value) ? null : 'Please enter a valid phone number.')
         },
     });
 
-    const handleSubmit = () => {
-        console.log(form.values);
-        // onSubmit(form.values);
-        close();
-      };
+    // const handleSubmit = () => {
+    //     console.log(form.values);
+    //     // onSubmit(form.values);
+    //     close();
+    //   };
+
+    // const handleFileChange = async(e) => {
+    //     console.log(e.target.files[0]);
+    //     const data = form.values
+    //     await put(`${EndPoints.updateUserProfile}/${user?.id}`,data).then((response)=>{
+    //     console.log(response.data);
+    //     }).catch(error =>{
+    //     console.log(error);
+    //     })
+    // }
 
 
 
@@ -63,18 +88,23 @@ export default function ProfileDetailModal(props){
         <Modal size={800} radius={20} opened={open} onClose={() => close()} title="Personal Details" centered>
             {/* <PersonalDetails details={record} onClose={() => close()} onSubmit={handleSaveEdit}/> */}
             <div style={imgContainer}>
-                <Avatar style={imageStyle} src={Profile} alt=""/>
+                <Avatar style={imageStyle} src={user.profileImage} alt=""/>
+                {/* <input type="file" accept="image/*"  onChange={handleFileChange} /> */}
             </div>
             <div style={container}>
-                <form onSubmit={(e) => e.preventDefault()}>
+                <form>
                     <div style={content}>
                         <div style={layout}>
-                            <label>Name</label>
-                            <TextInput {...form.getInputProps('name')}/>
+                            <label>First Name</label>
+                            <TextInput {...form.getInputProps('firstName')}/>
+                        </div>
+                        <div style={layout}>
+                            <label>Last Name</label>
+                            <TextInput {...form.getInputProps('lastName')}/>
                         </div>
                         <div style={layout}>
                             <label>DOB</label>
-                            <TextInput type="date" {...form.getInputProps('dob')}/>
+                            <TextInput {...form.getInputProps('dob')}/>
                         </div>
                         <div style={layout}>
                             <label>Gender</label>
@@ -86,22 +116,22 @@ export default function ProfileDetailModal(props){
                         </div>
                         <div style={layout}>
                             <label>Mobile No</label>
-                            <TextInput {...form.getInputProps('number')}/>
+                            <TextInput {...form.getInputProps('phone')}/>
                         </div>
-                        <div style={layout}>
+                        {/* <div style={layout}>
                             <label>Email Id</label>
                             <TextInput {...form.getInputProps('email')}/>
-                        </div>
-                        <div style={layout}>
+                        </div> */}
+                        {/* <div style={layout}>
                             <label>BloodGroup</label>
                             <TextInput {...form.getInputProps('bloodGroup')}/>
-                        </div>
-                        <div style={layout}>
-                            <label>Martial Status</label>
-                            <TextInput {...form.getInputProps('martialStatus')}/>
-                        </div>
+                        </div> */}
                     </div>
                     <div>
+                        <label>Email Id</label>
+                        <TextInput {...form.getInputProps('email')}/>
+                    </div>
+                    <div style={{paddingTop:'15px'}}>
                         <label>Address</label>
                         <Textarea  {...form.getInputProps('address')}/>
                     </div>

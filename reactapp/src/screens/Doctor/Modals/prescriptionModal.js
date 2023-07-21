@@ -49,15 +49,26 @@ export default function PrescriptionModal(props) {
   async function handleSubmit() {
     let prev = form.values.medicineLists;
     for (let i = 0; i < prev.length; i++) {
-      prev[i].appointmentId = appointmentData;
-      prev[i].prescribedDays = noOfDays;
+      prev[i].appointmentId = appointmentData?.id;
+      prev[i].prescribedDays = Number(noOfDays);
+      let count=0;
+      if(prev[i].morning){
+        count+=1;
+      }
+      if(prev[i].noon){
+        count+=1
+      }
+      if(prev[i].night){
+        count+=1
+      }
+      prev[i].quantity = count*Number(noOfDays);
     }
     console.log("dwdq", prev);
-    // await post(EndPoints.register,prev).then((response)=>{
-    //     console.log(response.data);
-    //   }).catch(error =>{
-    //     console.log(error);
-    //   })
+    await post(EndPoints.createPharmacy,prev).then((response)=>{
+        console.log(response.data);
+      }).catch(error =>{
+        console.log(error);
+      })
   }
 
   useEffect(() => {
