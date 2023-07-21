@@ -1,8 +1,11 @@
 package com.example.springapp.serviceImplementation;
 
+import com.example.springapp.dto.request.HmsAppointmentRequestDto;
 import com.example.springapp.exception.EntityNotFoundException;
 import com.example.springapp.model.HmsAppointment;
+import com.example.springapp.model.User;
 import com.example.springapp.repository.HmsAppointmentRepository;
+import com.example.springapp.repository.UserRepository;
 import com.example.springapp.service.HmsAppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,8 +14,13 @@ import java.util.List;
 @Service
 
 public class HmsAppointmentImpl implements HmsAppointmentService {
+
+
     @Autowired
     private HmsAppointmentRepository appointmentRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public HmsAppointment saveAppointment(HmsAppointment appointment) {
@@ -49,22 +57,36 @@ public class HmsAppointmentImpl implements HmsAppointmentService {
 //
 
     @Override
-    public HmsAppointment updateAppointmentById(Long id, HmsAppointment updatedAppointment) {
-        HmsAppointment existingAppointment = appointmentRepository.findById(id)
-                .orElseThrow(()->new EntityNotFoundException(id));
+    public HmsAppointment updateAppointmentById(Long id, HmsAppointmentRequestDto updatedAppointment) {
 
-        existingAppointment.setDoctorId(updatedAppointment.getDoctorId());
-        existingAppointment.setDate(updatedAppointment.getDate());
-        existingAppointment.setTime(updatedAppointment.getTime());
-        existingAppointment.setIssue(updatedAppointment.getIssue());
-        existingAppointment.setAppointmentStatus(updatedAppointment.getAppointmentStatus());
-        existingAppointment.setPatientId(updatedAppointment.getPatientId());
-        existingAppointment.setStatus(updatedAppointment.getStatus());
+        HmsAppointment hmsAppointment=appointmentRepository.findById(id).orElseThrow();
 
+        if (updatedAppointment.getDoctorId() != null ) {
+            User doctor=userRepository.findById(updatedAppointment.getDoctorId()).orElseThrow();
+            hmsAppointment.setDoctor(doctor);
 
+        }
+        if (updatedAppointment.getPatientId() != null ) {
+            User patient=userRepository.findById(updatedAppointment.getPatientId()).orElseThrow();
+            hmsAppointment.setDoctor(patient);
+        }
+        if (updatedAppointment.getDate() != null ) {
+            hmsAppointment.setDate(updatedAppointment.getDate());
 
+        }
+        if (updatedAppointment.getTime() != null ) {
+            hmsAppointment.setTime(updatedAppointment.getTime());
 
-        return appointmentRepository.save(existingAppointment);
+        }
+        if (updatedAppointment.getIssue() != null ) {
+            hmsAppointment.setIssue(updatedAppointment.getIssue());
+
+        }
+        if (updatedAppointment.getAppointmentStatus() != null ) {
+            hmsAppointment.setAppointmentStatus(updatedAppointment.getAppointmentStatus());
+        }
+
+        return appointmentRepository.save(hmsAppointment);
 
     }
 

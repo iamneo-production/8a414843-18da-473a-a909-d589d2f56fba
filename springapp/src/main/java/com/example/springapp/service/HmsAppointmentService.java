@@ -1,4 +1,5 @@
 package com.example.springapp.service;
+import com.example.springapp.dto.request.HmsAppointmentRequestDto;
 import com.example.springapp.model.HmsAppointment;
 
 import java.util.List;
@@ -8,7 +9,7 @@ public interface HmsAppointmentService {
 
 //    public HmsAppointment updateAppointment(HmsAppointment appointment);
 
-    HmsAppointment updateAppointmentById(Long id, HmsAppointment updatedAppointment);
+    HmsAppointment updateAppointmentById(Long id, HmsAppointmentRequestDto updatedAppointment);
 
     public List<HmsAppointment> findAllAppointment();
 

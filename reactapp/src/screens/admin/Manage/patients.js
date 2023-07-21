@@ -225,7 +225,6 @@ function ManagePatientUser() {
       return columnValue.toLowerCase().includes(filterValue); // Compare lowercase values
     });
   });
-  
   return (
     <>
       {/* <Button m="md" style={{left:"90%",borderRadius:"15px",textDecoration:"none",

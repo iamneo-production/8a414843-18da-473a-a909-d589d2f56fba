@@ -1,8 +1,5 @@
 package com.example.springapp.service;
-
 import com.example.springapp.config.jwt.JwtTokenProvider;
-import com.example.springapp.dto.UserDto;
-import com.example.springapp.email.EmailService;
 import com.example.springapp.model.User;
 import com.example.springapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +22,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -53,9 +50,22 @@ public class UserService implements UserDetailsService {
 
 
 
-    public boolean verifyUser(String email,String password){
+    /*public boolean verifyUser(String email,String password){
         User user=userRepository.findByEmail(email).orElseThrow();
          return new BCryptPasswordEncoder().matches(password,user.getPassword());
+    }*/
+    public boolean verifyUser(String email, String password) {
+        // Fetch the user from the data store based on the provided email
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                return true;
+            }
+        }
+
+        return false; // Passwords do not match or user not found
     }
     public boolean checkuserNameExists(String email){
         return userRepository.findByEmail(email).isPresent();
@@ -108,41 +118,41 @@ public class UserService implements UserDetailsService {
         }
         return false;
     }
-    public User updateUser(Long departmentId, UserDto userDto) {
+    public User updateUser(Long departmentId, User user) {
         User userDB = userRepository.findById(departmentId).orElse(null);
         if (userDB != null) {
-            if (userDto.getFirstName() != null && !userDto.getFirstName().isEmpty()) {
-                userDB.setFirstName(userDto.getFirstName());
+            if (user.getFirstName() != null && !user.getFirstName().isEmpty()) {
+                userDB.setFirstName(user.getFirstName());
             }
-            if (userDto.getLastName() != null && !userDto.getLastName().isEmpty()) {
-                userDB.setLastName(userDto.getLastName());
+            if (user.getLastName() != null && !user.getLastName().isEmpty()) {
+                userDB.setLastName(user.getLastName());
             }
-            if (userDto.getDob() != null ){
-                userDB.setDob(userDto.getDob());
+            if (user.getDob() != null ){
+                userDB.setDob(user.getDob());
             }
-            if (userDto.getEmail() != null && !userDto.getEmail().isEmpty()) {
-                userDB.setEmail(userDto.getEmail());
+            if (user.getEmail() != null && !user.getEmail().isEmpty()) {
+                userDB.setEmail(user.getEmail());
             }
-            if (userDto.getRoles() != null && !userDto.getRoles().isEmpty()) {
-                userDB.setRoles(userDto.getRoles());
+            if (user.getRoles() != null && !user.getRoles().isEmpty()) {
+                userDB.setRoles(user.getRoles());
             }
-            if(userDto.getAge() != null) {
-            userDB.setAge(userDto.getAge());
+            if(user.getAge() != null) {
+            userDB.setAge(user.getAge());
             }
-            if (userDto.getGender() != null && !userDto.getGender().isEmpty()) {
-                userDB.setGender(userDto.getGender());
+            if (user.getGender() != null && !user.getGender().isEmpty()) {
+                userDB.setGender(user.getGender());
             }
-            if (userDto.getAddress() != null && !userDto.getAddress().isEmpty()) {
-                userDB.setAddress(userDto.getAddress());
+            if (user.getAddress() != null && !user.getAddress().isEmpty()) {
+                userDB.setAddress(user.getAddress());
             }
-            if (userDto.getPhone() != null) {
-                userDB.setPhone(userDto.getPhone());
+            if (user.getPhone() != null) {
+                userDB.setPhone(user.getPhone());
             }
-            if (userDto.getSalary() != null) {
-                userDB.setSalary(userDto.getSalary());
+            if (user.getSalary() != null) {
+                userDB.setSalary(user.getSalary());
             }
-            if (userDto.getSpecialist() != null && !userDto.getSpecialist().isEmpty()) {
-                userDB.setSpecialist(userDto.getSpecialist());
+            if (user.getSpecialist() != null && !user.getSpecialist().isEmpty()) {
+                userDB.setSpecialist(user.getSpecialist());
             }
             return userRepository.save(userDB);
         } else {
@@ -162,12 +172,81 @@ public class UserService implements UserDetailsService {
         }
         return null;
     }
-    public void sendEmailWithPassword(String email, String password) {
-        // Implement your actual email sending logic here
-        String subject = "Registration Details";
-        String body = "Thank you for registering. Your password is: " + password;
+    public void sendEmailWithPassword(String email, String password,String roles) {
 
-        // Replace the code below with your email sending implementation
+        String subject = "Registration Details";
+        String body = "You Have been Registered as"+ roles + ". Your Temporary password is for your safety rest it: " + password;
+
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(email);
+            helper.setSubject(subject);
+            helper.setText(body, true);
+
+            javaMailSender.send(message);
+
+            System.out.println("Email sent successfully to: " + email);
+        } catch (MessagingException e) {
+            System.out.println("Failed to send email to: " + email);
+            e.printStackTrace();
+        }
+    }
+    public void sendEmailToPatient(String email) {
+
+        String subject = "You are Successfully registered";
+        String body = "Thank you for registering. Your Book Your Appointments to Doctors to stay Healthy";
+
+        try {
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(email);
+            helper.setSubject(subject);
+            helper.setText(body, true);
+
+            javaMailSender.send(message);
+
+            System.out.println("Email sent successfully to: " + email);
+        } catch (MessagingException e) {
+            System.out.println("Failed to send email to: " + email);
+            e.printStackTrace();
+        }
+    }
+
+    public String generateRandomPassword() {
+        // Generate a random password
+        String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%/";
+        int passwordLength = 8;
+        StringBuilder password = new StringBuilder();
+
+        for (int i = 0; i < passwordLength; i++) {
+            int index = ThreadLocalRandom.current().nextInt(allowedChars.length());
+            password.append(allowedChars.charAt(index));
+        }
+
+        return password.toString();
+    }
+    public boolean resetPassword(String email, String newPassword) {
+
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+
+            // Hash the new password before saving it to the database
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+
+            return true; // Password reset successful
+        }
+
+        return false; // Password reset failed
+    }
+    public void sendEmailResetPassword(String email, String password) {
+        String subject = "Reset password";
+        String body = "Your Password has been reset. Your New password is: " + password;
+
         try {
             // Create a new email message
             MimeMessage message = javaMailSender.createMimeMessage();
@@ -185,19 +264,37 @@ public class UserService implements UserDetailsService {
             e.printStackTrace();
         }
     }
+    public String generateRandomOTP() {
+        // Generate an OTP
+        int otpLength = 6;
+        StringBuilder otp = new StringBuilder();
 
-    public String generateRandomPassword() {
-        // Generate a random password
-        String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%/";
-        int passwordLength = 8;
-        Random random = new Random();
-        StringBuilder password = new StringBuilder();
-
-        for (int i = 0; i < passwordLength; i++) {
-            int index = random.nextInt(allowedChars.length());
-            password.append(allowedChars.charAt(index));
+        for (int i = 0; i < otpLength; i++) {
+            int digit = ThreadLocalRandom.current().nextInt(10);
+            otp.append(digit);
         }
 
-        return password.toString();
+        return otp.toString();
+    }
+
+    public void sendOTPEmail(String email, String otp) {
+        String subject = "Reset Password OTP";
+        String body = "Your OTP for password reset is: " + otp;
+
+        try {
+            // Create a new email message
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(email);
+            helper.setSubject(subject);
+            helper.setText(body, true);
+
+            javaMailSender.send(message);
+
+            System.out.println("OTP email sent successfully to: " + email);
+        } catch (MessagingException e) {
+            System.out.println("Failed to send OTP email to: " + email);
+            e.printStackTrace();
+        }
     }
 }
