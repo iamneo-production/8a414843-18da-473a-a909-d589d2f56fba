@@ -1,8 +1,10 @@
 package com.example.springapp.controller;
 
+import com.example.springapp.dto.BaseResponseDto;
 import com.example.springapp.model.HmsInventory;
 import com.example.springapp.service.HmsInventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,8 +57,13 @@ public class HmsInventoryController {
     }
     @CrossOrigin(origins = "http://localhost:8081")
     @GetMapping
-    public ResponseEntity<List<HmsInventory>> getAllInventories() {
+    public ResponseEntity<?> getAllInventories() {
+    try{
         List<HmsInventory> inventories = inventoryService.getAllInventories();
-        return ResponseEntity.ok(inventories);
+        return ResponseEntity.ok(new BaseResponseDto("Success",inventories));
+    }catch (Exception ignored){
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error Creating User");
+    }
+
     }
 }
