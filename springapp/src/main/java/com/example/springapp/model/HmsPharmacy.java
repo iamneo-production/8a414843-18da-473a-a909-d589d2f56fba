@@ -22,10 +22,10 @@ public class HmsPharmacy {
     private Long doctor_id;
     private Long appointment_id;
     private Long medicine_id;
-//    private String medication_name;
+    //    private String medication_name;
     private Long prescribed_days;
     private Long quantity;
-//    private String dosage;
+    //    private String dosage;
 //    private LocalDate refill_date;
 //    private String prescription_number;
     private Boolean morning;
@@ -87,7 +87,7 @@ public class HmsPharmacy {
         this.medicine_id = medicine_id;
     }
 
-//    public String getMedication_name() {
+    //    public String getMedication_name() {
 //        return medication_name;
 //    }
 //
@@ -98,7 +98,7 @@ public class HmsPharmacy {
     public Long getPrescribed_days() {
         return prescribed_days;
     }
-//
+    //
     public void setPrescribed_days(Long prescribed_days) {
         this.prescribed_days = prescribed_days;
     }

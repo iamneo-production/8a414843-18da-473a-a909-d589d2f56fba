@@ -1,8 +1,5 @@
 package com.example.springapp.service;
-
 import com.example.springapp.config.jwt.JwtTokenProvider;
-import com.example.springapp.dto.UserDto;
-import com.example.springapp.email.EmailService;
 import com.example.springapp.model.User;
 import com.example.springapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +22,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -121,41 +118,41 @@ public class UserService implements UserDetailsService {
         }
         return false;
     }
-    public User updateUser(Long departmentId, UserDto userDto) {
+    public User updateUser(Long departmentId, User user) {
         User userDB = userRepository.findById(departmentId).orElse(null);
         if (userDB != null) {
-            if (userDto.getFirstName() != null && !userDto.getFirstName().isEmpty()) {
-                userDB.setFirstName(userDto.getFirstName());
+            if (user.getFirstName() != null && !user.getFirstName().isEmpty()) {
+                userDB.setFirstName(user.getFirstName());
             }
-            if (userDto.getLastName() != null && !userDto.getLastName().isEmpty()) {
-                userDB.setLastName(userDto.getLastName());
+            if (user.getLastName() != null && !user.getLastName().isEmpty()) {
+                userDB.setLastName(user.getLastName());
             }
-            if (userDto.getDob() != null ){
-                userDB.setDob(userDto.getDob());
+            if (user.getDob() != null ){
+                userDB.setDob(user.getDob());
             }
-            if (userDto.getEmail() != null && !userDto.getEmail().isEmpty()) {
-                userDB.setEmail(userDto.getEmail());
+            if (user.getEmail() != null && !user.getEmail().isEmpty()) {
+                userDB.setEmail(user.getEmail());
             }
-            if (userDto.getRoles() != null && !userDto.getRoles().isEmpty()) {
-                userDB.setRoles(userDto.getRoles());
+            if (user.getRoles() != null && !user.getRoles().isEmpty()) {
+                userDB.setRoles(user.getRoles());
             }
-            if(userDto.getAge() != null) {
-            userDB.setAge(userDto.getAge());
+            if(user.getAge() != null) {
+            userDB.setAge(user.getAge());
             }
-            if (userDto.getGender() != null && !userDto.getGender().isEmpty()) {
-                userDB.setGender(userDto.getGender());
+            if (user.getGender() != null && !user.getGender().isEmpty()) {
+                userDB.setGender(user.getGender());
             }
-            if (userDto.getAddress() != null && !userDto.getAddress().isEmpty()) {
-                userDB.setAddress(userDto.getAddress());
+            if (user.getAddress() != null && !user.getAddress().isEmpty()) {
+                userDB.setAddress(user.getAddress());
             }
-            if (userDto.getPhone() != null) {
-                userDB.setPhone(userDto.getPhone());
+            if (user.getPhone() != null) {
+                userDB.setPhone(user.getPhone());
             }
-            if (userDto.getSalary() != null) {
-                userDB.setSalary(userDto.getSalary());
+            if (user.getSalary() != null) {
+                userDB.setSalary(user.getSalary());
             }
-            if (userDto.getSpecialist() != null && !userDto.getSpecialist().isEmpty()) {
-                userDB.setSpecialist(userDto.getSpecialist());
+            if (user.getSpecialist() != null && !user.getSpecialist().isEmpty()) {
+                userDB.setSpecialist(user.getSpecialist());
             }
             return userRepository.save(userDB);
         } else {
@@ -221,11 +218,10 @@ public class UserService implements UserDetailsService {
         // Generate a random password
         String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%/";
         int passwordLength = 8;
-        Random random = new Random();
         StringBuilder password = new StringBuilder();
 
         for (int i = 0; i < passwordLength; i++) {
-            int index = random.nextInt(allowedChars.length());
+            int index = ThreadLocalRandom.current().nextInt(allowedChars.length());
             password.append(allowedChars.charAt(index));
         }
 
@@ -269,13 +265,12 @@ public class UserService implements UserDetailsService {
         }
     }
     public String generateRandomOTP() {
-        // Generate a otp
+        // Generate an OTP
         int otpLength = 6;
-        Random random = new Random();
         StringBuilder otp = new StringBuilder();
 
         for (int i = 0; i < otpLength; i++) {
-            int digit = random.nextInt(10);
+            int digit = ThreadLocalRandom.current().nextInt(10);
             otp.append(digit);
         }
 

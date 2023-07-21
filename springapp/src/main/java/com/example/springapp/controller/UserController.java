@@ -1,6 +1,5 @@
 package com.example.springapp.controller;
 
-import com.example.springapp.dto.UserDto;
 import com.example.springapp.dto.BaseResponseDto;
 import com.example.springapp.dto.UserLoginDto;
 import com.example.springapp.model.User;
@@ -180,11 +179,10 @@ public class UserController {
 
 
     @GetMapping("/api/auth/users/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
+    public ResponseEntity<User> getUserById(@PathVariable("id") Long id) {
         Optional<User> user = userService.getUserById(id);
         if (user.isPresent()) {
-            UserDto userDto = new UserDto(user.get());
-            return ResponseEntity.ok(userDto);
+            return ResponseEntity.ok(user.get());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -200,13 +198,11 @@ public class UserController {
         }
     }
 
-
     @PutMapping("/api/auth/users/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id, @RequestBody UserDto userDto) {
-        User updatedUser = userService.updateUser(id, userDto);
+    public ResponseEntity<User> updateUser(@PathVariable("id") Long id, @RequestBody User user) {
+        User updatedUser = userService.updateUser(id, user);
         if (updatedUser != null) {
-            UserDto updatedUserDto = new UserDto(updatedUser);
-            return ResponseEntity.ok(updatedUserDto);
+            return ResponseEntity.ok(updatedUser);
         } else {
             return ResponseEntity.notFound().build();
         }

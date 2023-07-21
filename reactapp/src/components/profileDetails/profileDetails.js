@@ -7,9 +7,10 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import Profile from '../../assests/man.png';
-
+import ResetPassword from '../password/ResetPassword';
+import { useDisclosure } from '@mantine/hooks';
 //style
-const imgContainer = { display: "flex",justifyContent: "center", alignItems: "center",height: "120px" }
+const imgContainer = { display: "flex",justifyContent: "center", alignItems: "center",height: "120px"}
 
 const imageStyle = { position:'absolute',top:'9%',left:'43%',width:'7em',height:'7em',borderRadius:'50%',objectFit:'cover' }
 
@@ -29,7 +30,7 @@ bloodGroup:'O+ve', email:'abcd@gmail.com', number:'123456XXX9', martialStatus: '
 
 export default function ProfileDetailModal(props){
     const{ open, close} = props;
-
+    //const [opened, { open, close }] = useDisclosure(false);
     const form = useForm({
         initialValues: {
             name: details?.name,
@@ -50,7 +51,7 @@ export default function ProfileDetailModal(props){
             number: (value) => (/^\d{10}$/.test(value) ? null : 'Please enter a valid phone number.')
         },
     });
-
+    
     const handleSubmit = () => {
         console.log(form.values);
         // onSubmit(form.values);
@@ -60,6 +61,7 @@ export default function ProfileDetailModal(props){
 
 
     return(
+        <>
         <Modal size={800} radius={20} opened={open} onClose={() => close()} title="Personal Details" centered>
             {/* <PersonalDetails details={record} onClose={() => close()} onSubmit={handleSaveEdit}/> */}
             <div style={imgContainer}>
@@ -109,7 +111,7 @@ export default function ProfileDetailModal(props){
                     <Button onClick={()=>close()} style={cancelButton}>Cancel</Button>
                 </form>
             </div>    
-
         </Modal>
+        </>
     )
 }
