@@ -26,7 +26,7 @@ import SampleTable from "../../components/customTable/sampleTable"
 import CustomLottie from '../../components/lottieFiles/customLottie'
 import DoctorLottie from '../../assests/Lottiefiles/doctor.json'
 import HomeLottie from '../../assests/Lottiefiles/Home.json'
-
+import { FooterSocial } from "../../components/footer/footerSocial";
 
 export default function HomeScreen() {
 
