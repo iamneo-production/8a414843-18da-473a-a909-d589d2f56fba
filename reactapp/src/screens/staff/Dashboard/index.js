@@ -11,8 +11,7 @@ import {
 import { useState } from "react";
 import Profile from '../../../assests/man.png';
 import React from 'react';
-import { useSelector } from 'react-redux';
-
+import { useDispatch,useSelector } from 'react-redux';
 const staffDetails =  {name:'Andy', id:'001' , designation:'STAFF', status:true, gender:'Male', dob:'29/09/2003', age: '28',
 bloodGroup:'O+ve', email:'abcd@gmail.com', number:'123456XXX9', martialStatus: 'Unmarried', address:'London'}
 
@@ -50,8 +49,9 @@ const imageStyle = {position:'absolute',top:'11%',left:'calc(100% - 218px)',widt
 
 export default function PatientDashboard() {
 
+ /*    const dispatch = useDispatch()
     const user = useSelector((s) => s?.user?.value)
-    console.log(user);
+    console.log("userdate",user); */
 
     const [record,setRecord] = useState(staffDetails);
 

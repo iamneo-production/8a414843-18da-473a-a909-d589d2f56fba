@@ -53,9 +53,22 @@ public class UserService implements UserDetailsService {
 
 
 
-    public boolean verifyUser(String email,String password){
+    /*public boolean verifyUser(String email,String password){
         User user=userRepository.findByEmail(email).orElseThrow();
          return new BCryptPasswordEncoder().matches(password,user.getPassword());
+    }*/
+    public boolean verifyUser(String email, String password) {
+        // Fetch the user from the data store based on the provided email
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                return true;
+            }
+        }
+
+        return false; // Passwords do not match or user not found
     }
     public boolean checkuserNameExists(String email){
         return userRepository.findByEmail(email).isPresent();
@@ -162,21 +175,39 @@ public class UserService implements UserDetailsService {
         }
         return null;
     }
-    public void sendEmailWithPassword(String email, String password) {
-        // Implement your actual email sending logic here
-        String subject = "Registration Details";
-        String body = "Thank you for registering. Your password is: " + password;
+    public void sendEmailWithPassword(String email, String password,String roles) {
 
-        // Replace the code below with your email sending implementation
+        String subject = "Registration Details";
+        String body = "You Have been Registered as"+ roles + ". Your Temporary password is for your safety rest it: " + password;
+
         try {
-            // Create a new email message
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setTo(email);
             helper.setSubject(subject);
             helper.setText(body, true);
 
-            // Send the email
+            javaMailSender.send(message);
+
+            System.out.println("Email sent successfully to: " + email);
+        } catch (MessagingException e) {
+            System.out.println("Failed to send email to: " + email);
+            e.printStackTrace();
+        }
+    }
+    public void sendEmailToPatient(String email) {
+
+        String subject = "You are Successfully registered";
+        String body = "Thank you for registering. Your Book Your Appointments to Doctors to stay Healthy";
+
+        try {
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(email);
+            helper.setSubject(subject);
+            helper.setText(body, true);
+
             javaMailSender.send(message);
 
             System.out.println("Email sent successfully to: " + email);
@@ -199,5 +230,76 @@ public class UserService implements UserDetailsService {
         }
 
         return password.toString();
+    }
+    public boolean resetPassword(String email, String newPassword) {
+
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+
+            // Hash the new password before saving it to the database
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+
+            return true; // Password reset successful
+        }
+
+        return false; // Password reset failed
+    }
+    public void sendEmailResetPassword(String email, String password) {
+        String subject = "Reset password";
+        String body = "Your Password has been reset. Your New password is: " + password;
+
+        try {
+            // Create a new email message
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(email);
+            helper.setSubject(subject);
+            helper.setText(body, true);
+
+            // Send the email
+            javaMailSender.send(message);
+
+            System.out.println("Email sent successfully to: " + email);
+        } catch (MessagingException e) {
+            System.out.println("Failed to send email to: " + email);
+            e.printStackTrace();
+        }
+    }
+    public String generateRandomOTP() {
+        // Generate a otp
+        int otpLength = 6;
+        Random random = new Random();
+        StringBuilder otp = new StringBuilder();
+
+        for (int i = 0; i < otpLength; i++) {
+            int digit = random.nextInt(10);
+            otp.append(digit);
+        }
+
+        return otp.toString();
+    }
+
+    public void sendOTPEmail(String email, String otp) {
+        String subject = "Reset Password OTP";
+        String body = "Your OTP for password reset is: " + otp;
+
+        try {
+            // Create a new email message
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(email);
+            helper.setSubject(subject);
+            helper.setText(body, true);
+
+            javaMailSender.send(message);
+
+            System.out.println("OTP email sent successfully to: " + email);
+        } catch (MessagingException e) {
+            System.out.println("Failed to send OTP email to: " + email);
+            e.printStackTrace();
+        }
     }
 }
