@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface HmsPharmacyRepository extends JpaRepository<HmsPharmacy,Long> {
     List<HmsPharmacy> findAllByAppointment(HmsAppointment appointmentId);
+
+    List<HmsPharmacy> findAllByStatusTrue();
 }

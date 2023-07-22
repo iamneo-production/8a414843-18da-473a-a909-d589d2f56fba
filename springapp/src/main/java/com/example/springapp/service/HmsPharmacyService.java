@@ -15,4 +15,6 @@ public interface HmsPharmacyService {
     public List<HmsPharmacy> updatePharmacy(Long id, List<HmsPharmacyRequestDto> updatedPharmacy);
 
     public HmsPharmacy getPharmacyById(Long id);
+
+    List<HmsPharmacy> getPharmacyByAppointmentId(Long appointmentId);
 }
