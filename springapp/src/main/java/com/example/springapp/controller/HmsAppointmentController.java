@@ -62,7 +62,7 @@ public class HmsAppointmentController {
     }
 
     @DeleteMapping("/api/appointment/{id}")
-    public String deleteAppointment(@RequestParam Long id) {
+    public String deleteAppointment(@PathVariable Long id) {
         impl.deleteAppointment(id);
         return null;
     }
@@ -77,6 +77,15 @@ public class HmsAppointmentController {
     public List<HmsAppointment> individualUsersAppointment(@PathVariable Long doctorId, @RequestParam (required = false) String appointmentStatus){
         return impl.doctorsAppointment(doctorId, appointmentStatus);
     }
+
+
+
+    @GetMapping("/api/all-patient-appointment/{patientId}")
+    public List<HmsAppointment> getAllPatientAppointment(@PathVariable Long patientId){
+        return impl.appointmentPendingAcceptedPrescribed(patientId);
+    }
+
+
 
 
 }

@@ -20,4 +20,6 @@ public interface HmsAppointmentService {
     public List<HmsAppointment> doctorsAppointment(Long doctorId, String appointmentStatus);
 
     List<HmsAppointment> appointmentAppointmentStatus(String appointmentStatus);
+
+   List<HmsAppointment> appointmentPendingAcceptedPrescribed(Long patientId);
 }

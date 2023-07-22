@@ -12,67 +12,63 @@ import {
   ActionIcon
 } from "@mantine/core";
 import moment from "moment";
-// import { IconSearch, IconPlus, IconEdit, IconTrash } from "@tabler/icons-react";
-import ModalForm from "../appointmentForm";
+import { useSelector } from 'react-redux';
+
+import ModalForm from "./modals/appointmentModal";
 import CustomTable from "../../../components/customTable";
 
 import { useDisclosure } from "@mantine/hooks";
 import { Modal } from "@mantine/core";
 import { Link } from "react-router-dom";
+import { DataTable } from "mantine-datatable"
 
-import { IconSearch, IconPlus, IconEdit, IconTrash } from "@tabler/icons-react";
+import { IconSearch, IconPlus, IconEdit, IconTrash, IconTrashX } from "@tabler/icons-react";
 
 import axios from "axios";
+import {del, get} from "../../../api"
+import EndPoints from "../../../api/endPoints";
 import { useParams } from "react-router-dom";
 
 
-// export default function PatientAppointment() {
-//   const [patients, setPatients] = useState([]);
-  
-//   const {id}=useParams()
-
-//   useEffect(() => {
-//     loadPatients();
-//   }, []); //will run only once when the page loads
-
-//   const loadPatients = async () => {
-//     const result = await axios.get("http://localhost:8080/api/appointment/");
-//     setPatients(result.data);
-//   };
-
-//   const deletePatient=async(id)=>{
-//     await axios.delete(`http://localhost:8080/api/appointment/${id}`)
-//     loadPatients()
-//   }
-
 export default function PatientAppointment() {
   const [patients, setPatients] = useState([]);
-  const patientId = 8; // patient ID should be set over here
+  const[dlt, setDlt]=useState(null);
 
-  useEffect(() => {
-    loadPatients();
-  }, []); // Fetch patients 
 
-  const loadPatients = async () => {
-    try {
-      const result = await axios.get("http://localhost:8080/api/appointment");
-      const filteredPatients = result.data.filter(
-        (patient) => patient.patientId === patientId
-      );
-      setPatients(filteredPatients);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
-  const deletePatient = async (id) => {
-    try {
-      await axios.delete(`http://localhost:8080/api/appointment/${id}`);
-      loadPatients();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+ 
+  const user = useSelector((s) => s?.user?.value)
+  
+  const {id}=useParams()
+
+  const getAppointments =async() =>{
+    await get(`${EndPoints.fetchAppointment}/${user?.id}`).then((response)=>{
+      setPatients(response);
+      console.log(response);
+  }).catch(error =>{
+      console.log(error);
+  })
+
+  }
+  useEffect(()=>{
+    getAppointments()
+  },[])
+
+  
+
+  async function handleDelete(){
+    console.log("FromDeleteMethod",dlt.id);
+   
+     await del(`${EndPoints.deleteAppointment}/${dlt.id}`).then((response) => {
+        console.log(response);
+     }).catch(error => {
+        console.log(error);
+    })
+    setDlt(null);
+    window.location.reload();
+}
+
+
   
 
   const [opened, { open, close }] = useDisclosure(false);
@@ -92,7 +88,7 @@ export default function PatientAppointment() {
     // },
 
     {
-      accessor: "doctorId",
+      accessor: "doctor.firstName",
       title: "Doctor Id",
       textAlignment: "center",
     },
@@ -120,11 +116,28 @@ export default function PatientAppointment() {
 
     
 
+    // {
+    //   accessor: "actions",
+    //   title: <Text mr="xs">Row actions</Text>,
+    //   textAlignment: "center",
+    // },
     {
-      accessor: "actions",
+      accessor: 'actions',
       title: <Text mr="xs">Row actions</Text>,
-      textAlignment: "center",
+      textAlignment: 'center',
+      render: (data) => (
+          <Group spacing={4} position="center" noWrap>
+              <ActionIcon color="blue">
+                  <IconEdit size={16} />
+              </ActionIcon>
+              <ActionIcon color="red"  >
+                  <IconTrash size={16} onClick={()=>{setDlt(data);console.log(data)}} />
+              </ActionIcon>
+          </Group>
+      ),
     },
+
+
   ];
   return (
     <>
@@ -140,7 +153,7 @@ export default function PatientAppointment() {
              
               centered
             >
-              <ModalForm onCloseModal={close} patientId={patientId} />
+              <ModalForm onCloseModal={close}  />
             </Modal>
 
             <Button onClick={open}>
@@ -149,8 +162,9 @@ export default function PatientAppointment() {
           </Group>
         </Grid.Col>
       </Grid>
+      
 
-      <Table>
+      {/* <Table>
         <thead>
           <tr>
             {colDef.map((column, index) => (
@@ -163,20 +177,21 @@ export default function PatientAppointment() {
             <tr key={index}>
               <th scope="row">{index + 1}</th>
 
-              {/* <td>{patient.patientId}</td> */}
-              <td>{patient.doctorId}</td>
+              
+              <td>{patient.doctor.firstName}</td>
               <td>{patient.date}</td>
               <td>{patient.time}</td>
               <td>{patient.issue}</td>
               <td>{patient.appointmentStatus}</td>
-              {/* <td>{patient.doctor}</td> */}
+              
               <td>
+              
                 <Group spacing={4} position="center" noWrap>
                 
-                  <ActionIcon disabled color="blue" onClick={open} to={`/editPatient/${patient.id}`}>
+                  <ActionIcon color="blue" onClick={open} to={`/editPatient/${patient.id}`}>
                     <IconEdit size={16} />
                   </ActionIcon>
-                  <ActionIcon disabled color="red" onClick={()=>{deletePatient(patient.id)}}>
+                  <ActionIcon color="red">
                     <IconTrash size={16} />
                   </ActionIcon>
                 </Group>
@@ -184,7 +199,35 @@ export default function PatientAppointment() {
             </tr>
           ))}
         </tbody>
-      </Table>
+      </Table> */}
+      <Modal opened={dlt !== null} onClose={() => setDlt(null)} size="sm" withCloseButton={false} centered>
+                <div style={{margin:"20px",  display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', height: '300px',padding:"10px" }}>
+                    <IconTrashX style={{ width: "50px", height: "50px", color: 'red', marginBottom: "30px" }} />
+                    <Text style={{ fontSize: "30px" }}>Are you sure?</Text>
+                    <p style={{ textAlign: "center", fontSize: "12px", color: "#888" }}>Do you really want to delete these records? This process cannot be undone.</p>
+                    <div style={{marginTop:"20px", display: 'flex', justifyContent: 'center' }}>
+                        <Button style={{ marginRight: "15px",backgroundColor:"lightgrey" }} onClick={() => setDlt(null)}>Cancel</Button>
+                        <Button style={{backgroundColor:"red"}} onClick={handleDelete}>Delete</Button>
+                    </div>
+                </div>
+            </Modal>
+      <DataTable
+                withBorder
+                shadow="md"
+                withColumnBorders
+                highlightOnHover
+                borderRadius='md'
+                striped
+                horizontalSpacing="xs"
+                verticalSpacing="xs"
+                fontSize="xs"
+                verticalAlignment="top"
+                // fetching={fetching}
+                loaderVariant="bars"
+                minHeight="60vh"
+                columns={colDef}
+                records={patients}
+            />
     </>
   );
 }   
