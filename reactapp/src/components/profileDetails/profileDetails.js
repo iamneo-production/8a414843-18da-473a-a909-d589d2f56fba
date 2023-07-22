@@ -7,12 +7,14 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import Profile from '../../assests/man.png';
+import ResetPassword from '../password/ResetPassword';
+import { useDisclosure } from '@mantine/hooks';
 import { useSelector } from 'react-redux';
 import { put } from '../../api';
 import EndPoints from '../../api/endPoints';
 
 //style
-const imgContainer = { display: "flex",justifyContent: "center", alignItems: "center",height: "120px" }
+const imgContainer = { display: "flex",justifyContent: "center", alignItems: "center",height: "120px"}
 
 const imageStyle = { position:'absolute',top:'9%',left:'43%',width:'7em',height:'7em',borderRadius:'50%',objectFit:'cover' }
 
@@ -27,8 +29,8 @@ const updateButton = { marginTop:"20px", padding: "10px 20px", borderRadius: "7p
 const cancelButton = { marginTop:"20px", padding: "10px 20px", borderRadius: "7px",border:"none",color: "white", position: "relative", background: "rgba(139, 127, 194, 1)", cursor: "pointer", left: "62%" }
 
 
-const details =  {name:'Andy', id:'001' , designation:'STAFF', status:true, gender:'Male', dob:'29/09/2003', age: '28',
-bloodGroup:'O+ve', email:'abcd@gmail.com', phone:'123456XXX9', martialStatus: 'Unmarried', address:'London'}
+// const details =  {name:'Andy', id:'001' , designation:'STAFF', status:true, gender:'Male', dob:'29/09/2003', age: '28',
+// bloodGroup:'O+ve', email:'abcd@gmail.com', phone:'123456XXX9', martialStatus: 'Unmarried', address:'London'}
 
 export default function ProfileDetailModal(props){
     const{ open, close} = props;
@@ -52,7 +54,7 @@ export default function ProfileDetailModal(props){
             firstName: user?.firstName,
             lastName: user?.lastName,
             id: user?.id ,
-            status:details.status,
+            status:user?.status,
             gender: user?.gender,
             dob: user?.dob,
             age: user?.age,
@@ -85,6 +87,7 @@ export default function ProfileDetailModal(props){
 
 
     return(
+        <>
         <Modal size={800} radius={20} opened={open} onClose={() => close()} title="Personal Details" centered>
             {/* <PersonalDetails details={record} onClose={() => close()} onSubmit={handleSaveEdit}/> */}
             <div style={imgContainer}>
@@ -139,7 +142,7 @@ export default function ProfileDetailModal(props){
                     <Button onClick={()=>close()} style={cancelButton}>Cancel</Button>
                 </form>
             </div>    
-
         </Modal>
+        </>
     )
 }

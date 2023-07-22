@@ -1,92 +1,240 @@
-import { Box } from "@mantine/core";
+import {
+    Modal,
+    Grid,
+    Text,
+    Group,
+    Button,
+    TextInput,
+    ActionIcon,
+} from '@mantine/core';
 
-import TableStructure from "./tableStructure"
+import {
+    IconEdit,
+    IconPlus,
+    IconSearch,
+    IconTrashX,
+    IconTrash
+} from "@tabler/icons-react";
 
-// Sending Records or Data to the table
-export default function Pharmacy(){
+import { DataTable } from "mantine-datatable"
+import { useState, useEffect} from "react";
+import ModifyAndCreateModal from "./ModifyAndCreateModal"
+import { get, del } from '../../../api';
+import EndPoints from '../../../api/endPoints';
+import CustomTable from '../../../components/customTable';
 
-    //Data
-    const records = [
-        { 
-            id: 1,
-            medicine_name: "Aspirin",
-            manufacturer:"AbcD",
-            category:"Tablet",
-            price:"2.50",
-            expiry_date: "1/05/2023",
-            quanity: "150"
+
+export default function Pharmacy() {
+
+    //Managing the states for editing records and opening modals(popup)        
+    const [editRecordId, setEditRecordId] = useState(null);
+    //Adding new records to already existing records
+    const [addRecord, setAddRecord] = useState(null);
+    //State to maintain record 
+    const [records,setRecords] = useState([]);
+
+    
+  const [searchTerm, setSearchTerm] = useState("");
+  const [deleteModalOpen, setDeleteModalOpen] = useState(null);
+
+  
+  const deletingData = [];
+
+
+
+    const getPharmacy =async() =>{
+        await get(EndPoints.inventoryList).then((response)=>{
+          setRecords(response.data);
+          console.log(response);
+      }).catch(error =>{
+          console.log(error);
+      })
+    }
+    
+    useEffect(() => {
+      getPharmacy();
+    }, []);
+
+
+   
+
+    const filteredRecords = records.filter((record) =>
+        record.medicineName?.toLowerCase().includes(searchTerm.toLowerCase())||
+        record.category?.toLowerCase().includes(searchTerm.toLowerCase())||
+        record.usages?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const colDef = [
+        {
+            accessor: "id",//for api
+            title: "Item No",
+            titleStyle: { color: "" },//define style
+            textAlignment: "center",
+            
         },
         {
-            id: 2,
-            medicine_name: "Dolo 120mg",
-            manufacturer:"xyz",
-            category:"Syrup",
-            price:"120",
-            expiry_date: "2/05/2023",
-            quanity: "150",
-        },
-        { 
-            id: 3, 
-            medicine_name: "Paracetamol", 
-            manufacturer:"efgh", 
-            category:"Tablet", 
-            price:"2.50", 
-            expiry_date: "3/05/2023", 
-            quanity: "150" 
+            accessor: "medicineName",//for api
+            title: "Medicine Name",
+            titleStyle: { color: "" },//define style
+            textAlignment: "center",
+            
         },
         {
-            id: 4,
-            medicine_name: "Dolo 250 Suspension",
-            manufacturer:"uvw",
-            category:"Syrup",
-            price:"120",
-            expiry_date: "1/05/2023",
-            quanity: "150",
-        },
-        { 
-            id: 5, 
-            medicine_name: "Acephen", 
-            manufacturer:"ijkl", 
-            category:"Tablet", 
-            price:"2.50", 
-            expiry_date: "4/05/2023", 
-            quanity: "150" 
+            accessor: "usages",//for api
+            title: "Usage",
+            titleStyle: { color: "" },//define style
+            textAlignment: "center",
+            
         },
         {
-            id: 6,
-            medicine_name: "Crocin 240 DS",
-            manufacturer:"qrst",
-            category:"Syrup",
-            price:"120",
-            expiry_date: "5/05/2023",
-            quanity: "150",
+            accessor: "category",//for api
+            title: "Category",
+            titleStyle: { color: "" },//define style
+            textAlignment: "center",
+        
         },
-        { 
-            id: 7, 
-            medicine_name: "Ecotrin", 
-            manufacturer:"mnop", 
-            category:"Tablet", 
-            price:"2.50", 
-            expiry_date: "1/05/2023", 
-            quanity: "150" 
+        {
+            accessor: "price",//for api
+            title: "Price (per unit)",
+            titleStyle: { color: "" },//define style
+            textAlignment: "center",
+            
         },
-        { 
-            id: 8, 
-            medicine_name: "Ecotrin", 
-            manufacturer:"mnop", 
-            category:"Tablet", 
-            price:"2.50", 
-            expiry_date: "1/05/2023", 
-            quanity: "150" 
+        {
+            accessor: "quantity",//for api
+            title: "Quanity",
+            titleStyle: { color: "" },//define style
+            textAlignment: "center",
+            
         },
+        {
+            accessor: "expiryDate",//for api
+            title: "Expiry Date",
+            titleStyle: { color: "" },//define style
+            textAlignment: "center",
+            
+        },
+        {
+            accessor: 'actions',
+            title: <Text mr="xs">Row actions</Text>,
+            textAlignment: 'center',
+            render: (data) => (
+                <Group spacing={4} position="center" noWrap>
+                    <ActionIcon color="blue" onClick={() => setEditRecordId(data)}>
+                        <IconEdit size={16} />
+                    </ActionIcon>
+                    <ActionIcon color="red" onClick={() => setDeleteModalOpen(data)}>
+                        <IconTrash size={16} />
+                    </ActionIcon>
+                </Group>
+            ),
+          },
     ];
+
+
+    
+
+    // Search to filter the records using product name
+    function handleSearch(e){
+        setSearchTerm(e.currentTarget.value);
+    }
+        
+    //Deleting record
+    async function handleDelete(){
+        console.log("FromDeleteMethod",deleteModalOpen);
+        deletingData.push(deleteModalOpen);
+         await del(`${EndPoints.deleteInventory}/${deleteModalOpen.id}`).then((response) => {
+            console.log(response);
+         }).catch(error => {
+            console.log(error);
+        })
+        setDeleteModalOpen(null);
+        window.location.reload();
+    }
+
+    //styles
+    
+
+    const searchBar={
+        width : '600px',
+        padding : '0px 0px 20px 0px',
+        display : 'inline-block',
+    }
+
+    const [isHovered, setIsHovered] = useState(false);
+    
+    const btnstyle={
+        backgroundColor: isHovered ? '#F3F4F6' : '#FAFBFC',
+        transition: 'background-color 0.3s',
+        border: '1px solid rgba(27, 31, 35, 0.15)',
+        borderRadius: '6px',
+        boxShadow: 'rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset',
+        boxSizing: 'border-box',
+        color: '#24292E',
+        cursor: 'pointer'
+    };
 
     return (
         <>
-            <Box m="md">
-                {/* Passing records to the table  */}
-                <TableStructure products={records} />
-            </Box>
+            {/* <Text  >
+                
+            </Text> */}
+            <Grid>
+                <Grid.Col xs={4} lg={4} />
+                <Grid.Col xs={8} lg={8}>
+                <Group position="apart">
+                    <Text ta="center" size="xl" style={{ margin: "25px", fontWeight: "bold", color: "#BF94E4" }}> PHARMACY MANAGEMENT</Text>
+                    <Button style={btnstyle}  onMouseEnter={()=>setIsHovered(true)} onMouseLeave={()=>setIsHovered(false)} onClick={()=>setAddRecord(1)}><IconPlus color='blue'/></Button>
+                </Group>
+                </Grid.Col>
+            </Grid>
+            <TextInput
+            my="md"
+            radius="md"
+            placeholder="Search Medicine Name, Usage, Category..."
+            icon={<IconSearch />}
+            // value={searchValue}
+            // onChange={handleInputChange}
+            // onIconClick={handleIconClick}
+            // style={{ borderBlockColor: "transparent" }}
+          />
+           
+            <Modal opened={addRecord !== null} onClose={() => setAddRecord(null)} title="Add New Product" centered>
+                <ModifyAndCreateModal onClose={() => setAddRecord(null)}/>
+            </Modal>
+            <Modal opened={editRecordId !== null} onClose={() => setEditRecordId(null)} title="Edit Record" centered>
+                <ModifyAndCreateModal records={editRecordId} onClose={() => setEditRecordId(null)} />
+            </Modal>
+            <Modal opened={deleteModalOpen !== null} onClose={() => setDeleteModalOpen(null)} size="sm" withCloseButton={false} centered>
+                <div style={{margin:"20px",  display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', height: '300px',padding:"10px" }}>
+                    <IconTrashX style={{ width: "50px", height: "50px", color: 'red', marginBottom: "30px" }} />
+                    <Text style={{ fontSize: "30px" }}>Are you sure?</Text>
+                    <p style={{ textAlign: "center", fontSize: "12px", color: "#888" }}>Do you really want to delete these records? This process cannot be undone.</p>
+                    <div style={{marginTop:"20px", display: 'flex', justifyContent: 'center' }}>
+                        <Button style={{ marginRight: "15px",backgroundColor:"lightgrey" }} onClick={() => setDeleteModalOpen(null)}>Cancel</Button>
+                        <Button style={{backgroundColor:"red"}} onClick={handleDelete}>Delete</Button>
+                    </div>
+                </div>
+            </Modal>
+            {/* <CustomTable coloumnDef={colDef} records={filteredRecords}/> */}
+
+            <DataTable
+                withBorder
+                shadow="md"
+                withColumnBorders
+                highlightOnHover
+                borderRadius='md'
+                striped
+                horizontalSpacing="xs"
+                verticalSpacing="xs"
+                fontSize="xs"
+                verticalAlignment="top"
+                // fetching={fetching}
+                loaderVariant="bars"
+                minHeight="60vh"
+                columns={colDef}
+                records={filteredRecords}
+            />
         </>
-    );
+    )
 }

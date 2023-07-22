@@ -45,7 +45,6 @@ const AdminDashboard = () => {
       { month: 'May', profit: 417500 },
       { month: 'Jun', profit: 311000 },
     ];
-  
     const chartData = {
       labels: hospitalProfitData.map((data) => data.month),
       datasets: [
