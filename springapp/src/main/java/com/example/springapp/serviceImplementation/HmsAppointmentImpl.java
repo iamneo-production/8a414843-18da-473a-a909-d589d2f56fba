@@ -10,6 +10,7 @@ import com.example.springapp.service.HmsAppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 @Service
 
@@ -56,6 +57,16 @@ public class HmsAppointmentImpl implements HmsAppointmentService {
     public List<HmsAppointment> appointmentAppointmentStatus(String appointmentStatus) {
         return appointmentRepository.findByAppointmentStatus(appointmentStatus);
     }
+
+
+
+@Override
+    public List<HmsAppointment> appointmentPendingAcceptedPrescribed(Long patientId) {
+        List<String> appointmentStatusList = Arrays.asList("pending", "accepted", "prescribed");
+        return appointmentRepository.findByPatientIdAndAppointmentStatusIn(patientId, appointmentStatusList);
+    }
+
+
 
 
     @Override
