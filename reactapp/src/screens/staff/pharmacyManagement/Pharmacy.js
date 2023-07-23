@@ -21,7 +21,7 @@ import { useState, useEffect} from "react";
 import ModifyAndCreateModal from "./ModifyAndCreateModal"
 import { get, del } from '../../../api';
 import EndPoints from '../../../api/endPoints';
-import CustomTable from '../../../components/customTable';
+// import CustomTable from '../../../components/customTable';
 
 
 export default function Pharmacy() {
@@ -36,6 +36,7 @@ export default function Pharmacy() {
     
   const [searchTerm, setSearchTerm] = useState("");
   const [deleteModalOpen, setDeleteModalOpen] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   
   const deletingData = [];
@@ -140,7 +141,7 @@ export default function Pharmacy() {
     }
         
     //Deleting record
-    async function handleDelete(){
+    const handleDelete= async() =>{
         console.log("FromDeleteMethod",deleteModalOpen);
         deletingData.push(deleteModalOpen);
          await del(`${EndPoints.deleteInventory}/${deleteModalOpen.id}`).then((response) => {
@@ -149,19 +150,11 @@ export default function Pharmacy() {
             console.log(error);
         })
         setDeleteModalOpen(null);
-        window.location.reload();
+        getPharmacy();
     }
 
-    //styles
+
     
-
-    const searchBar={
-        width : '600px',
-        padding : '0px 0px 20px 0px',
-        display : 'inline-block',
-    }
-
-    const [isHovered, setIsHovered] = useState(false);
     
     const btnstyle={
         backgroundColor: isHovered ? '#F3F4F6' : '#FAFBFC',
@@ -176,9 +169,6 @@ export default function Pharmacy() {
 
     return (
         <>
-            {/* <Text  >
-                
-            </Text> */}
             <Grid>
                 <Grid.Col xs={4} lg={4} />
                 <Grid.Col xs={8} lg={8}>
@@ -193,10 +183,7 @@ export default function Pharmacy() {
             radius="md"
             placeholder="Search Medicine Name, Usage, Category..."
             icon={<IconSearch />}
-            // value={searchValue}
-            // onChange={handleInputChange}
-            // onIconClick={handleIconClick}
-            // style={{ borderBlockColor: "transparent" }}
+            onChange={handleSearch}
           />
            
             <Modal opened={addRecord !== null} onClose={() => setAddRecord(null)} title="Add New Product" centered>
@@ -231,7 +218,7 @@ export default function Pharmacy() {
                 verticalAlignment="top"
                 // fetching={fetching}
                 loaderVariant="bars"
-                minHeight="60vh"
+                height="60vh"
                 columns={colDef}
                 records={filteredRecords}
             />

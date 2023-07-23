@@ -45,7 +45,6 @@ export default function ModifyAndCreateModal(props) {
                 console.log(error);
             })
         }
-        window.location.reload();
         onClose();
       };
 

@@ -15,6 +15,13 @@ const EndPoints = {
     deleteInventory:"/api/inventory",
     postAppointment:"/api/appointment",
     getDoctor:'/api/role-list',
+    fetchAppointment:'/api/all-patient-appointment',
+    postAppointment:'/api/appointment',
+    getDoctor:'/api/role-list',
+    deleteAppointment:'/api/appointment',
+    getBilling:'/api/appointment-appointmentStatus',
+    getBillingDetails:'/api/pharmacy-appointmentId',
+    getRolesCount:'/api/role-list-count',
 }
 
 export default EndPoints

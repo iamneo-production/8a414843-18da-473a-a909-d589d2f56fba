@@ -297,4 +297,8 @@ public class UserService implements UserDetailsService {
             e.printStackTrace();
         }
     }
+    
+    public int getUserCountByRole(String roles) {
+        return userRepository.countByRolesContaining(roles);
+    }
 }

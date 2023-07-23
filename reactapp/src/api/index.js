@@ -49,6 +49,20 @@ export const put = async (url, data, contentType = 'application/json', token = n
   }
 };
 
+// Custom PUT method
+export const putFile = async (url, data, contentType = 'multipart/form-data', token = null) => {
+  try {
+    const headers = {
+      'Content-Type': contentType,
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    };
+    const response = await api.put(url, data, { headers });
+    return response.data;
+  } catch (error) {
+    errorHandler(error);
+  }
+};
+
 // Custom DELETE method
 export const del = async (url, token = null) => {
   try {
