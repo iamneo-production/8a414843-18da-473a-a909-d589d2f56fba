@@ -10,6 +10,8 @@ const EndPoints = {
     doctorAppointment:"/api/doctor-appointment",
     inventoryList:'/api/inventory',
     createPharmacy:'/api/pharmacy',
+    getDoctors:'/api/role-list',
+    deleteUsers:'/api/auth/users',
 }
 
 export default EndPoints

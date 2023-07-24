@@ -5,6 +5,10 @@ import com.example.springapp.model.HmsAppointment;
 import java.util.List;
 
 public interface HmsAppointmentService {
+
+
+
+
     public HmsAppointment saveAppointment(HmsAppointment appointment);
 
 //    public HmsAppointment updateAppointment(HmsAppointment appointment);
@@ -18,4 +22,6 @@ public interface HmsAppointmentService {
     public void deleteAppointment(Long id);
 
     public List<HmsAppointment> doctorsAppointment(Long doctorId, String appointmentStatus);
+
+//    public List<HmsAppointment> doctorsAppointmentCompleted(Long doctorId, String appointmentStatus);
 }

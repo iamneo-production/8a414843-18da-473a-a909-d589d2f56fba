@@ -238,4 +238,24 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid OTP");
         }
     }
+
+    @PostMapping("/api/auth/pay")
+    public ResponseEntity<?> sendMailPay(@RequestBody Map<String, String> requestBody) {
+        String email = requestBody.get("email");
+
+        if (userService.checkuserNameExists(email)) {
+
+            userService.sendMailPay(email);
+
+
+            return new ResponseEntity<>("Payment sent successfully",HttpStatus.ACCEPTED);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found");
+        }
+    }
+
+
+
 }
+
+

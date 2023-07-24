@@ -21,12 +21,57 @@ import VaccinationResearch from "../../assests/VaccinationResearch .svg"
 import CustomFooter from '../../components/footer/index'
 import SignUp from "./auth/signUp";
 import SignIn from "./auth/signIn";
-import SampleTable from "../../components/customTable/sampleTable"
-// import PatientLayout from "../patient/layout";
-import CustomLottie from '../../components/lottieFiles/customLottie'
-import DoctorLottie from '../../assests/Lottiefiles/doctor.json'
-import HomeLottie from '../../assests/Lottiefiles/Home.json'
+import CustomLottie from '../../components/lottieFiles/customLottie';
+import Orthopedics from '../../assests/Orthopedics.jpg'
+import Dermatology from '../../assests/Dermatology.jpg'
+import Surgeon from '../../assests/Surgeon.jpg'
+import Neurologist from '../../assests/Neurologist.jpg'
+import Cardiology from '../../assests/Cardiology physician.jpg'
 import { FooterSocial } from "../../components/footer/footerSocial";
+import AboutUspage from "../../components/aboutUS/AboutUsPage";
+import { ContactUs } from "../../components/contactUs/ContactUsPage";
+import { FeaturesImages } from "../../components/contactUs/help";
+import AboutUspages from "../../components/aboutUS";
+import Mappings from "../../components/contactUs/maps";
+import { FeaturesCards } from "../../components/services/Services";
+import { FeaturesTitle } from "../../components/services/servo";
+import { GridAsymmetrical } from "../../components/aboutUS/icons";
+
+const containerStyle = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    maxWidth: '100%',
+    margin: '0 auto',
+    padding: '0px 50px 0px 50px'
+  };
+
+  const cardStyle = {
+    flex: '1',
+    border: '2px solid black',
+    padding: '30px',
+    boxSizing: 'border-box',
+    borderRadius: '30px',
+    margin: '15px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  };
+
+const data = [
+    { name: 'John Doe', rating: 4, review: 'Good infrastructure. Qualified doctors and specalist. Good sanitation and hygiene. good care to patients.' },
+    { name: 'Jane Smith', rating: 5, review: 'Nice hospital. It is well maintained and recently renovated. The doctors and the nursing staff are good.' },
+    { name: 'Jane Smith', rating: 4, review: 'Good facilities Good specialist with good health care. Good sanitation and hygiene. Nice hospital.' },
+  ];
+
+  const record = [
+    { image: Orthopedics, title: 'Orthopedics'},
+    { image: Dermatology, title: 'Dermatology'},
+    { image: Surgeon, title: 'General Surgery'},
+    { image: Neurologist, title: 'Neurologist'},
+    { image: Cardiology, title: 'Cardiology physician'},
+  ];
+
+  
 
 export default function HomeScreen() {
 
@@ -177,21 +222,55 @@ export default function HomeScreen() {
                     <Grid.Col xs={1} lg={1}/>
                 </Grid>
             </Container>
+
+
             </div>
+            
             }
+            {
+                active === 2 &&   <div>
+                    <FeaturesTitle setActive={setActive} active={active}/>
+                    <FeaturesCards/>
+            
+                    </div>
+                
+            }
+           
+            {
+                active === 3 &&   <div>
+                    <AboutUspage setActive={setActive} active={active}/>
+                    <GridAsymmetrical/>
+                    <AboutUspages/>
+                    </div>
+                
+            }
+            {
+                active === 4 &&  <div>
+                     <FeaturesImages setActive={setActive} active={active} /> 
+                     <ContactUs/>
+                     <Mappings/>
+                </div>
+            }
+          
             {
                 active === 6 && <SignUp />
             }
             {
                 active === 5 && <SignIn />
             }
-            <Divider mt="md" />
+           
+            <Divider color="gray" style={{marginTop:"10px"}} />
+            
+            
+            
+
             <div>
-                <CustomFooter setActive={setActive} active={active} />
-            </div>
-            <div>
-                <FooterSocial/>
-            </div>
+              
+            {/* <CustomFooter/> */}
+           
+            <CustomFooter setActive={setActive} active={active} />
+            
+        </div>
 
 
         </>

@@ -8,14 +8,21 @@ import com.example.springapp.repository.HmsAppointmentRepository;
 import com.example.springapp.repository.UserRepository;
 import com.example.springapp.service.HmsAppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.security.PrivateKey;
 import java.util.List;
 @Service
 
 public class HmsAppointmentImpl implements HmsAppointmentService {
 
 
+    @Autowired
+    private JavaMailSender javaMailSender;
     @Autowired
     private HmsAppointmentRepository appointmentRepository;
 
@@ -52,6 +59,11 @@ public class HmsAppointmentImpl implements HmsAppointmentService {
     public List<HmsAppointment> doctorsAppointment(Long doctorId, String appointmentStatus) {
         return appointmentRepository.findByDoctorIdAndAppointmentStatus(doctorId, appointmentStatus);
     }
+
+//    @Override
+//    public List<HmsAppointment> doctorsAppointmentCompleted(Long doctorId, String appointmentStatus) {
+//        return appointmentRepository.findByDoctorIdAndAppointmentStatus(doctorId, appointmentStatus);
+//    }
 
 
 //
@@ -98,4 +110,17 @@ public class HmsAppointmentImpl implements HmsAppointmentService {
     }
 
 
+    public void sendEmailToPatient(String email, String subject, String body) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(email);
+            helper.setSubject(subject);
+            helper.setText(body, false);
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            // Handle the exception if needed
+        }
+    }
 }
