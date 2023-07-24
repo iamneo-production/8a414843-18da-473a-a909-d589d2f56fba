@@ -1,227 +1,192 @@
 import {
-    Modal,
-    Grid,
-    Text,
-    Group,
+    Box,
     Button,
+    Grid,
+    Group,
     TextInput,
+    Text,
+    Image,
+    createStyles,
+    useMantineTheme,
     ActionIcon,
-} from '@mantine/core';
-
-import {
+    Menu,
+    Title,
+    Loader,
+    ScrollArea,
+    UnstyledButton,
+    rem,
+  } from "@mantine/core";
+  import React, { useEffect, useState } from "react";
+  import { keys } from "@mantine/utils";
+  import {
+    IconDotsVertical,
     IconEdit,
-    IconPlus,
+    IconEye,
     IconSearch,
-    IconTrashX,
-    IconTrash
-} from "@tabler/icons-react";
-
-import { DataTable } from "mantine-datatable"
-import { useState, useEffect} from "react";
-import ModifyAndCreateModal from "./ModifyAndCreateModal"
-import { get, del } from '../../../api';
-import EndPoints from '../../../api/endPoints';
-// import CustomTable from '../../../components/customTable';
-
-
-export default function Pharmacy() {
-
-    //Managing the states for editing records and opening modals(popup)        
-    const [editRecordId, setEditRecordId] = useState(null);
-    //Adding new records to already existing records
-    const [addRecord, setAddRecord] = useState(null);
-    //State to maintain record 
-    const [records,setRecords] = useState([]);
-
-    
-  const [searchTerm, setSearchTerm] = useState("");
-  const [deleteModalOpen, setDeleteModalOpen] = useState(null);
-  const [isHovered, setIsHovered] = useState(false);
-
+    IconSelector,
+    IconChevronDown,
+    IconChevronUp,
+    IconTrash,
+  } from "@tabler/icons-react";
+  import { Link } from "react-router-dom";
   
-  const deletingData = [];
-
-
-
-    const getPharmacy =async() =>{
-        await get(EndPoints.inventoryList).then((response)=>{
-          setRecords(response.data);
-          console.log(response);
-      }).catch(error =>{
-          console.log(error);
-      })
-    }
-    
-    useEffect(() => {
-      getPharmacy();
-    }, []);
-
-
-   
-
-    const filteredRecords = records.filter((record) =>
-        record.medicineName?.toLowerCase().includes(searchTerm.toLowerCase())||
-        record.category?.toLowerCase().includes(searchTerm.toLowerCase())||
-        record.usages?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    const colDef = [
-        {
-            accessor: "id",//for api
-            title: "Item No",
-            titleStyle: { color: "" },//define style
-            textAlignment: "center",
-            
-        },
-        {
-            accessor: "medicineName",//for api
-            title: "Medicine Name",
-            titleStyle: { color: "" },//define style
-            textAlignment: "center",
-            
-        },
-        {
-            accessor: "usages",//for api
-            title: "Usage",
-            titleStyle: { color: "" },//define style
-            textAlignment: "center",
-            
-        },
-        {
-            accessor: "category",//for api
-            title: "Category",
-            titleStyle: { color: "" },//define style
-            textAlignment: "center",
-        
-        },
-        {
-            accessor: "price",//for api
-            title: "Price (per unit)",
-            titleStyle: { color: "" },//define style
-            textAlignment: "center",
-            
-        },
-        {
-            accessor: "quantity",//for api
-            title: "Quanity",
-            titleStyle: { color: "" },//define style
-            textAlignment: "center",
-            
-        },
-        {
-            accessor: "expiryDate",//for api
-            title: "Expiry Date",
-            titleStyle: { color: "" },//define style
-            textAlignment: "center",
-            
-        },
-        {
-            accessor: 'actions',
-            title: <Text mr="xs">Row actions</Text>,
-            textAlignment: 'center',
-            render: (data) => (
-                <Group spacing={4} position="center" noWrap>
-                    <ActionIcon color="blue" onClick={() => setEditRecordId(data)}>
-                        <IconEdit size={16} />
-                    </ActionIcon>
-                    <ActionIcon color="red" onClick={() => setDeleteModalOpen(data)}>
-                        <IconTrash size={16} />
-                    </ActionIcon>
-                </Group>
-            ),
-          },
-    ];
-
-
-    
-
-    // Search to filter the records using product name
-    function handleSearch(e){
-        setSearchTerm(e.currentTarget.value);
-    }
-        
-    //Deleting record
-    const handleDelete= async() =>{
-        console.log("FromDeleteMethod",deleteModalOpen);
-        deletingData.push(deleteModalOpen);
-         await del(`${EndPoints.deleteInventory}/${deleteModalOpen.id}`).then((response) => {
-            console.log(response);
-         }).catch(error => {
-            console.log(error);
+  import ModifyAndCreateModal from "./ModifyAndCreateModal";
+  import CustomTable from "../../../components/customTable";
+  import { get } from "../../../api";
+  import EndPoints from "../../../api/endPoints";
+  
+  export default function Pharmacy() {
+    const [invoicemodal, setInvoicemodal] = useState(false);
+  
+    const [billingData, setBillingData] = useState([]);
+    const [billGenerating, setBillGenerating] = useState([]);
+    const [loading, setLoading] = useState(false);
+  
+    const getBilling = async () => {
+      setLoading(true);
+      await get(`${EndPoints.getBilling}?appointmentStatus=prescribed`)
+        .then((response) => {
+          setBillingData(response?.data);
         })
-        setDeleteModalOpen(null);
-        getPharmacy();
-    }
-
-
-    
-    
-    const btnstyle={
-        backgroundColor: isHovered ? '#F3F4F6' : '#FAFBFC',
-        transition: 'background-color 0.3s',
-        border: '1px solid rgba(27, 31, 35, 0.15)',
-        borderRadius: '6px',
-        boxShadow: 'rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset',
-        boxSizing: 'border-box',
-        color: '#24292E',
-        cursor: 'pointer'
+        .catch((error) => {
+          console.log(error);
+        });
+      setLoading(false);
     };
-
+  
+    useEffect(() => {
+      getBilling();
+    }, []);
+  
+    const colDef = [
+      {
+        accessor: "doctor?.id",
+        title: "Attending Doctor",
+        titleStyle: { color: "" },
+        textAlignment: "center",
+        render: (data) => (
+          <Group position="center">
+            <Text>{data?.doctor?.firstName}</Text>
+          </Group>
+        ),
+      },
+  
+      {
+        accessor: "date",
+        title: "Date",
+        textAlignment: "center",
+      },
+      {
+        accessor: "appointmentStatus",
+        title: "Prescription Status",
+        textAlignment: "center",
+      },
+      {
+        accessor: "amount",
+        title: "Amount",
+        textAlignment: "center",
+      },
+      {
+        accessor: "Invoice",
+        textAlignment: "center",
+        render: (data) => (
+          <Button
+            size="xs"
+            onClick={() => {
+              setInvoicemodal(true);
+              setBillGenerating(data);
+            }}
+          >
+            {" "}
+            Pay
+          </Button>
+        ),
+      },
+    ];
+  
+    const [searchValue, setSearchValue] = React.useState("");
+  
+    // const filteredRecords = React.useMemo(() => {
+    //   if (!searchValue) {
+    //     return records;
+    //   }
+  
+    //   return records.filter((record) =>
+    //     Object.values(record)
+    //       .join(" ")
+    //       .toLowerCase()
+    //       .includes(searchValue.toLowerCase())
+    //   );
+    // }, [searchValue, records]);
+    // const filteredRecords = React.useMemo(() => {
+    //     if (!searchValue) {
+    //       return records;
+    //     }
+  
+    //     return records.filter((record) =>
+    //       Object.values(record)
+    //         .join(" ")
+    //         .toLowerCase()
+    //         .includes(searchValue.trim().toLowerCase())
+    //     );
+    //   }, [searchValue, records]);
+  
+    //   return (
+    //       <><Text ta="center">Medical records</Text><Box m="md">
+    //           <MedicalRecords coloumnDef={colDef} records={records} />
+    //       </Box></>
+    //    <> <Text ta="center" size="xl" style={{ marginTop: "15px", fontWeight: "bold" }}>
+    //     MEDICAL RECORDS
+    //   </Text><Box m="md">
+    //          <MedicalRecords coloumnDef={colDef} records={records} />
+    //       </Box></>
+    //   );
     return (
-        <>
-            <Grid>
-                <Grid.Col xs={4} lg={4} />
-                <Grid.Col xs={8} lg={8}>
-                <Group position="apart">
-                    <Text ta="center" size="xl" style={{ margin: "25px", fontWeight: "bold", color: "#BF94E4" }}> PHARMACY MANAGEMENT</Text>
-                    <Button style={btnstyle}  onMouseEnter={()=>setIsHovered(true)} onMouseLeave={()=>setIsHovered(false)} onClick={()=>setAddRecord(1)}><IconPlus color='blue'/></Button>
-                </Group>
-                </Grid.Col>
-            </Grid>
-            <TextInput
-            my="md"
+      <>
+        <Text
+          ta="center"
+          size="xl"
+          style={{ marginTop: "15px", fontWeight: "bold", color: "#BF94E4" }}
+        >
+          PHARMACY
+        </Text>
+  
+        <Box m="md" ml="20px" mr="20px">
+          {/* 205 line -- search box border */}
+          <TextInput
+            value={searchValue}
+            onChange={(event) => setSearchValue(event.currentTarget.value)}
+            placeholder="Search..."
+            icon={<IconSearch color="#BF94E4" />}
             radius="md"
-            placeholder="Search Medicine Name, Usage, Category..."
-            icon={<IconSearch />}
-            onChange={handleSearch}
+            styles={{
+              input: { color: "#BF94E4" },
+              icon: { color: "#BF94E4" },
+            }}
           />
-           
-            <Modal opened={addRecord !== null} onClose={() => setAddRecord(null)} title="Add New Product" centered>
-                <ModifyAndCreateModal onClose={() => setAddRecord(null)}/>
-            </Modal>
-            <Modal opened={editRecordId !== null} onClose={() => setEditRecordId(null)} title="Edit Record" centered>
-                <ModifyAndCreateModal records={editRecordId} onClose={() => setEditRecordId(null)} />
-            </Modal>
-            <Modal opened={deleteModalOpen !== null} onClose={() => setDeleteModalOpen(null)} size="sm" withCloseButton={false} centered>
-                <div style={{margin:"20px",  display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', height: '300px',padding:"10px" }}>
-                    <IconTrashX style={{ width: "50px", height: "50px", color: 'red', marginBottom: "30px" }} />
-                    <Text style={{ fontSize: "30px" }}>Are you sure?</Text>
-                    <p style={{ textAlign: "center", fontSize: "12px", color: "#888" }}>Do you really want to delete these records? This process cannot be undone.</p>
-                    <div style={{marginTop:"20px", display: 'flex', justifyContent: 'center' }}>
-                        <Button style={{ marginRight: "15px",backgroundColor:"lightgrey" }} onClick={() => setDeleteModalOpen(null)}>Cancel</Button>
-                        <Button style={{backgroundColor:"red"}} onClick={handleDelete}>Delete</Button>
-                    </div>
-                </div>
-            </Modal>
-            {/* <CustomTable coloumnDef={colDef} records={filteredRecords}/> */}
-
-            <DataTable
-                withBorder
-                shadow="md"
-                withColumnBorders
-                highlightOnHover
-                borderRadius='md'
-                striped
-                horizontalSpacing="xs"
-                verticalSpacing="xs"
-                fontSize="xs"
-                verticalAlignment="top"
-                // fetching={fetching}
-                loaderVariant="bars"
-                height="60vh"
-                columns={colDef}
-                records={filteredRecords}
-            />
-        </>
-    )
-}
+        </Box>
+        <Box mt={1} ml={20} mr={20} mb={0}>
+          {/* 219 line -- table border */}
+          <CustomTable
+            coloumnDef={colDef}
+            records={billingData}
+            fetching={loading}
+          />
+        </Box>
+  
+        {invoicemodal && (
+          <ModifyAndCreateModal
+            open={invoicemodal}
+            close={() => {
+              getBilling()
+              setInvoicemodal(false);
+            }}
+            records={billGenerating}
+          />
+        )}
+  
+        {/* <MedicalRecords coloumnDef={colDef} records={filteredRecords} /> */}
+      </>
+    );
+  }
+  

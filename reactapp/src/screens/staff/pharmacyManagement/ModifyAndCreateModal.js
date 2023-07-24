@@ -1,69 +1,245 @@
 import {
-    NumberInput,
+    Card,
+    Button,
     TextInput,
     Select,
-} from '@mantine/core';
-import { useForm } from '@mantine/form';
-import { DateInput } from '@mantine/dates';
-import { post, put } from '../../../api';
-import EndPoints from '../../../api/endPoints';
-
-
-export default function ModifyAndCreateModal(props) {
-
-
-    
-    const {records, onClose } = props
-
-    const form = useForm({
-        initialValues: {
-            medicineName : records?.medicineName !==null ? records?.medicineName : '' ,
-            usages : records?.usages !==null ? records?.usages : '',
-            category : records?.category !==null ? records?.category : '',
-            price : records?.price !==null ? records?.price : '',
-            quantity : records?.quantity !==null ? records?.quantity : '',
-            expiry_date : records?.expiry_date !==null ? records?.expiry_date : '',
-        },
-        validate: {
-            price: (value) => (value > 0 ? null : 'Enter the correct value' ),
-            quanity: (value) => (value > 0 ? null : 'Enter the correct value' ),
-        },
-    });
-
-    const handleSubmit = async() => {
-        const data = form.values;
-        if(records===undefined){
-            await post(`${EndPoints.addInventory}`,data).then((response) => {
-                console.log(response);
-            }).catch(error => {
-                console.log(error);
-            })
-        }else{
-            await put(`${EndPoints.updateInventory}/${records.id}`,data).then((response) => {
-                console.log(response);
-            }).catch(error => {
-                console.log(error);
-            })
-        }
-        onClose();
+    Grid,
+    Col,
+    Title,
+    Container,
+    Modal,
+    Text,
+    Checkbox,
+    Divider,
+  } from "@mantine/core";
+  import { useForm } from "@mantine/form";
+  import { Textarea } from "@mantine/core";
+  import { DatePickerInput } from "@mantine/dates";
+  import { useState, useEffect } from "react";
+  
+  import { TimeInput } from "@mantine/dates";
+  import { IconCalendar, IconClock2 } from "@tabler/icons-react";
+  import { get, post } from "../../../api/index";
+  import EndPoints from "../../../api/endPoints";
+  
+  export default function ModifyAndCreateModal(props) {
+    const { open, close, records } = props;
+    const [medicineDatas, setMedicineDatas] = useState([]);
+    console.log("rec", records);
+  
+    let total = 0;
+  
+    const getBillingDetails = async () => {
+      await get(`${EndPoints.getBillingDetails}/${records.id}`)
+        .then((response) => {
+          // setBillGenerating(response[0]);
+          setMedicineDatas(response?.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+  
+    useEffect(() => {
+      getBillingDetails();
+    }, []);
+  
+    const meds = [
+      {
+        med: "Paracetamol",
+        cost: 20,
+        quantity: 5,
+      },
+      {
+        med: "Aspirin",
+        cost: 15,
+        quantity: 5,
+      },
+      {
+        med: "Syrup1",
+        cost: 120,
+        quantity: 1,
+      },
+    ];
+  
+    const handlePay = async (e) => {
+      e.preventDefault();
+      let data = {
+        appointmentId: records?.id,
+        patientId: records?.patient?.id,
+        amount:total,
+        paid: true,
       };
-
+      await post(`${EndPoints.createBilling}`, data)
+        .then((response) => {
+          close();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
     return (
-
-        <form style={{margin:"10px",padding:"10px"}} onSubmit={form.onSubmit((values) => { console.log(values); handleSubmit()})}>
-            <TextInput style={{ height: "7vh",marginBottom:"20px"}} label="Medicine Name" placeholder="Medicine Name" {...form.getInputProps('medicineName')} />
-            <TextInput style={{ height: "7vh",marginBottom:"20px"}} label="Usage" placeholder="Usage" {...form.getInputProps('usages')} />
-            <Select style={{ height: "7vh",marginBottom:"20px"}} label="Category" placeholder="Category" data={[
-                { value: 'Tablet', label: 'Tablet' },
-                { value: 'Syrup', label: 'Syrup' },
-                { value: 'Cream', label: 'Cream' },{ value: 'general', label: 'general' },
-            ]}
-            {...form.getInputProps('category')} />
-            <TextInput style={{ height: "7vh",marginBottom:"20px",width:"50%",display:"inline-block",paddingRight:"5px"}} label="Price (per unit)" placeholder="Price" {...form.getInputProps('price')} />
-            <NumberInput style={{ height: "7vh",marginBottom:"20px",width:"50%",display:"inline-block",paddingLeft:"5px"}} label="Quantity" {...form.getInputProps('quantity')}/>
-            <DateInput style={{ height: "7vh",marginBottom:"20px"}} label="Expiry Date" placeholder="Expiry Date" {...form.getInputProps('expiryDate')}/>
-            <button onClick={handleSubmit} style={{marginTop:"20px", padding: "10px 20px", borderRadius: "7px",border:"none",color: "white", position: "relative", background: "rgba(139, 127, 194, 1)", cursor: "pointer", left: "82%" }}>Add</button> 
-        </form>
-            
-    )
-}
+      <>
+        <Modal
+          size={800}
+          opened={open}
+          onClose={close}
+          title={<Text>Payment</Text>}
+        >
+          <form onSubmit={handlePay}>
+            <Grid>
+              <Grid.Col xs={2.7} lg={2.7}>
+                <Text>Description</Text>
+              </Grid.Col>
+  
+              <Grid.Col xs={1.3} lg={1.3}>
+                <Text>Morning</Text>
+              </Grid.Col>
+  
+              <Grid.Col xs={1} lg={1}>
+                <Text>Noon</Text>
+              </Grid.Col>
+  
+              <Grid.Col xs={1} lg={1}>
+                <Text>Night</Text>
+              </Grid.Col>
+  
+              <Grid.Col xs={2} lg={2}>
+                <Text>Unit Cost</Text>
+              </Grid.Col>
+  
+              <Grid.Col xs={2} lg={2}>
+                <Text>Quantity</Text>
+              </Grid.Col>
+  
+              <Grid.Col xs={2} lg={2}>
+                <Text>Amount</Text>
+              </Grid.Col>
+              {/*  */}
+  
+              {medicineDatas?.map((d) => {
+                total += d?.inventory?.price * d?.quantity;
+                return (
+                  <>
+                    <Grid.Col xs={3} lg={3}>
+                      <Text>
+                        {d?.inventory?.medicineName?.charAt(0).toUpperCase() +
+                          d?.inventory?.medicineName?.slice(1)}
+                      </Text>
+                    </Grid.Col>
+  
+                    <Grid.Col m={0} xs={1} lg={1}>
+                      <Checkbox size="md" label checked={d?.morning} />
+                    </Grid.Col>
+  
+                    <Grid.Col xs={1} lg={1}>
+                      <Checkbox size="md" label="" checked={d?.noon} />
+                    </Grid.Col>
+  
+                    <Grid.Col xs={1} lg={1}>
+                      <Checkbox size="md" label="" checked={d?.night} />
+                    </Grid.Col>
+  
+                    <Grid.Col xs={2} lg={2}>
+                      <Text>₹{d?.inventory?.price}</Text>
+                    </Grid.Col>
+  
+                    <Grid.Col xs={2} lg={2}>
+                      <Text>{d?.quantity}</Text>
+                    </Grid.Col>
+  
+                    <Grid.Col xs={2} lg={2}>
+                      <Text>₹{d?.inventory?.price * d?.quantity}</Text>
+                    </Grid.Col>
+                  </>
+                );
+              })}
+  
+              <Grid.Col xs={12} lg={12}>
+                <Divider />
+              </Grid.Col>
+  
+              <Grid.Col xs={10} lg={10}>
+                <Text align="end" pr={100}>
+                  Grand Total
+                </Text>
+              </Grid.Col>
+              <Grid.Col xs={2} lg={2}>
+                <Text>₹{total}</Text>
+              </Grid.Col>
+  
+              <Grid.Col xs={10} lg={10}>
+                <Text align="end" pr={100}>
+                  Discount
+                </Text>
+              </Grid.Col>
+              <Grid.Col xs={2} lg={2}>
+                <Text>0</Text>
+              </Grid.Col>
+  
+              <Grid.Col xs={10} lg={10}>
+                <Text align="end" pr={100}>
+                  Tax
+                </Text>
+              </Grid.Col>
+              <Grid.Col xs={2} lg={2}>
+                <Text>0</Text>
+              </Grid.Col>
+  
+              <Grid.Col xs={12} lg={12}>
+                <Divider />
+              </Grid.Col>
+  
+              <Grid.Col xs={10} lg={10}>
+                <Text align="end" pr={100}>
+                  Net Total
+                </Text>
+              </Grid.Col>
+              <Grid.Col xs={2} lg={2}>
+                <Text>₹{total}</Text>
+              </Grid.Col>
+  
+              <Grid.Col xs={10} lg={10} />
+  
+              <Grid.Col xs={2} lg={2}>
+                <Button
+                  type="submit"
+                  radius="md"
+                  size="md"
+                  style={{ backgroundColor: "#9370DB" }}
+                >
+                  PAY
+                </Button>
+              </Grid.Col>
+            </Grid>
+  
+            {/* <Grid pt="lg" m={0} px={0} style={{ textAlign: "end" }}>
+              <Grid.Col xs={6} lg={6}>
+                Grand Total
+              </Grid.Col>
+              <Grid.Col xs={6} lg={6}>
+                <Text>100</Text>
+              </Grid.Col>
+  
+        <Grid.Col xs={12} lg={12}>
+          <Divider />
+        </Grid.Col>
+  
+              <Grid.Col xs={6} lg={6}>
+                Net Total
+              </Grid.Col>
+              <Grid.Col xs={6} lg={6}>
+                {grandTotal()}
+              </Grid.Col>
+  
+              {/* <Grid.Col xs={6} lg={6}>
+            Pay the invoice within 5 days of receiving it.
+          </Grid.Col> */}
+  
+            {/* </Grid>  */}
+          </form>
+        </Modal>
+      </>
+    );
+  }
+  
