@@ -150,10 +150,11 @@ export default function PatientAppointment() {
             <Modal
               opened={opened}
               onClose={close}
+              
              
               centered
             >
-              <ModalForm onCloseModal={close}  />
+              <ModalForm onCloseModal={close} getAppointments={getAppointments}  />
             </Modal>
 
             <Button onClick={open}>
