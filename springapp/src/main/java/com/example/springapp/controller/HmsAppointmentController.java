@@ -27,6 +27,7 @@ public class HmsAppointmentController {
     public HmsAppointment saveAppointment(@RequestBody HmsAppointmentRequestDto appointment) {
         User doctor=userRepository.findById(appointment.getDoctorId()).orElseThrow();
         User patient=userRepository.findById(appointment.getPatientId()).orElseThrow();
+
         HmsAppointment hmsAppointment=new HmsAppointment(
                 patient,
                 doctor,
@@ -38,7 +39,6 @@ public class HmsAppointmentController {
 
         return impl.saveAppointment(hmsAppointment);
     }
-
     @GetMapping("/api/appointment")
     public List<HmsAppointment> findAllAppointment(){
         return impl.findAllAppointment();

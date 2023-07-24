@@ -126,6 +126,15 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something Went Wrong");
         }
     }
+    @GetMapping("/api/auth/doctors")
+    public  ResponseEntity<?> getDoctorUsers(){
+        try{
+            List<User> data = userService.getDoctorUsers();
+            return ResponseEntity.ok(new BaseResponseDto("Success",data));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went Wrong");
+        }
+    }
     private String getProfileImage(byte[] imageData) {
         if (imageData != null && imageData.length > 0) {
             String base64Image = Base64.getEncoder().encodeToString(imageData);
@@ -159,7 +168,6 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
-
     @PutMapping("/api/auth/users/{id}")
     public ResponseEntity<User> updateUser(@PathVariable("id") Long id, @RequestBody User user) {
         User updatedUser = userService.updateUser(id, user);
@@ -219,7 +227,6 @@ public class UserController {
 
             // hash map is used to store the otp
             userOtpMap.put(email, otp);
-
             return new ResponseEntity<>("OTP sent successfully",HttpStatus.ACCEPTED);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found");

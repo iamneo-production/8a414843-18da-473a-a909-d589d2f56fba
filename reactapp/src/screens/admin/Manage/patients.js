@@ -29,19 +29,6 @@ function ManagePatientUser() {
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [editData, setEditData] = useState(null);
-  /* private Long id;
-    private String name;
-    private String email;
-    private String password;
-    private String roles;
-    private Integer age;
-    private String gender;
-    private String address;
-    private Long phone;
-    private Long salary;
-    private String specialist;
-    private byte[] profileImage;
-    private boolean status; */
   const [tableData, setTableData] = useState([
     {
         id: 45,
@@ -120,39 +107,6 @@ function ManagePatientUser() {
         Fees: 23456,
         Status:'paid',
     },
-    {
-        id: 59,
-        PatientName: 'John snow',
-        Email:'johnsnow@gmail.com',
-        Age:21,
-        Address:'2/1 chennai tambaram',
-        Phone:4342325,
-        Gender: 'male',
-        Fees: 23456,
-        Status:'paid',
-    },
-    {
-        id: 56,
-        PatientName: 'John snow',
-        Email:'johnsnow@gmail.com',
-        Age:21,
-        Address:'2/1 chennai tambaram',
-        Phone:4342325,
-        Gender: 'male',
-        Fees: 23456,
-        Status:'notpaid',
-    },
-    {
-        id: 32,
-        PatientName: 'John Rnow',
-        Email:'johnsnow@gmail.com',
-        Age:21,
-        Address:'2/1 chennai tambaram',
-        Phone:4342325,
-        Gender: 'male',
-        Fees: 23456,
-        Status:'paid',
-    },
 
   ]);
 
@@ -176,10 +130,7 @@ function ManagePatientUser() {
       Fees:formData.Fees,
       Status: formData.Status,
     };
-  
-
     setTableData((prevData) => [...prevData, newUser]);
-
     setFormData({
       id: '',
       PatientName: '',
@@ -191,10 +142,8 @@ function ManagePatientUser() {
       Fees:'',
       Status: '',
     });
-  
     setAddModalOpen(false);
   };
-  
   const handleDelete = (id) => {
     setDeleteId(id);
     setDeleteModalOpen(true);
@@ -209,8 +158,6 @@ function ManagePatientUser() {
     setEditData(data);
     setEditModalOpen(true);
   };
-
-
   const handleUpdate = () => {
     setTableData((prevData) =>
       prevData.map((record) => (record.id === editData.id ? { ...record, ...editData } : record))
@@ -227,12 +174,6 @@ function ManagePatientUser() {
   });
   return (
     <>
-      {/* <Button m="md" style={{left:"90%",borderRadius:"15px",textDecoration:"none",
-                borderColor: "rgba(139, 127, 194, 1)", 
-                color: "white", position: "relative", 
-                overflow: "hidden", 
-                background: "rgba(139, 127, 194, 1)", cursor: "pointer"}} onClick={() => setAddModalOpen(true)} >Add User
-      </Button> */}
       <DataTable
         height={300}
         withBorder

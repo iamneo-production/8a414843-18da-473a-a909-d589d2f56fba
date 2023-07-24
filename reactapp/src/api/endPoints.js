@@ -15,6 +15,8 @@ const EndPoints = {
     deleteInventory:"/api/inventory",
     postAppointment:"/api/appointment",
     getDoctor:'/api/role-list',
+    getUsers:"/api/role-list",
+    deleteUserDetails:"/api/auth/users",
     fetchAppointment:'/api/all-patient-appointment',
     postAppointment:'/api/appointment',
     getDoctor:'/api/role-list',

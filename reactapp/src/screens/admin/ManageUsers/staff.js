@@ -1,15 +1,14 @@
 import React,{useEffect, useState} from "react";
 import { DataTable } from "mantine-datatable";
-import { Button,Group,Text,Input, Grid, Col } from "@mantine/core";
+import { Button,Col,Group,Text,Grid,Input } from "@mantine/core";
 import { useDisclosure } from '@mantine/hooks';
 import { Modal } from "@mantine/core";
-import AddPatient from "./modal/add/AddPatient"; 
 import { IconTrash,IconEdit } from "@tabler/icons-react";
 import EndPoints from "../../../api/endPoints";
 import { post,del,put } from "../../../api";
-import PatientEditLay from "./modal/edit/PatientEditLay";
-
-const PatientUser = () =>{
+import StaffEditLay from "./modal/edit/StaffEditLay";
+import AddStaff from "./modal/add/AddStaff";
+const StaffUser = () =>{
 
     const [records, setRecords] = useState([]);
     const [opened, { open, close }] = useDisclosure(false);
@@ -17,9 +16,8 @@ const PatientUser = () =>{
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredRecords, setFilteredRecords] = useState([]);
 
-
-    const getPatients =async() =>{
-        await post(EndPoints.getUsers,{role:'ROLE_PATIENT'}).then((response)=>{
+    const getStaffs =async() =>{
+        await post(EndPoints.getUsers,{role:'ROLE_STAFF'}).then((response)=>{
           setRecords(response.data);
           console.log(response);
       }).catch(error =>{
@@ -28,10 +26,10 @@ const PatientUser = () =>{
       console.log("sssss",records);
       }
       useEffect(()=>{
-        getPatients();
+        getStaffs();
       },[])
-    
-      useEffect(() => {
+      
+    useEffect(() => {
         // Update filteredRecords whenever the searchTerm or records change
         const filtered = records.filter(
           (record) =>
@@ -39,18 +37,21 @@ const PatientUser = () =>{
             record.firstName.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredRecords(filtered);
-      }, [searchTerm, records]);
-      
-    
-    const handleAddPatient = async(patientData) => {
-        patientData.roles="ROLE_PATIENT";
-        await post(EndPoints.register,patientData).then((response)=>{
+    }, [searchTerm, records]);
+
+    const handleAddStaff = async(staffData) => {
+        /* // Update the records state with the new doctor data
+        console.log("Doctor data received:", doctorData);
+        setRecords((prevRecords) => [...prevRecords, doctorData]);
+        // Close the modal after adding the doctor */
+        staffData.roles="ROLE_STAFF";
+        await post(EndPoints.register,staffData).then((response)=>{
             console.log(response);
         }).catch(error =>{
             console.log(error);
         })
         close();
-        getPatients();
+        getStaffs();
       };
       const handleEdit = (id) => {
         setEditingRecordId(id);
@@ -65,9 +66,9 @@ const PatientUser = () =>{
         setEditingRecordId(null);        
         window.location.reload();
       };
-    const handleDeleteClick = async(patientId) => {
-      console.log("FromDeleteMethod",patientId);
-      await del(`${EndPoints.deleteUserDetails}/${patientId}`).then((response) => {
+    const handleDeleteClick = async(staffId) => {
+      console.log("FromDeleteMethod",staffId);
+      await del(`${EndPoints.deleteUserDetails}/${staffId}`).then((response) => {
         console.log(response);
      }).catch(error => {
         console.log(error);
@@ -167,7 +168,7 @@ const PatientUser = () =>{
                 );
             }
         }, */
-        {
+        /* {
             accessor: "address",            
             title: "Addess",
             titleStyle: { color: "" },
@@ -180,7 +181,7 @@ const PatientUser = () =>{
                     </Group>
                 );
             }
-        },
+        }, */
         {
             accessor: "phone",            
             title: "Phone",
@@ -194,6 +195,32 @@ const PatientUser = () =>{
                 );
             }
         },
+        {
+            accessor: "salary",            
+            title: "Salary",
+            titleStyle: { color: "" },
+            textAlignment: "center",
+            render: (data) => {
+                return(
+                    <Group position="center">
+                        <Text>{data?.salary}</Text>
+                    </Group>
+                );
+            }
+        },
+        /* {
+            accessor: "specialist",            
+            title: "Specialist",
+            titleStyle: { color: "" },
+            textAlignment: "center",
+            render: (data) => {
+                return(
+                    <Group position="center">
+                        <Text>{data?.specialist}</Text>
+                    </Group>
+                );
+            }
+        }, */
         {
             accessor: "actions",
             title: "Actions",
@@ -217,6 +244,7 @@ const PatientUser = () =>{
         },
     ]
     return(
+        
             <Grid gutter="lg">
             <Col span={6}>
             <Input
@@ -231,14 +259,14 @@ const PatientUser = () =>{
             <Button mt="sm" style={{ padding: "10px 20px", borderRadius: "7px",
             border:"none",color: "white", position: "relative", 
             background: "rgba(139, 127, 194, 1)", cursor: "pointer",left:"75%",top:"16%"}} onClick={open}>
-                Add Patient
+                Add Staff
             </Button>   
-            </Col>                                                        
-            <Modal opened={opened} onClose={close} title="Add Patients" centered>
-                <AddPatient onAddPatient={handleAddPatient} />
+            </Col>                                                                                        
+            <Modal opened={opened} onClose={close} title="Add Staffs" centered>
+                <AddStaff onAddStaff={handleAddStaff} />
             </Modal>
             <Modal opened={editingRecordId !== null} onClose={()=>{setEditingRecordId(null)}} title="Edit Record" centered>
-                <PatientEditLay records={editingRecordId} onClose={()=>{setEditingRecordId(null)}} onSubmit={handleSaveEdit} />
+                <StaffEditLay records={editingRecordId} onClose={()=>{setEditingRecordId(null)}} onSubmit={handleSaveEdit} />
             </Modal>
             <Col span={12}>
             <DataTable
@@ -247,7 +275,7 @@ const PatientUser = () =>{
             columns={colDef}/>
             </Col>
             </Grid>
+            
     );
 }
-
-export default PatientUser;
+export default StaffUser;

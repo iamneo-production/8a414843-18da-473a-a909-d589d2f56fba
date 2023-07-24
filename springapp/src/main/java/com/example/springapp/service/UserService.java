@@ -94,6 +94,9 @@ public class UserService implements UserDetailsService {
     public List<User> getAllUser(){
         return userRepository.findAll();
     }
+    public  List<User> getDoctorUsers(){
+        return  userRepository.findByRoles("ROLE_DOCTOR");
+    }
 
     public List<User> getUserByRole(String role){
         System.out.println("Service"+role);
@@ -198,7 +201,6 @@ public class UserService implements UserDetailsService {
         String body = "Thank you for registering. Your Book Your Appointments to Doctors to stay Healthy";
 
         try {
-
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setTo(email);
@@ -213,7 +215,6 @@ public class UserService implements UserDetailsService {
             e.printStackTrace();
         }
     }
-
     public String generateRandomPassword() {
         // Generate a random password
         String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%/";
