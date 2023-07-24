@@ -8,6 +8,7 @@ import person from "../../../assests/person.svg"
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logins } from '../../../provider/features/userSlice';
+import { setToken } from '../../../provider/features/tokenSlice';
 import { post } from '../../../api';
 import EndPoints from '../../../api/endPoints';
 import {setRole} from '../../../provider/features/roleSlice';
@@ -29,7 +30,9 @@ function SignIn() {
     const handleSubmit= async() =>{
         await post(EndPoints.login,form.values).then(response=>{
             console.log(response)
-            dispatch(logins(response.data))
+            dispatch(logins(response?.data))
+            // dispatch(setToken(response?.token))
+            localStorage.setItem('token',response?.token)
             if(response?.data?.roles==="ROLE_PATIENT"){
                 dispatch(setRole('patient'))
                 // localStorage.setItem('Role','patient')
