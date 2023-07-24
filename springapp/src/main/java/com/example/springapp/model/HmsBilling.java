@@ -13,12 +13,14 @@ public class HmsBilling {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     private Long patientId;
 
     @ManyToOne
     @JoinColumn(name="appointmentId")
     private HmsAppointment appointment;
 
+    private Long amount;
     private boolean paid;
 
     @CreationTimestamp
@@ -29,14 +31,23 @@ public class HmsBilling {
     private Boolean status;
 
 
-    public HmsBilling(HmsAppointment appointment,Long patientId, boolean paid) {
+    public HmsBilling(HmsAppointment appointment,Long patientId,Long amount, boolean paid) {
         this.appointment = appointment;
         this.patientId=patientId;
+        this.amount=amount;
         this.paid = paid;
     }
 
     public HmsBilling() {
 
+    }
+
+    public Long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Long amount) {
+        this.amount = amount;
     }
 
     public Long getPatientId() {
@@ -99,7 +110,9 @@ public class HmsBilling {
     public String toString() {
         return "HmsBilling{" +
                 "id=" + id +
+                ", patientId=" + patientId +
                 ", appointment=" + appointment +
+                ", amount=" + amount +
                 ", paid=" + paid +
                 ", created_at=" + created_at +
                 ", updated_at=" + updated_at +
