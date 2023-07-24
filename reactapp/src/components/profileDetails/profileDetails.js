@@ -44,7 +44,7 @@ export default function ProfileDetailModal(props){
         }).catch(error =>{
         console.log(error);
         })
-
+    
         close();
     
     }
