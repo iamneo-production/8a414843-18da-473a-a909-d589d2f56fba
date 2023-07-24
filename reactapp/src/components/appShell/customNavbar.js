@@ -109,7 +109,7 @@ export default function CustomNavbar(props) {
     const { data } = props
     const navigate = useNavigate()
     const { classes, cx } = useStyles();
-    const [active, setActive] = useState('Billing');
+    const [active, setActive] = useState('');
     const dispatch = useDispatch()
 
     const links = data.map((item) => (

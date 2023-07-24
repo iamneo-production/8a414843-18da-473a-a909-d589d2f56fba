@@ -14,7 +14,7 @@ import {
 import LatestAppshell from '../../../components/appShell/latestAppshell'
 import Payroll from '../payroll/index'
 import AdminDashboard from '../dashboard/index';
-import ManageUserForm from '../ManageUsers/index';
+import ManageUserForm from '../ManageUsers';
 import Pharmacy from '../pharmacy/index';
 import Inventory from '../inventoryManagement/Inventory';
 const data = [
