@@ -74,22 +74,12 @@ export default function PatientAppointment() {
   const [opened, { open, close }] = useDisclosure(false);
 
   const colDef = [
-    {
-      accessor: "id",
-      title: "Id",
-      titleStyle: { color: "" },
-      textAlignment: "center",
-    },
-    // {
-    //   accessor: "patientId",
-    //   title: "Patient Id",
-    //   titleStyle: { color: "" },
-    //   textAlignment: "center",
-    // },
+    
+    
 
     {
       accessor: "doctor.firstName",
-      title: "Doctor Id",
+      title: "Doctor Name",
       textAlignment: "center",
     },
     {

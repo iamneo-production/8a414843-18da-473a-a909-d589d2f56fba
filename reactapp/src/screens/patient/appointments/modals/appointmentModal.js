@@ -245,6 +245,7 @@ export default function ModalForm({ onCloseModal, patientId }) {
       console.log(error);
     })
     onCloseModal();
+    
   }
 
 
