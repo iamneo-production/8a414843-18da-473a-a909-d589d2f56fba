@@ -296,3 +296,6 @@ export default function ManagePatient() {
     </div>
   );
 }
+
+
+

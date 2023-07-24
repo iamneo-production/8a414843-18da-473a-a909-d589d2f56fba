@@ -3,7 +3,9 @@ package com.example.springapp.controller;
 import com.example.springapp.dto.UserDto;
 import com.example.springapp.dto.BaseResponseDto;
 import com.example.springapp.dto.UserLoginDto;
+import com.example.springapp.model.HmsAppointment;
 import com.example.springapp.model.User;
+import com.example.springapp.service.HmsAppointmentService;
 import com.example.springapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.*;
 
 @RestController
@@ -25,6 +28,7 @@ public class UserController {
     @Lazy
     @Autowired
     private PasswordEncoder passwordEncoder;
+
 
     @Autowired
     UserService userService;
@@ -242,4 +246,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid OTP");
         }
     }
+
+
+
 }

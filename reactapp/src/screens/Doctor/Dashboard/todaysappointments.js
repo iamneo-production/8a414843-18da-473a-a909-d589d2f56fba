@@ -135,12 +135,201 @@
 //-------------------------------------
 
 
-import React, { useState } from "react";
-import { Box, Card, ScrollArea, Text } from "@mantine/core";
+// import React, { useState, useEffect } from "react";
+// import { Box, Card, ScrollArea, Text } from "@mantine/core";
+// import { DataTable } from "mantine-datatable";
+// import { useSelector } from "react-redux";
+// import { get } from "../../../api/index";
+// import EndPoints from "../../../api/endPoints";
+
+
+// const ManagePatient = () => {
+//   const [selectedPatient, setSelectedPatient] = useState(null);
+
+//   const user = useSelector((s) => s?.user?.value);
+//   const [loading, setLoading] = useState(false);
+//   const [records, setRecords] = useState([]);
+
+//   const handleRowClick = (patient) => {
+//     setSelectedPatient(patient);
+//   };
+
+//   const handleClosePopup = () => {
+//     setSelectedPatient(null);
+//   };
+
+//   const colDef = [
+//     {
+//       accessor: "id",
+//       title: "ID",
+//       titleStyle: { color: "" },
+//       textAlignment: "center",
+//     },
+//     {
+//       accessor: "patient.firstName",
+//       title: "Patient Name",
+//       titleStyle: { color: "" },
+//       textAlignment: "center",
+//     },
+//     {
+//       accessor: "time",
+//       title: "Time",
+//       titleStyle: { color: "" },
+//       textAlignment: "center",
+//     },
+//   ];
+
+
+//   const getUsers = async () => {
+//     setLoading(true);
+//     try {
+//       const response = await get(
+//         `${EndPoints.doctorAppointment}/${user?.id}?appointmentStatus=accepted`
+//       );
+//       setRecords(response);
+//     } catch (error) {
+//       console.log(error);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     getUsers();
+//   }, []);
+
+//   // const records = [
+//   //   {
+//   //     id: 1,
+//   //     patientName: "Patient 1",
+//   //     AppointmentTime: "9:00:00",
+//   //     age: 25,
+//   //     gender: "Male",
+//   //     weight: "70 kg",
+//   //   },
+//   //   {
+//   //     id: 2,
+//   //     patientName: "Patient 2",
+//   //     AppointmentTime: "9:00:00",
+//   //     age: 30,
+//   //     gender: "Female",
+//   //     weight: "60 kg",
+//   //   },
+//   //   {
+//   //     id: 3,
+//   //     patientName: "Patient 3",
+//   //     AppointmentTime: "9:00:00",
+//   //     age: 40,
+//   //     gender: "Male",
+//   //     weight: "80 kg",
+//   //   },
+//   //   {
+//   //       id: 4,
+//   //       patientName: "Patient 4",
+//   //       AppointmentTime: "9:00:00",
+//   //       age: 40,
+//   //       gender: "Male",
+//   //       weight: "80 kg",
+//   //     },
+//   //     {
+//   //       id: 5,
+//   //       patientName: "Patient 5",
+//   //       AppointmentTime: "9:00:00",
+//   //       age: 40,
+//   //       gender: "Male",
+//   //       weight: "80 kg",
+//   //     },
+//   //     {
+//   //       id: 6,
+//   //       patientName: "Patient 6",
+//   //       AppointmentTime: "9:00:00",
+//   //       age: 40,
+//   //       gender: "Male",
+//   //       weight: "80 kg",
+//   //     },
+//   //     {
+//   //       id: 7,
+//   //       patientName: "Patient 7",
+//   //       AppointmentTime: "9:00:00",
+//   //       age: 40,
+//   //       gender: "Male",
+//   //       weight: "80 kg",
+//   //     },
+//   //   // Add more records here...
+//   // ];
+
+//   return (
+//     <ScrollArea height={300}>
+
+//       <Box m="md">
+//         <DataTable
+//           height={300}
+//           withBorder
+//           shadow="md"
+//           highlightOnHover
+//           borderRadius="md"
+//           striped
+//           horizontalSpacing="xs"
+//           verticalSpacing="xs"
+//           verticalAlignment="top"
+//           columns={colDef}
+//           records={records}
+//           onRowClick={handleRowClick}
+//           selectedRowIds={selectedPatient ? [selectedPatient.id] : []}
+//         />
+//       </Box>
+//       {selectedPatient && (
+//         <Box
+//           position="fixed"
+//           top="50%"
+//           left="50%"
+//           transform="translate(-50%, -50%)"
+//           width={400}
+//           height={200}
+//           bg="white"
+//           shadow="lg"
+//           radius="md"
+//           padding="lg"
+//         >
+//           <Card>
+//             ID: {selectedPatient.id}
+//             <br />
+//             Name: {selectedPatient.patientName}
+//             <br />
+//             Age: {selectedPatient.age}
+//             <br />
+//             Gender: {selectedPatient.gender}
+//             <br />
+//             Weight: {selectedPatient.weight}
+//           </Card>
+//           <button radius="md"
+//           variant="subtle"
+//           style={{color:"white", backgroundColor:'red', }} 
+//           onClick={handleClosePopup}>Close</button>
+//         </Box>
+//       )}
+//     </ScrollArea>
+//   );
+// };
+
+// export default ManagePatient;
+
+
+//--------------------------------------------------------------------------------------------------------
+
+
+import React, { useState, useEffect } from "react";
+import { Box, Card, ScrollArea, Text, Loader } from "@mantine/core";
 import { DataTable } from "mantine-datatable";
+import { useSelector } from "react-redux";
+import { get } from "../../../api/index";
+import EndPoints from "../../../api/endPoints";
 
 const ManagePatient = () => {
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [records, setRecords] = useState([]);
+  const user = useSelector((s) => s?.user?.value);
 
   const handleRowClick = (patient) => {
     setSelectedPatient(patient);
@@ -158,97 +347,61 @@ const ManagePatient = () => {
       textAlignment: "center",
     },
     {
-      accessor: "patientName",
+      accessor: "patient.firstName",
       title: "Patient Name",
       titleStyle: { color: "" },
       textAlignment: "center",
     },
     {
-      accessor: "AppointmentTime",
+      accessor: "time",
       title: "Time",
       titleStyle: { color: "" },
       textAlignment: "center",
     },
   ];
 
-  const records = [
-    {
-      id: 1,
-      patientName: "Patient 1",
-      AppointmentTime: "9:00:00",
-      age: 25,
-      gender: "Male",
-      weight: "70 kg",
-    },
-    {
-      id: 2,
-      patientName: "Patient 2",
-      AppointmentTime: "9:00:00",
-      age: 30,
-      gender: "Female",
-      weight: "60 kg",
-    },
-    {
-      id: 3,
-      patientName: "Patient 3",
-      AppointmentTime: "9:00:00",
-      age: 40,
-      gender: "Male",
-      weight: "80 kg",
-    },
-    {
-        id: 4,
-        patientName: "Patient 4",
-        AppointmentTime: "9:00:00",
-        age: 40,
-        gender: "Male",
-        weight: "80 kg",
-      },
-      {
-        id: 5,
-        patientName: "Patient 5",
-        AppointmentTime: "9:00:00",
-        age: 40,
-        gender: "Male",
-        weight: "80 kg",
-      },
-      {
-        id: 6,
-        patientName: "Patient 6",
-        AppointmentTime: "9:00:00",
-        age: 40,
-        gender: "Male",
-        weight: "80 kg",
-      },
-      {
-        id: 7,
-        patientName: "Patient 7",
-        AppointmentTime: "9:00:00",
-        age: 40,
-        gender: "Male",
-        weight: "80 kg",
-      },
-    // Add more records here...
-  ];
+  const getUsers = async () => {
+    setLoading(true);
+    try {
+      const response = await get(
+        `${EndPoints.doctorAppointment}/${user?.id}?appointmentStatus=accepted`
+      );
+      setRecords(response);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <ScrollArea height={300}>
       <Box m="md">
-        <DataTable
-          height={300}
-          withBorder
-          shadow="md"
-          highlightOnHover
-          borderRadius="md"
-          striped
-          horizontalSpacing="xs"
-          verticalSpacing="xs"
-          verticalAlignment="top"
-          columns={colDef}
-          records={records}
-          onRowClick={handleRowClick}
-          selectedRowIds={selectedPatient ? [selectedPatient.id] : []}
-        />
+        {loading ? (
+          <Card style={{ textAlign: "center", padding: "20px" }}>
+            <Loader size="lg" />
+          </Card>
+        ) : (
+          <DataTable
+            height={300}
+            withBorder
+            shadow="md"
+            highlightOnHover
+            borderRadius="md"
+            striped
+            horizontalSpacing="xs"
+            verticalSpacing="xs"
+            verticalAlignment="top"
+            columns={colDef}
+            records={records}
+            onRowClick={handleRowClick}
+            selectedRowIds={selectedPatient ? [selectedPatient.id] : []}
+          />
+        )}
       </Box>
       {selectedPatient && (
         <Box
@@ -265,19 +418,23 @@ const ManagePatient = () => {
         >
           <Card>
             ID: {selectedPatient.id}
-            <br />
-            Name: {selectedPatient.patientName}
-            <br />
-            Age: {selectedPatient.age}
-            <br />
-            Gender: {selectedPatient.gender}
-            <br />
-            Weight: {selectedPatient.weight}
+             <br />
+            Name: {selectedPatient.patient.firstName}
+             <br />
+            Age: {selectedPatient.patient.age}
+             <br />
+            Gender: {selectedPatient.patient.gender}
+             <br />
+            Appointment Time: {selectedPatient.time}
           </Card>
-          <button radius="md"
-          variant="subtle"
-          style={{color:"white", backgroundColor:'red', }} 
-          onClick={handleClosePopup}>Close</button>
+          <button
+            radius="md"
+            variant="subtle"
+            style={{ color: "white", backgroundColor: "red" }}
+            onClick={handleClosePopup}
+          >
+            Close
+          </button>
         </Box>
       )}
     </ScrollArea>

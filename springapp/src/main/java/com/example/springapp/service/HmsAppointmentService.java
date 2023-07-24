@@ -2,6 +2,7 @@ package com.example.springapp.service;
 import com.example.springapp.dto.request.HmsAppointmentRequestDto;
 import com.example.springapp.model.HmsAppointment;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface HmsAppointmentService {
@@ -18,4 +19,6 @@ public interface HmsAppointmentService {
     public void deleteAppointment(Long id);
 
     public List<HmsAppointment> doctorsAppointment(Long doctorId, String appointmentStatus);
+
+    //public List<HmsAppointment> getAppointmentsByDate(LocalDate today);
 }

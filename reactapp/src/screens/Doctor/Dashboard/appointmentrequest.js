@@ -1,118 +1,118 @@
 
 //----------------------------------------------------------------------------------------------------------------------
 
-import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Button,
-  Text,
-  Group,
-  Notification,
-  ScrollArea,
-  Card,
-} from "@mantine/core";
-import { useSelector } from 'react-redux';
-import {get} from "../../../api/index";
-import EndPoints from "../../../api/endPoints";
+// import React, { useState, useEffect } from "react";
+// import {
+//   Box,
+//   Button,
+//   Text,
+//   Group,
+//   Notification,
+//   ScrollArea,
+//   Card,
+// } from "@mantine/core";
+// import { useSelector } from 'react-redux';
+// import {get} from "../../../api/index";
+// import EndPoints from "../../../api/endPoints";
 
-const AppointmentRequest = () => {
-  const [selectedNotification, setSelectedNotification] = useState(null);
-  const [records, setRecords] = useState([]);
-  //const [records, setRecords] = useState([]);
-
-
-  const user = useSelector((s) => s?.user?.value)
-    console.log(user);
+// const AppointmentRequest = () => {
+//   const [selectedNotification, setSelectedNotification] = useState(null);
+//   const [records, setRecords] = useState([]);
+//   //const [records, setRecords] = useState([]);
 
 
-  const handleAccept = (patientName) => {
-    setSelectedNotification({
-      color: "green",
-      message: `Appointment with ${patientName} is fixed.`,
-    });
-  };
-
-  const handleReject = (patientName) => {
-    setSelectedNotification({
-      color: "red",
-      message: `Appointment with ${patientName} is rejected.`,
-    });
-  };
+//   const user = useSelector((s) => s?.user?.value)
+//     console.log(user);
 
 
-  const getUsers =async() =>{
-    await get(`${EndPoints.doctorAppointment}/${user?.id}?appointmentStatus=pending`).then((response)=>{
-      setRecords(response);
-      console.log(response);
-  }).catch(error =>{
-      console.log(error);
-  })
+//   const handleAccept = (patientName) => {
+//     setSelectedNotification({
+//       color: "green",
+//       message: `Appointment with ${patientName} is fixed.`,
+//     });
+//   };
 
-  }
-  useEffect(()=>{
-    getUsers()
-  },[])
+//   const handleReject = (patientName) => {
+//     setSelectedNotification({
+//       color: "red",
+//       message: `Appointment with ${patientName} is rejected.`,
+//     });
+//   };
+
+
+//   const getUsers =async() =>{
+//     await get(`${EndPoints.doctorAppointment}/${user?.id}?appointmentStatus=pending`).then((response)=>{
+//       setRecords(response);
+//       console.log(response);
+//   }).catch(error =>{
+//       console.log(error);
+//   })
+
+//   }
+//   useEffect(()=>{
+//     getUsers()
+//   },[])
 
   
 
-  //console.log(records.patient?.firstName);
+//   //console.log(records.patient?.firstName);
 
-  return (
-    <ScrollArea height={300}>
-      <Box m="md" style={{ display: "flex", flexWrap: "wrap" }}>
-        {records.map((data) => (
-          <Card
-            key={data.id}
-            shadow="md"
-            style={{ marginBottom: "16px", marginRight: "16px", width: "300px" }}
-          >
-            <Box padding="md">
-              <Text weight={500} style={{ marginBottom: "8px", fontSize: "18px" }}>
-                {data.patient?.firstName} {data.patient?.lastName}
-              </Text>
-              <Group position="center">
-                <Text weight={500} style={{ marginRight: "8px" }}>
-                  Date: {data.date}
-                </Text>
-                <Text weight={500} style={{ marginRight: "8px" }}>
-                  Time: {data.time}
-                </Text>
-              </Group>
-              <Group position="center">
-                <Button
-                  radius="md"
-                  variant="subtle"
-                  onClick={() => handleAccept(data.patientName)}
-                >
-                  Accept
-                </Button>
-                <Button
-                  style={{ color: "red" }}
-                  radius="md"
-                  variant="subtle"
-                  onClick={() => handleReject(data.patientName)}
-                >
-                  Reject
-                </Button>
-              </Group>
-            </Box>
-          </Card>
-        ))}
-        {selectedNotification && (
-          <Notification
-            title="Appointment Status"
-            color={selectedNotification.color}
-            onClose={() => setSelectedNotification(null)}
-          >
-            {selectedNotification.message}
-          </Notification>
-        )}
-      </Box>
-    </ScrollArea>
-  );
-};
+//   return (
+//     <ScrollArea height={300}>
+//       <Box m="md" style={{ display: "flex", flexWrap: "wrap" }}>
+//         {records.map((data) => (
+//           <Card
+//             key={data.id}
+//             shadow="md"
+//             style={{ marginBottom: "16px", marginRight: "16px", width: "300px" }}
+//           >
+//             <Box padding="md">
+//               <Text weight={500} style={{ marginBottom: "8px", fontSize: "18px" }}>
+//                 {data.patient?.firstName} {data.patient?.lastName}
+//               </Text>
+//               <Group position="center">
+//                 <Text weight={500} style={{ marginRight: "8px" }}>
+//                   Date: {data.date}
+//                 </Text>
+//                 <Text weight={500} style={{ marginRight: "8px" }}>
+//                   Time: {data.time}
+//                 </Text>
+//               </Group>
+//               <Group position="center">
+//                 <Button
+//                   radius="md"
+//                   variant="subtle"
+//                   onClick={() => handleAccept(data.patientName)}
+//                 >
+//                   Accept
+//                 </Button>
+//                 <Button
+//                   style={{ color: "red" }}
+//                   radius="md"
+//                   variant="subtle"
+//                   onClick={() => handleReject(data.patientName)}
+//                 >
+//                   Reject
+//                 </Button>
+//               </Group>
+//             </Box>
+//           </Card>
+//         ))}
+//         {selectedNotification && (
+//           <Notification
+//             title="Appointment Status"
+//             color={selectedNotification.color}
+//             onClose={() => setSelectedNotification(null)}
+//           >
+//             {selectedNotification.message}
+//           </Notification>
+//         )}
+//       </Box>
+//     </ScrollArea>
+//   );
+// };
 
-export default AppointmentRequest;
+// export default AppointmentRequest;
 
 
 //-----------------------------------------------------------------------------------------------------------------
@@ -339,4 +339,305 @@ export default AppointmentRequest;
 //------------------------------------------------------------------------------------------------------------------
 
 
+//main code
 
+
+// import React, { useState, useEffect } from "react";
+// import {
+//   Box,
+//   Button,
+//   Text,
+//   Group,
+//   Notification,
+//   ScrollArea,
+//   Card,
+//   Loader
+// } from "@mantine/core";
+// import { useSelector } from "react-redux";
+// import { get, put } from "../../../api/index";
+// import EndPoints from "../../../api/endPoints";
+
+// const AppointmentRequest = () => {
+//   const [selectedNotification, setSelectedNotification] = useState(null);
+//   const [records, setRecords] = useState([]);
+//   const user = useSelector((s) => s?.user?.value);
+//   const [loading, setLoading] = useState(false);
+
+//   const handleAccept = (appointmentId, patientName) => {
+//     setLoading(true);
+//     put(`${EndPoints.changeStatus}/${appointmentId}`, {
+//       appointmentStatus: "accepted",
+//     })
+//       .then(() => {
+//         setSelectedNotification({
+//           color: "green",
+//           message: `Appointment with ${patientName} is fixed.`,
+//         });
+//         getUsers();
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//       setLoading(false);
+//   };
+
+//   const handleReject = (appointmentId, patientName) => {
+//     setLoading(true);
+//     put(`${EndPoints.changeStatus}/${appointmentId}`, {
+//       appointmentStatus: "rejected",
+//     })
+//       .then(() => {
+//         setSelectedNotification({
+//           color: "red",
+//           message: `Appointment with ${patientName} is rejected.`,
+//         });
+//         getUsers();
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//       setLoading(false);
+//   };
+
+//   const getUsers = async () => {
+//     setLoading(true);
+//     try {
+//       const response = await get(
+//         `${EndPoints.doctorAppointment}/${user?.id}?appointmentStatus=pending`
+//       );
+//       setRecords(response);
+//     } catch (error) {
+//       console.log(error);
+//     }
+//     setLoading(false);
+//   };
+
+//   useEffect(() => {
+//     getUsers();
+//   }, []);
+
+//   return (
+//     <ScrollArea height={300}>
+//       <Box m="md" style={{ display: "flex", flexWrap: "wrap" }}>
+//         {loading?<Loader/>:
+//         records.map((data) => (
+//           <Card
+//             key={data.id}
+//             shadow="md"
+//             style={{ marginBottom: "16px", marginRight: "16px", width: "300px" }}
+//           >
+//             <Box padding="md">
+//               <Text weight={500} style={{ marginBottom: "8px", fontSize: "18px" }}>
+//                 {data.patient?.firstName} {data.patient?.lastName}
+//               </Text>
+//               <Group position="center">
+//                 <Text weight={500} style={{ marginRight: "8px" }}>
+//                   Date: {data.date}
+//                 </Text>
+//                 <Text weight={500} style={{ marginRight: "8px" }}>
+//                   Time: {data.time}
+//                 </Text>
+//               </Group>
+//               <Group position="center">
+//                 <Button
+//                   radius="md"
+//                   variant="subtle"
+//                   onClick={() => handleAccept(data.id, `${data.patient?.firstName} ${data.patient?.lastName}`)}
+//                   loading={loading}
+//                 >
+//                   Accept
+//                 </Button>
+//                 <Button
+//                   style={{ color: "red" }}
+//                   radius="md"
+//                   variant="subtle"
+//                   onClick={() => handleReject(data.id, `${data.patient?.firstName} ${data.patient?.lastName}`)}
+//                   loading={loading}
+//                 >
+//                   Reject
+//                 </Button>
+//               </Group>
+//             </Box>
+//           </Card>
+//         ))
+//         }
+//         {selectedNotification && (
+//           <Notification
+//             title="Appointment Status"
+//             color={selectedNotification.color}
+//             onClose={() => setSelectedNotification(null)}
+//           >
+//             {selectedNotification.message}
+//           </Notification>
+//         )}
+//       </Box>
+//     </ScrollArea>
+//   );
+// };
+
+// export default AppointmentRequest;
+
+
+
+//---------------------------------------------------------------------------------------------------------
+
+
+
+import React, { useState, useEffect } from "react";
+import {
+  Box,
+  Button,
+  Text,
+  Group,
+  Notification,
+  ScrollArea,
+  Card,
+  Loader,
+} from "@mantine/core";
+import { useSelector } from "react-redux";
+import { get, put } from "../../../api/index";
+import EndPoints from "../../../api/endPoints";
+
+const AppointmentRequest = () => {
+  const [selectedNotification, setSelectedNotification] = useState(null);
+  const [records, setRecords] = useState([]);
+  const user = useSelector((s) => s?.user?.value);
+  const [loading, setLoading] = useState(false);
+
+  const handleAccept = (appointmentId, patientName) => {
+    setLoading(true);
+    put(`${EndPoints.changeStatus}/${appointmentId}`, {
+      appointmentStatus: "accepted",
+    })
+      .then(() => {
+        setSelectedNotification({
+          color: "green",
+          message: `Appointment with ${patientName} is fixed.`,
+        });
+        getUsers();
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const handleReject = (appointmentId, patientName) => {
+    setLoading(true);
+    put(`${EndPoints.changeStatus}/${appointmentId}`, {
+      appointmentStatus: "rejected",
+    })
+      .then(() => {
+        setSelectedNotification({
+          color: "red",
+          message: `Appointment with ${patientName} is rejected.`,
+        });
+        getUsers();
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const getUsers = async () => {
+    setLoading(true);
+    try {
+      const response = await get(
+        `${EndPoints.doctorAppointment}/${user?.id}?appointmentStatus=pending`
+      );
+      setRecords(response);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  return (
+    <ScrollArea height={300}>
+      <Box m="md" style={{ display: "flex", flexWrap: "wrap" }}>
+        {loading ? (
+          <Loader />
+        ) : (
+          records.map((data) => (
+            <Card
+              key={data.id}
+              shadow="md"
+              style={{
+                marginBottom: "16px",
+                marginRight: "16px",
+                width: "300px",
+              }}
+            >
+              <Box padding="md">
+                <Text
+                  weight={500}
+                  style={{ marginBottom: "8px", fontSize: "18px" }}
+                >
+                  {data.patient?.firstName} {data.patient?.lastName}
+                </Text>
+                <Group position="center">
+                  <Text weight={500} style={{ marginRight: "8px" }}>
+                    Date: {data.date}
+                  </Text>
+                  <Text weight={500} style={{ marginRight: "8px" }}>
+                    Time: {data.time}
+                  </Text>
+                </Group>
+                <Group position="center">
+                  <Button
+                    radius="md"
+                    variant="subtle"
+                    onClick={() =>
+                      handleAccept(
+                        data.id,
+                        `${data.patient?.firstName} ${data.patient?.lastName}`
+                      )
+                    }
+                    loading={loading}
+                  >
+                    Accept
+                  </Button>
+                  <Button
+                    style={{ color: "red" }}
+                    radius="md"
+                    variant="subtle"
+                    onClick={() =>
+                      handleReject(
+                        data.id,
+                        `${data.patient?.firstName} ${data.patient?.lastName}`
+                      )
+                    }
+                    loading={loading}
+                  >
+                    Reject
+                  </Button>
+                </Group>
+              </Box>
+            </Card>
+          ))
+        )}
+      </Box>
+      {selectedNotification && (
+        <Notification
+          title="Appointment Status"
+          color={selectedNotification.color}
+          onClose={() => setSelectedNotification(null)}
+        >
+          {selectedNotification.message}
+        </Notification>
+      )}
+    </ScrollArea>
+  );
+};
+
+export default AppointmentRequest;
