@@ -21,5 +21,5 @@ public interface HmsAppointmentService {
 
     List<HmsAppointment> appointmentAppointmentStatus(String appointmentStatus);
 
-   List<HmsAppointment> appointmentPendingAcceptedPrescribed(Long patientId);
+   List<HmsAppointment> appointmentPendingAcceptedPrescribed(Long patientId,String appointmentStatus);
 }

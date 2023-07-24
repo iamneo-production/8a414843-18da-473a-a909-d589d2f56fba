@@ -1,5 +1,6 @@
 package com.example.springapp.controller;
 
+import com.example.springapp.dto.BaseResponseDto;
 import com.example.springapp.dto.request.HmsAppointmentRequestDto;
 import com.example.springapp.model.HmsAppointment;
 
@@ -8,6 +9,8 @@ import com.example.springapp.repository.HmsAppointmentRepository;
 import com.example.springapp.repository.UserRepository;
 import com.example.springapp.serviceImplementation.HmsAppointmentImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,10 +28,10 @@ public class HmsAppointmentController {
 
     @PostMapping("/api/appointment")
     public HmsAppointment saveAppointment(@RequestBody HmsAppointmentRequestDto appointment) {
-        User doctor=userRepository.findById(appointment.getDoctorId()).orElseThrow();
-        User patient=userRepository.findById(appointment.getPatientId()).orElseThrow();
+        User doctor = userRepository.findById(appointment.getDoctorId()).orElseThrow();
+        User patient = userRepository.findById(appointment.getPatientId()).orElseThrow();
 
-        HmsAppointment hmsAppointment=new HmsAppointment(
+        HmsAppointment hmsAppointment = new HmsAppointment(
                 patient,
                 doctor,
                 appointment.getDate(),
@@ -39,8 +42,9 @@ public class HmsAppointmentController {
 
         return impl.saveAppointment(hmsAppointment);
     }
+
     @GetMapping("/api/appointment")
-    public List<HmsAppointment> findAllAppointment(){
+    public List<HmsAppointment> findAllAppointment() {
         return impl.findAllAppointment();
     }
 
@@ -55,9 +59,14 @@ public class HmsAppointmentController {
 //    }
 
     @PutMapping("/api/appointment/{id}")
-    public HmsAppointment updateAppointmentById(@PathVariable Long id, @RequestBody HmsAppointmentRequestDto updatedAppointment) {
+    public ResponseEntity<?> updateAppointmentById(@PathVariable Long id, @RequestBody HmsAppointmentRequestDto updatedAppointment) {
 
-        return impl.updateAppointmentById(id, updatedAppointment);
+        try {
+            HmsAppointment data = impl.updateAppointmentById(id, updatedAppointment);
+            return ResponseEntity.ok(new BaseResponseDto("Success", data));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went Wrong");
+        }
 
     }
 
@@ -68,24 +77,40 @@ public class HmsAppointmentController {
     }
 
     @GetMapping("/api/appointment-appointmentStatus")
-    public List<HmsAppointment> getAppointmentAppointmentStatus( @RequestParam (required = false) String appointmentStatus){
-        return impl.appointmentAppointmentStatus( appointmentStatus);
+    public ResponseEntity<?> getAppointmentAppointmentStatus(@RequestParam(required = false) String appointmentStatus) {
+
+        try {
+            List<HmsAppointment> data = impl.appointmentAppointmentStatus(appointmentStatus);
+            return ResponseEntity.ok(new BaseResponseDto("Success", data));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went Wrong");
+        }
+
     }
 
 
     @GetMapping("/api/doctor-appointment/{doctorId}")
-    public List<HmsAppointment> individualUsersAppointment(@PathVariable Long doctorId, @RequestParam (required = false) String appointmentStatus){
-        return impl.doctorsAppointment(doctorId, appointmentStatus);
-    }
+    public ResponseEntity<?> individualUsersAppointment(@PathVariable Long doctorId, @RequestParam(required = false) String appointmentStatus) {
 
+        try {
+            List<HmsAppointment> data = impl.doctorsAppointment(doctorId, appointmentStatus);
+            return ResponseEntity.ok(new BaseResponseDto("Success", data));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went Wrong");
+        }
+    }
 
 
     @GetMapping("/api/all-patient-appointment/{patientId}")
-    public List<HmsAppointment> getAllPatientAppointment(@PathVariable Long patientId){
-        return impl.appointmentPendingAcceptedPrescribed(patientId);
+    public ResponseEntity<?> getAllPatientAppointment(@PathVariable Long patientId,@RequestParam(required = false) String appointmentStatus) {
+        try {
+            List<HmsAppointment> data = impl.appointmentPendingAcceptedPrescribed(patientId,appointmentStatus);
+            return ResponseEntity.ok(new BaseResponseDto("Success", data));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went Wrong");
+        }
+
     }
-
-
 
 
 }

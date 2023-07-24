@@ -5,6 +5,8 @@ import com.example.springapp.repository.HmsBillingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class HmsBillingService {
 
@@ -13,5 +15,9 @@ public class HmsBillingService {
 
     public HmsBilling createBilling(HmsBilling billing) {
         return hmsBillingRepository.save(billing);
+    }
+
+    public List<HmsBilling> getAllBiilling(){
+        return hmsBillingRepository.findAll();
     }
 }

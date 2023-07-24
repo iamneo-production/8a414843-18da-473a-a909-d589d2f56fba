@@ -17,4 +17,6 @@ public interface HmsAppointmentRepository extends JpaRepository<HmsAppointment, 
 
 
     List<HmsAppointment> findByPatientIdAndAppointmentStatusIn(Long patientId, List<String> appointmentStatusList);
+
+    List<HmsAppointment> findByPatientIdAndAppointmentStatus(Long patientId,String appointmentStatus);
 }

@@ -7,6 +7,7 @@ public class HmsBillingRequestDto {
 
     private Long patientId;
     private boolean paid;
+    private Long amount;
 
     public Long getPatientId() {
         return patientId;
@@ -14,6 +15,14 @@ public class HmsBillingRequestDto {
 
     public void setPatientId(Long patientId) {
         this.patientId = patientId;
+    }
+
+    public Long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Long amount) {
+        this.amount = amount;
     }
 
     public Long getAppointmentId() {

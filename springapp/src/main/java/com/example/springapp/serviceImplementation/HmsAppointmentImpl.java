@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+
 @Service
 
 public class HmsAppointmentImpl implements HmsAppointmentService {
@@ -61,9 +63,13 @@ public class HmsAppointmentImpl implements HmsAppointmentService {
 
 
 @Override
-    public List<HmsAppointment> appointmentPendingAcceptedPrescribed(Long patientId) {
-        List<String> appointmentStatusList = Arrays.asList("pending", "accepted", "prescribed");
-        return appointmentRepository.findByPatientIdAndAppointmentStatusIn(patientId, appointmentStatusList);
+    public List<HmsAppointment> appointmentPendingAcceptedPrescribed(Long patientId,String appointmentStatus) {
+        if(Objects.equals(appointmentStatus, "completed")){
+            return appointmentRepository.findByPatientIdAndAppointmentStatus(patientId,appointmentStatus);
+        }else {
+            List<String> appointmentStatusList = Arrays.asList("pending", "accepted", "prescribed");
+            return appointmentRepository.findByPatientIdAndAppointmentStatusIn(patientId, appointmentStatusList);
+        }
     }
 
 
