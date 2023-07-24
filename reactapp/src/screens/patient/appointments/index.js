@@ -43,7 +43,7 @@ export default function PatientAppointment() {
 
   const getAppointments =async() =>{
     await get(`${EndPoints.fetchAppointment}/${user?.id}`).then((response)=>{
-      setPatients(response);
+      setPatients(response?.data);
       console.log(response);
   }).catch(error =>{
       console.log(error);

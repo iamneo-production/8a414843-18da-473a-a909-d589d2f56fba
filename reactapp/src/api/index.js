@@ -22,10 +22,10 @@ export const get = async (url, token = null) => {
 };
 
 // Custom POST method
-export const post = async (url, data, contentType = 'application/json', token = null) => {
+export const post = async (url, data, token = null) => {
   try {
     const headers = {
-      'Content-Type': contentType,
+      'Content-Type': 'application/json',
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     };
     const response = await api.post(url, data, { headers });
@@ -36,10 +36,10 @@ export const post = async (url, data, contentType = 'application/json', token = 
 };
 
 // Custom PUT method
-export const put = async (url, data, contentType = 'application/json', token = null) => {
+export const put = async (url, data,  token = null) => {
   try {
     const headers = {
-      'Content-Type': contentType,
+      'Content-Type': 'application/json',
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     };
     const response = await api.put(url, data, { headers });
@@ -50,10 +50,10 @@ export const put = async (url, data, contentType = 'application/json', token = n
 };
 
 // Custom PUT method
-export const putFile = async (url, data, contentType = 'multipart/form-data', token = null) => {
+export const putFile = async (url, data, token = null) => {
   try {
     const headers = {
-      'Content-Type': contentType,
+      'Content-Type':  'multipart/form-data',
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     };
     const response = await api.put(url, data, { headers });

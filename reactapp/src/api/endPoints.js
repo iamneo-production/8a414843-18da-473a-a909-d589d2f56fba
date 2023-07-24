@@ -24,6 +24,9 @@ const EndPoints = {
     getBilling:'/api/appointment-appointmentStatus',
     getBillingDetails:'/api/pharmacy-appointmentId',
     getRolesCount:'/api/role-list-count',
+    updateAppointment:'/api/appointment',
+    createBilling:'/api/billing',
+    allBilling:'/api/billing'
 }
 
 export default EndPoints

@@ -51,7 +51,7 @@ export default function ManagePatient() {
       `${EndPoints.doctorAppointment}/${user?.id}?appointmentStatus=accepted`
     )
       .then((response) => {
-        setRecords(response);
+        setRecords(response?.data);
         console.log(response);
       })
       .catch((error) => {
@@ -64,7 +64,7 @@ export default function ManagePatient() {
       `${EndPoints.doctorAppointment}/${user?.id}?appointmentStatus=prescribed`
     )
       .then((response) => {
-        setRecords(response);
+        setRecords(response?.data);
         console.log(response);
       })
       .catch((error) => {
@@ -72,12 +72,16 @@ export default function ManagePatient() {
       });
   };
 
-  useEffect(() => {
+  async function handleSelect(){
     if (selectedTab === "pending appointments") {
       getAcceptedAppointments();
     } else if (selectedTab === "completed appointments") {
       getPrescribedAppointments();
     }
+  }
+
+  useEffect(() => {
+    handleSelect()
   }, [selectedTab]);
 
   const colDef1 = [
@@ -247,6 +251,7 @@ export default function ManagePatient() {
             setModalOpen(false);
           }}
           appointmentData={appointmentData}
+          getFunction={handleSelect}
         />
       )}
     </div>
