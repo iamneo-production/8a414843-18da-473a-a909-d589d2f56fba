@@ -16,7 +16,6 @@ export default function Pharmacy() {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, []);
 
