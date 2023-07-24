@@ -103,9 +103,9 @@ public class User implements UserDetails {
     /*public void setPhone()
     {this.phone= this.phone;}*/
     public Long getPhone(){return phone;}
-    public void setCreatedAt(){this.createdAt=createdAt;}
+    public void setCreatedAt(Date createdAt){this.createdAt=createdAt;}
     public Date getCreatedAt(){return createdAt;}
-    public void setUpdatedAt(){this.updatedAt=updatedAt;}
+    public void setUpdatedAt(Date updatedAt){this.updatedAt=updatedAt;}
     public Date getUpdatedAt(){return updatedAt;}
 
     /*public void setSalary(long salary){

@@ -69,6 +69,7 @@ export default function PrescriptionModal(props) {
       }).catch(error =>{
         console.log(error);
       })
+      close();
   }
 
   useEffect(() => {

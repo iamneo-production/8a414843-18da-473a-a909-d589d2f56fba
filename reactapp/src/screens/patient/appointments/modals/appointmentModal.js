@@ -203,7 +203,7 @@ import {post, get} from "../../../../api"
 import EndPoints from "../../../../api/endPoints";
 import { useSelector } from 'react-redux';
 
-export default function ModalForm({ onCloseModal, patientId }) {
+export default function ModalForm({ onCloseModal,patientId, getAppointments }) {
   const user = useSelector((s) => s?.user?.value)
   const[doctors,setDoctors] = useState([]);
   const [selectedDoctorId, setSelectedDoctorId] = useState('');
@@ -241,6 +241,7 @@ export default function ModalForm({ onCloseModal, patientId }) {
 
     await post(EndPoints.postAppointment,data).then((response)=>{
       console.log(response.data);
+      getAppointments();
     }).catch(error =>{
       console.log(error);
     })

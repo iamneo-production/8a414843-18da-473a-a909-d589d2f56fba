@@ -106,6 +106,16 @@ public class UserController {
         }
 
     }
+    @PostMapping("/api/role-list-count")
+    public ResponseEntity<?> getUserCountByRole(@RequestBody Map<String, String> requestBody) {
+        try {
+            String role = requestBody.get("roles");
+            int count = userService.getUserCountByRole(role);
+            return ResponseEntity.ok(new BaseResponseDto("Success", count));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new BaseResponseDto("Something went wrong"));
+        }
+    }
 
     @GetMapping("/api/auth/users")
     public ResponseEntity<?>  getAllUsers(){

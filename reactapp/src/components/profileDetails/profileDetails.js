@@ -3,20 +3,24 @@ import {
     TextInput,
     Textarea,
     Modal,
-    Button
+    Button,
+    ActionIcon,
+    Card
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import Profile from '../../assests/man.png';
-import ResetPassword from '../password/ResetPassword';
-import { useDisclosure } from '@mantine/hooks';
+import { useState } from "react";
 import { useSelector } from 'react-redux';
-import { put } from '../../api';
+import { put,putFile } from '../../api';
 import EndPoints from '../../api/endPoints';
+import { IconEditCircle } from '@tabler/icons-react';
 
 //style
 const imgContainer = { display: "flex",justifyContent: "center", alignItems: "center",height: "120px"}
 
 const imageStyle = { position:'absolute',top:'9%',left:'43%',width:'7em',height:'7em',borderRadius:'50%',objectFit:'cover' }
+
+const editIconStyle = { position:'absolute',top:'22%',left:'53%',borderRadius:'50%',objectFit:'cover' }
+
 
 const container = { display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '5px 20px 5px 20px' }
 
@@ -28,12 +32,14 @@ const updateButton = { marginTop:"20px", padding: "10px 20px", borderRadius: "7p
 
 const cancelButton = { marginTop:"20px", padding: "10px 20px", borderRadius: "7px",border:"none",color: "white", position: "relative", background: "rgba(139, 127, 194, 1)", cursor: "pointer", left: "62%" }
 
-
-const details =  {name:'Andy', id:'001' , designation:'STAFF', status:true, gender:'Male', dob:'29/09/2003', age: '28',
-bloodGroup:'O+ve', email:'abcd@gmail.com', phone:'123456XXX9', martialStatus: 'Unmarried', address:'London'}
+const imageUpload = { height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center'};
 
 export default function ProfileDetailModal(props){
     const{ open, close} = props;
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedFile, setSelectedFile] = useState(null);
+
+  
     const user = useSelector((s) => s?.user?.value)
     console.log(user);
 
@@ -44,9 +50,7 @@ export default function ProfileDetailModal(props){
         }).catch(error =>{
         console.log(error);
         })
-    
-        close();
-    
+        close();    
     }
 
     const form = useForm({
@@ -54,7 +58,7 @@ export default function ProfileDetailModal(props){
             firstName: user?.firstName,
             lastName: user?.lastName,
             id: user?.id ,
-            status:details.status,
+            status:user?.status,
             gender: user?.gender,
             dob: user?.dob,
             age: user?.age,
@@ -74,25 +78,31 @@ export default function ProfileDetailModal(props){
     //     close();
     //   };
 
-    // const handleFileChange = async(e) => {
-    //     console.log(e.target.files[0]);
-    //     const data = form.values
-    //     await put(`${EndPoints.updateUserProfile}/${user?.id}`,data).then((response)=>{
-    //     console.log(response.data);
-    //     }).catch(error =>{
-    //     console.log(error);
-    //     })
-    // }
+    const handleFileChange = (e) => {
+        setSelectedFile(e.target.files[0]);
+        console.log("photo",selectedFile);
+      };
+
+    const handleUploadfile = async(e) => {
+        const formData = new FormData();
+        formData.append('profileImage', selectedFile, {'Content-Type': 'multipart/form-data'});
+        await putFile(`${EndPoints.updateUserProfile}/${user?.id}`,formData).then((response)=>{
+        console.log(response);
+        }).catch(error =>{
+        console.log(error);
+        })
+    }
 
 
 
     return(
         <>
         <Modal size={800} radius={20} opened={open} onClose={() => close()} title="Personal Details" centered>
-            {/* <PersonalDetails details={record} onClose={() => close()} onSubmit={handleSaveEdit}/> */}
             <div style={imgContainer}>
-                <Avatar style={imageStyle} src={user.profileImage} alt=""/>
-                {/* <input type="file" accept="image/*"  onChange={handleFileChange} /> */}
+                <Avatar style={imageStyle}  src={`data:image/png;base64,${user?.profileImage}`} alt=""/>
+                <ActionIcon style={editIconStyle} onClick={() => {setModalOpen(true);}}>
+                    <IconEditCircle color='blue'/>
+                </ActionIcon>
             </div>
             <div style={container}>
                 <form>
@@ -142,6 +152,16 @@ export default function ProfileDetailModal(props){
                     <Button onClick={()=>close()} style={cancelButton}>Cancel</Button>
                 </form>
             </div>    
+        </Modal>
+        <Modal size={400} radius={30} shadow="xl" opened={modalOpen} onClose={()=>setModalOpen(false)} title="Upload Image" >
+            <Card padding="xl" style={imageUpload}>
+                <Avatar size={120} src={`data:image/png;base64,${user?.profileImage}`}  alt="" style={{ marginBottom: '10px' }}/>
+                <input type="file" accept="image/*" onChange={handleFileChange} style={{marginTop:'10px', marginLeft: '80px' }}/>
+                <div style={{marginTop:"20px", display: 'flex', justifyContent: 'center' }}>
+                        <Button style={{ marginRight: "15px",backgroundColor:"lightgrey" }} onClick={() => setModalOpen(false)} >Cancel</Button>
+                        <Button style={{backgroundColor:"rgba(139, 127, 194, 1)"}} onClick={() => {handleUploadfile(); setModalOpen(false);}}>Upload</Button>
+                    </div>
+            </Card>
         </Modal>
         </>
     )

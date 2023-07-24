@@ -1,7 +1,4 @@
 import { useState } from "react";
-import CustomHeader from "../../header";
-import BannerCarousel from "../../components/carousel/temp";
-import CustomCarousel from "../../components/carousel";
 import {
     Text,
     Image,
@@ -17,6 +14,9 @@ import {
     Avatar
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import CustomHeader from "../../header";
+import BannerCarousel from "../../components/carousel/temp";
+import CustomCarousel from "../../components/carousel";
 import VaccinationResearch from "../../assests/VaccinationResearch .svg"
 import CustomFooter from '../../components/footer/index'
 import SignUp from "./auth/signUp";

@@ -10,12 +10,20 @@ const EndPoints = {
     doctorAppointment:"/api/doctor-appointment",
     inventoryList:'/api/inventory',
     createPharmacy:'/api/pharmacy',
+    updateInventory:"/api/inventory",
+    addInventory:"/api/inventory",
+    deleteInventory:"/api/inventory",
+    postAppointment:"/api/appointment",
+    getDoctor:'/api/role-list',
     getUsers:"/api/role-list",
     deleteUserDetails:"/api/auth/users",
     fetchAppointment:'/api/all-patient-appointment',
     postAppointment:'/api/appointment',
     getDoctor:'/api/role-list',
     deleteAppointment:'/api/appointment',
+    getBilling:'/api/appointment-appointmentStatus',
+    getBillingDetails:'/api/pharmacy-appointmentId',
+    getRolesCount:'/api/role-list-count',
 }
 
 export default EndPoints
