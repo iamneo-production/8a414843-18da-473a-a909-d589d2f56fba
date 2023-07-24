@@ -1,7 +1,6 @@
 package com.example.springapp.controller;
 
 import com.example.springapp.dto.request.HmsAppointmentRequestDto;
-import com.example.springapp.exception.EntityNotFoundException;
 import com.example.springapp.model.HmsAppointment;
 
 import com.example.springapp.model.User;
@@ -63,16 +62,30 @@ public class HmsAppointmentController {
     }
 
     @DeleteMapping("/api/appointment/{id}")
-    public String deleteAppointment(@RequestParam Long id) {
+    public String deleteAppointment(@PathVariable Long id) {
         impl.deleteAppointment(id);
         return null;
-
     }
+
+    @GetMapping("/api/appointment-appointmentStatus")
+    public List<HmsAppointment> getAppointmentAppointmentStatus( @RequestParam (required = false) String appointmentStatus){
+        return impl.appointmentAppointmentStatus( appointmentStatus);
+    }
+
 
     @GetMapping("/api/doctor-appointment/{doctorId}")
-    public List<HmsAppointment> doctorsAppointment(@PathVariable Long doctorId, @RequestParam (required = false) String appointmentStatus){
+    public List<HmsAppointment> individualUsersAppointment(@PathVariable Long doctorId, @RequestParam (required = false) String appointmentStatus){
         return impl.doctorsAppointment(doctorId, appointmentStatus);
     }
+
+
+
+    @GetMapping("/api/all-patient-appointment/{patientId}")
+    public List<HmsAppointment> getAllPatientAppointment(@PathVariable Long patientId){
+        return impl.appointmentPendingAcceptedPrescribed(patientId);
+    }
+
+
 
 
 }
