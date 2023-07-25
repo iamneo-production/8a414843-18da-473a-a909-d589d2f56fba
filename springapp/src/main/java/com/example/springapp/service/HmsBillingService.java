@@ -20,4 +20,5 @@ public class HmsBillingService {
     public List<HmsBilling> getAllBiilling(){
         return hmsBillingRepository.findAll();
     }
+
 }
