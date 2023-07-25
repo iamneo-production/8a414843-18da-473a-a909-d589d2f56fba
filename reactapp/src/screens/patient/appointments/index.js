@@ -28,15 +28,9 @@ import axios from "axios";
 import {del, get} from "../../../api"
 import EndPoints from "../../../api/endPoints";
 import { useParams } from "react-router-dom";
-
-
 export default function PatientAppointment() {
   const [patients, setPatients] = useState([]);
   const[dlt, setDlt]=useState(null);
-
-
-
- 
   const user = useSelector((s) => s?.user?.value)
   
   const {id}=useParams()

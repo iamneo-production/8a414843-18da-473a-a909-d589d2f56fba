@@ -1,8 +1,8 @@
 import { NumberInput, TextInput, Select } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { DateInput } from "@mantine/dates";
-import { post, put } from "../../../../api/index";
-import EndPoints from "../../../../api/endPoints";
+import EndPoints from "../../../api/endPoints";
+import {post, put} from "../../../api/index";
 
 export default function ModifyAndCreateModal(props) {
   const { records, onClose, getInventory } = props;
