@@ -59,10 +59,9 @@ public class HmsPharmacyController {
 
             HmsAppointmentRequestDto appointmentRequestDto = new HmsAppointmentRequestDto();
             appointmentRequestDto.setAppointmentStatus("prescribed");
-
-
            HmsAppointment updateHmsAppointment= appointmentService.updateAppointmentById(appointmentId, appointmentRequestDto);
-            for (HmsPharmacyRequestDto hmsPharmacyRequestDto : pharmacy) {
+
+           for (HmsPharmacyRequestDto hmsPharmacyRequestDto : pharmacy) {
                 HmsInventory inventory = inventoryRepository.findById(hmsPharmacyRequestDto.getMedicineId()).orElseThrow();
                 Long inventoryQuantity = inventory.getQuantity();
                 Long pharmacyQuantity = hmsPharmacyRequestDto.getQuantity();
@@ -104,8 +103,14 @@ public class HmsPharmacyController {
     }
 
     @GetMapping("/api/pharmacy-appointmentId/{appointmentId}")
-    public List<HmsPharmacy> getPharmacyByAppointmentId(@PathVariable Long appointmentId) {
-        return pharmacyService.getPharmacyByAppointmentId(appointmentId);
+    public ResponseEntity<?> getPharmacyByAppointmentId(@PathVariable Long appointmentId) {
+        try {
+            List<HmsPharmacy> data =  pharmacyService.getPharmacyByAppointmentId(appointmentId);
+            return ResponseEntity.ok(new BaseResponseDto("Success", data));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went Wrong");
+        }
+
     }
 
 
