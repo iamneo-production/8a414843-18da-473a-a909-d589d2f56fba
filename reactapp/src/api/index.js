@@ -1,4 +1,9 @@
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+
+
+const token=localStorage.getItem("token")
+console.log('token',token);
 
 const api = axios.create({
   baseURL: 'http://localhost:8080',
@@ -11,8 +16,11 @@ const errorHandler = (error) => {
 };
 
 // Custom GET method
-export const get = async (url, token = null) => {
+export const get = async (url) => {
+
   try {
+    // const token=localStorage.getItem("token")
+    // console.log("tokennnnn",token);
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     const response = await api.get(url, { headers });
     return response.data;
@@ -22,7 +30,7 @@ export const get = async (url, token = null) => {
 };
 
 // Custom POST method
-export const post = async (url, data, token = null) => {
+export const post = async (url, data) => {
   try {
     const headers = {
       'Content-Type': 'application/json',
@@ -36,7 +44,7 @@ export const post = async (url, data, token = null) => {
 };
 
 // Custom PUT method
-export const put = async (url, data,  token = null) => {
+export const put = async (url, data,) => {
   try {
     const headers = {
       'Content-Type': 'application/json',
@@ -50,7 +58,7 @@ export const put = async (url, data,  token = null) => {
 };
 
 // Custom PUT method
-export const putFile = async (url, data, token = null) => {
+export const putFile = async (url, data) => {
   try {
     const headers = {
       'Content-Type':  'multipart/form-data',
@@ -64,7 +72,7 @@ export const putFile = async (url, data, token = null) => {
 };
 
 // Custom DELETE method
-export const del = async (url, token = null) => {
+export const del = async (url) => {
   try {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     const response = await api.delete(url, { headers });

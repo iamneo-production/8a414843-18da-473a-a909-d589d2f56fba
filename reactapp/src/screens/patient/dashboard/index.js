@@ -10,7 +10,8 @@ import { useDispatch,useSelector } from 'react-redux';
 export default function PatientDashboard() {
   const dispatch = useDispatch()
   const user = useSelector((s) => s?.user?.value)
-  console.log("userdate",user);
+
+
   return (
     <Center h={700}> 
     <Grid grow gutter='sm'>

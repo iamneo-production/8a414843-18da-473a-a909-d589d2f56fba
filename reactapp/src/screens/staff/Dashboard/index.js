@@ -116,6 +116,9 @@ export default function StaffDashboard() {
     const [patientCount, setPatientCount] = useState(null);
     const [doctorCount,setDoctorCount] = useState(null);
 
+      
+
+
 
     const getPatientAndDoctors =async() =>{
         await post(EndPoints.getRolesCount,{roles:'ROLE_DOCTOR'}).then((response)=>{
