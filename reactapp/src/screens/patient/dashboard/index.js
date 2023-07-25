@@ -3,10 +3,15 @@ import { Grid } from '@mantine/core';
 import classes from './index.css';
 import {useState} from 'react';
 import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react'
+import { useDispatch,useSelector } from 'react-redux';
 // import { Calendar } from '@mantine/dates';
 
 
 export default function PatientDashboard() {
+  const dispatch = useDispatch()
+  const user = useSelector((s) => s?.user?.value)
+
+
   return (
     <Center h={700}> 
     <Grid grow gutter='sm'>

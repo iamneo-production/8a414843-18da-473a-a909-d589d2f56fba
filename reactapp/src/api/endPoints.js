@@ -1,0 +1,32 @@
+const EndPoints = {
+    usersList : "/api/auth/users",
+    register:"/api/auth/register",
+    login:"/api/auth/login",
+    forgetPassword:"/api/auth/forget-password",
+    resetPasswordWithOtp:"/api/auth/reset-password-with-otp",
+    resetPassword:"/api/auth/reset-password",
+    updateUserDetails:"/api/auth/users",
+    updateUserProfile:"/api/auth/profile",
+    doctorAppointment:"/api/doctor-appointment",
+    inventoryList:'/api/inventory',
+    createPharmacy:'/api/pharmacy',
+    updateInventory:"/api/inventory",
+    addInventory:"/api/inventory",
+    deleteInventory:"/api/inventory",
+    postAppointment:"/api/appointment",
+    getDoctor:'/api/role-list',
+    getUsers:"/api/role-list",
+    deleteUserDetails:"/api/auth/users",
+    fetchAppointment:'/api/all-patient-appointment',
+    postAppointment:'/api/appointment',
+    getDoctor:'/api/role-list',
+    deleteAppointment:'/api/appointment',
+    getBilling:'/api/appointment-appointmentStatus',
+    getBillingDetails:'/api/pharmacy-appointmentId',
+    getRolesCount:'/api/role-list-count',
+    updateAppointment:'/api/appointment',
+    createBilling:'/api/billing',
+    allBilling:'/api/billing'
+}
+
+export default EndPoints

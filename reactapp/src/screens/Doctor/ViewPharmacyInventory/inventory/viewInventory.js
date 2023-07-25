@@ -1,185 +1,131 @@
-import{
-    Box,
-    Button,
-    Grid,
-    Group,
-    TextInput,
-    Text,
-    Image,
-    createStyles,
-    useMantineTheme,
-    ActionIcon,
-    Menu,
-    Title,
-    Loader,
-} from "@mantine/core";
-import { Card } from "@mantine/core";
-import { DataTable, DataTableColumn } from "mantine-datatable"
-import { useState } from "react";
-import { useEffect } from "react";
-import {
-    IconDotsVertical,
-    IconEdit,
-    IconEye,
-    IconSearch,
-    IconTrash,
-} from "@tabler/icons-react";
-
-//import CustomTable from ".";
-const PAGE_SIZE = 10;
-export default function ManagePatient() {
-    const[page,setpage] = useState(1);
-
-    useEffect(()=>{
-        const from = (page-1)*PAGE_SIZE;
-        const to = from+PAGE_SIZE
-    })
-
-    // const [selectedRecords, setSelectedRecords] = useState<any>([]);
-    const colDef = [
-      {
-        accessor: "id",
-        title: "ItemID",
-        titleStyle: { color: "" },
-        textAlignment: "center",
-      },
-      {
-        accessor: "name",
-        title: "Name of the Equipments",
-        titleStyle: { color: "" },
-        textAlignment: "center",
-      },
-      {
-        accessor: "category",
-        title: "Categories",
-        titleStyle: { color: "" },
-        textAlignment: "center",
-      },
-      {
-        accessor: "quantity",
-        title: "Net Quantity",
-        titleStyle: { color: "" },
-        textAlignment: "center",
-      },
-    ];
-
-    const records = [
-        {   id:1,
-            name:"Bandages", 
-            category:"Medical",
-            quantity:"male",
-            
-        },
-        {   id:2,
-            name:"Syringes", 
-            category:"Medical",
-            quantity:"male",
-           
-        },
-        {   id:3,
-            name:"Gloves", 
-            category:"Medical",
-            quantity:"male",
-           
-        },
-        {   id:4,
-            name:"Surgical Masks", 
-            category:"Medical",
-            quantity:"male",
-            
-        },
-        {   id:5,
-            name:"X-ray Machine", 
-            category:"Equipment",
-            quantity:"male",
-           
-        },
-        {   id:6,
-            name:"Blood Pressure Monitor", 
-            category:"Equipment",
-            quantity:"male",
-           
-        },
-        {   id:7,
-            name:"IV Fluids", 
-            category:"Medication",
-            quantity:"male",
-           
-        },
-        {   id:7,
-            name:"Scalpels", 
-            category:"Surgical",
-            quantity:"male",
-            
-        },
-        {   id:9,
-            name:"Wheelchairs", 
-            category:"Equipemnt",
-            quantity:"male",
-            
-        },
-        {   id:10,
-            name:"	Forceps", 
-            category:"Surgical",
-            quantity:"male",
-            
-        },
-        {   id:11,
-            name:"Bone Drill", 
-            category:"Equipment",
-            quantity:"male",
-          
-        },
-        {   id:12,
-            name:"Electrosurgical Unit",
-            category:"Equipment",
-            quantity:"male",
-            
-        },
-    ];
-    return(
-        <Box m="md">
-            {/* <Grid>
-                <Grid.Col xs={2} lg={2}>
-                    <Card m="md" shadow="xl" p={20} 
-                     style={{fontFamily:"unset",
-                     borderRadius:"20px",
-                     background:"rgba(139, 127, 194, 1)",
-                      color:"white",
-                      textAlign:"center"}}>
-                        PATIENTS MANAGEMENT
-                    </Card>
-                </Grid.Col>
-                <Grid.Col xs={8} lg={8}></Grid.Col>
-                <Grid.Col xs={2} lg={2}>
-                    <Button p={30} left="46%" style={{borderRadius:"20px",top:"13%"}} >Add User</Button>
-                </Grid.Col>
-            </Grid> */}
+import { useEffect, useState } from "react";
+import { Box } from "@mantine/core";
+import { DataTable } from "mantine-datatable";
+import { get } from "../../../../api"; 
+import EndPoints from "../../../../api/endPoints";
 
 
-        <DataTable height={500}
-            withBorder
-            shadow="md"
-            // withColumnBorders
-            highlightOnHover
-            borderRadius='md'
-            striped
-            horizontalSpacing="xs"
-            verticalSpacing="xs"
-            // fontSize="xs"
-            verticalAlignment="top"
-            //fetching={fetching}
-            loaderVariant="bars"
-            minHeight="80vh"
-            // height={window.innerHeight - 230}
-            columns={colDef}
-            records={records}
-        // emptyState={<Stack align="center" spacing="xs">
-        //     <NoData />
-        // </Stack>}
-        // selectedRecords={selectedRecords}
-        // onSelectedRecordsChange={setSelectedRecords}
+export default function Inventory() {
+  const [records, setRecords] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const getPharmacy =async() =>{
+    await get(EndPoints.inventoryList).then((response)=>{
+      setRecords(response.data);
+      console.log(response);
+  }).catch(error =>{
+      console.log(error);
+  })
+}
+
+useEffect(() => {
+  getPharmacy();
+}, []);
+
+const filteredRecords = records.filter((record) =>
+    record.medicineName?.toLowerCase().includes(searchTerm.toLowerCase())||record.id?.toString().includes(searchTerm)
+  );
+ 
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+ 
+  const colDef = [
+    {
+      accessor: "id",
+      title: "S.No",
+      titleStyle: { fontWeight: "bold" },
+      textStyle: { fontWeight: "normal" },
+      textAlignment: "center",
+    },
+    {
+      accessor: "medicineName",
+      title: "Medicine Name",
+      titleStyle: { fontWeight: "bold" },
+      textStyle: { fontWeight: "normal" },
+      textAlignment: "center",
+    },
+    {                                           
+      accessor: "price",
+      title: "Price",
+      titleStyle: { fontWeight: "bold" },
+      textStyle: { fontWeight: "normal" },
+      textAlignment: "center",
+    },
+    {      
+      accessor: "quantity",
+      title: "Quantity",
+      titleStyle: { fontWeight: "bold" },
+      textStyle: { fontWeight: "normal" },
+      textAlignment: "center",
+    },
+    {
+      accessor: "usages",
+      title: "Usages",
+      titleStyle: { fontWeight: "bold" },
+      textStyle: { fontWeight: "normal" },
+      textAlignment: "center",
+    },
+    {
+      accessor: "itemNumber",
+      title: "Item Number",
+      titleStyle: { fontWeight: "bold" },
+      textStyle: { fontWeight: "normal" },
+      textAlignment: "center",
+    },
+    {
+      accessor: "category",
+      title: "Category",
+      titleStyle: { fontWeight: "bold" },
+      textStyle: { fontWeight: "normal" },
+      textAlignment: "center",
+    },
+    {
+      accessor: "expiryStatus",
+      title: "Expiry Status",
+      titleStyle: { fontWeight: "bold" },
+      textStyle: { fontWeight: "normal" },
+      textAlignment: "center",
+    },
+    
+  ];
+  
+
+  return (
+    <Box m="md">
+      <div style={{ display: "flex", alignItems: "center" }}>
+
+        <input
+          type="text"
+          placeholder="🔍ID or Name"
+          value={searchTerm}
+          onChange={handleSearch}
+          style={{
+            height: "32px",
+            fontSize: "12px",
+            border: "1px solid #ddd",
+            borderRadius: "6px",
+            marginBottom:"8px",
+            paddingLeft: "8px",
+            
+          }}
         />
-        </Box>
-    );
+      </div>
+      <DataTable
+        height={500}
+        withBorder
+        shadow="md"
+        highlightOnHover
+        borderRadius="md"
+        striped
+        horizontalSpacing="xs"
+        verticalSpacing="xs"
+        fontSize="xs"
+        verticalAlignment="top"
+        columns={colDef}
+        records={filteredRecords}
+      />
+    </Box>
+  );
 }

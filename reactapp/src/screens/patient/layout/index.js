@@ -15,11 +15,12 @@ import LatestAppshell from '../../../components/appShell/latestAppshell';
 import PatientDashboard from '../dashboard';
 import PatientAppointment from '../appointments';
 import MedicalRecord from "../medicalrecords";
-
+import ElectronicMedicalRecord from '../emr/ElectronicMedicalRecord';
 const data = [
     { link: '/patient/home', label: 'Dashboard', icon: IconBellRinging },
     { link: '/patient/appointment', label: 'Appointments', icon: IconReceipt2 },
     { link: '/patient/medicalrecord', label: 'Medical Records', icon: IconFingerprint },
+    { link: '/patient/emr',label:"EMR", icon:IconReceipt2},
     // { link: '', label: 'SSH Keys', icon: IconKey },
     // { link: '', label: 'Databases', icon: IconDatabaseImport },
     // { link: '', label: 'Authentication', icon: Icon2fa },
@@ -34,6 +35,7 @@ export default function PatientLayout() {
             <Route path='home' element={<LatestAppshell navData={data}><PatientDashboard/> </LatestAppshell>} />
             <Route path='appointment' element={<LatestAppshell navData={data}><PatientAppointment/></LatestAppshell>} />
             <Route path='medicalrecord' element={<LatestAppshell navData={data}><MedicalRecord/></LatestAppshell>} />
+            <Route path='EMR' element={<LatestAppshell navData={data}><ElectronicMedicalRecord/></LatestAppshell> }/>
         </Routes>
     )
 }
