@@ -2,7 +2,6 @@ package com.example.springapp.controller;
 
 import com.example.springapp.dto.BaseResponseDto;
 import com.example.springapp.dto.request.HmsAppointmentRequestDto;
-import com.example.springapp.exception.EntityNotFoundException;
 import com.example.springapp.model.HmsAppointment;
 
 import com.example.springapp.model.User;
@@ -32,9 +31,10 @@ public class HmsAppointmentController {
 
     @PostMapping("/api/appointment")
     public HmsAppointment saveAppointment(@RequestBody HmsAppointmentRequestDto appointment) {
-        User doctor=userRepository.findById(appointment.getDoctorId()).orElseThrow();
-        User patient=userRepository.findById(appointment.getPatientId()).orElseThrow();
-        HmsAppointment hmsAppointment=new HmsAppointment(
+        User doctor = userRepository.findById(appointment.getDoctorId()).orElseThrow();
+        User patient = userRepository.findById(appointment.getPatientId()).orElseThrow();
+
+        HmsAppointment hmsAppointment = new HmsAppointment(
                 patient,
                 doctor,
                 appointment.getDate(),
@@ -47,7 +47,7 @@ public class HmsAppointmentController {
     }
 
     @GetMapping("/api/appointment")
-    public List<HmsAppointment> findAllAppointment(){
+    public List<HmsAppointment> findAllAppointment() {
         return impl.findAllAppointment();
     }
 
@@ -62,22 +62,57 @@ public class HmsAppointmentController {
 //    }
 
     @PutMapping("/api/appointment/{id}")
-    public HmsAppointment updateAppointmentById(@PathVariable Long id, @RequestBody HmsAppointmentRequestDto updatedAppointment) {
+    public ResponseEntity<?> updateAppointmentById(@PathVariable Long id, @RequestBody HmsAppointmentRequestDto updatedAppointment) {
 
-        return impl.updateAppointmentById(id, updatedAppointment);
+        try {
+            HmsAppointment data = impl.updateAppointmentById(id, updatedAppointment);
+            return ResponseEntity.ok(new BaseResponseDto("Success", data));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went Wrong");
+        }
 
     }
 
     @DeleteMapping("/api/appointment/{id}")
-    public String deleteAppointment(@RequestParam Long id) {
+    public String deleteAppointment(@PathVariable Long id) {
         impl.deleteAppointment(id);
         return null;
+    }
+
+    @GetMapping("/api/appointment-appointmentStatus")
+    public ResponseEntity<?> getAppointmentAppointmentStatus(@RequestParam(required = false) String appointmentStatus) {
+
+        try {
+            List<HmsAppointment> data = impl.appointmentAppointmentStatus(appointmentStatus);
+            return ResponseEntity.ok(new BaseResponseDto("Success", data));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went Wrong");
+        }
 
     }
 
+
     @GetMapping("/api/doctor-appointment/{doctorId}")
-    public List<HmsAppointment> doctorsAppointment(@PathVariable Long doctorId, @RequestParam (required = false) String appointmentStatus){
-        return impl.doctorsAppointment(doctorId, appointmentStatus);
+    public ResponseEntity<?> individualUsersAppointment(@PathVariable Long doctorId, @RequestParam(required = false) String appointmentStatus) {
+
+        try {
+            List<HmsAppointment> data = impl.doctorsAppointment(doctorId, appointmentStatus);
+            return ResponseEntity.ok(new BaseResponseDto("Success", data));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went Wrong");
+        }
+    }
+
+
+    @GetMapping("/api/all-patient-appointment/{patientId}")
+    public ResponseEntity<?> getAllPatientAppointment(@PathVariable Long patientId,@RequestParam(required = false) String appointmentStatus) {
+        try {
+            List<HmsAppointment> data = impl.appointmentPendingAcceptedPrescribed(patientId,appointmentStatus);
+            return ResponseEntity.ok(new BaseResponseDto("Success", data));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went Wrong");
+        }
+
     }
 
 

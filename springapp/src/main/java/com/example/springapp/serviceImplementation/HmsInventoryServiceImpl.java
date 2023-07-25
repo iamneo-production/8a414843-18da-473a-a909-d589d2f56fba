@@ -32,20 +32,34 @@ public class HmsInventoryServiceImpl implements HmsInventoryService {
     public HmsInventory updateInventory(Long id, HmsInventory inventory) {
         HmsInventory existingInventory = inventoryRepository.findById(id).orElseThrow(()->new EntityNotFoundException(id));
         if (existingInventory != null) {
-
-            existingInventory.setQuantity(inventory.getQuantity());
-            existingInventory.setPrice(inventory.getPrice());
-            existingInventory.setMedicineName(inventory.getMedicineName());
-            existingInventory.setUsages(inventory.getUsages());
-            existingInventory.setItemNumber(inventory.getItemNumber());
-            existingInventory.setCategory(inventory.getCategory());
-            existingInventory.setExpiryStatus(inventory.getExpiryStatus());
-            existingInventory.setUpdated(inventory.getUpdated());
-            existingInventory.setCreated(inventory.getCreated());
-            existingInventory.setStatus(inventory.isStatus());
-
-
-            return inventoryRepository.save(existingInventory);
+        	if (inventory.getQuantity() != null) {
+        	    existingInventory.setQuantity(inventory.getQuantity());
+        	}
+        	if (inventory.getPrice() != null) {
+        	    existingInventory.setPrice(inventory.getPrice());
+        	}
+        	if (inventory.getMedicineName() != null && !inventory.getMedicineName().isEmpty()) {
+        	    existingInventory.setMedicineName(inventory.getMedicineName());
+        	}
+        	if (inventory.getUsages() != null && !inventory.getUsages().isEmpty()) {
+        	    existingInventory.setUsages(inventory.getUsages());
+        	}
+        	if (inventory.getItemNumber() != null && !inventory.getItemNumber().isEmpty()) {
+        	    existingInventory.setItemNumber(inventory.getItemNumber());
+        	}
+        	if (inventory.getCategory() != null && !inventory.getCategory().isEmpty()) {
+        	    existingInventory.setCategory(inventory.getCategory());
+        	}
+        	if (inventory.getExpiryStatus() != null) {
+        	    existingInventory.setExpiryStatus(inventory.getExpiryStatus());
+        	}
+        	if (inventory.getUpdated() != null) {
+        	    existingInventory.setUpdated(inventory.getUpdated());
+        	}
+        	if (inventory.getCreated() != null) {
+        	    existingInventory.setCreated(inventory.getCreated());
+        	}
+        	return inventoryRepository.save(existingInventory);
         }
         return null;
     }

@@ -1,6 +1,5 @@
 package com.example.springapp.controller;
 
-import com.example.springapp.dto.UserDto;
 import com.example.springapp.dto.BaseResponseDto;
 import com.example.springapp.dto.UserLoginDto;
 import com.example.springapp.model.HmsAppointment;
@@ -111,6 +110,16 @@ public class UserController {
         }
 
     }
+    @PostMapping("/api/role-list-count")
+    public ResponseEntity<?> getUserCountByRole(@RequestBody Map<String, String> requestBody) {
+        try {
+            String role = requestBody.get("roles");
+            int count = userService.getUserCountByRole(role);
+            return ResponseEntity.ok(new BaseResponseDto("Success", count));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new BaseResponseDto("Something went wrong"));
+        }
+    }
 
     @GetMapping("/api/auth/users")
     public ResponseEntity<?>  getAllUsers(){
@@ -119,6 +128,15 @@ public class UserController {
             return ResponseEntity.ok(new BaseResponseDto("Success",data));
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something Went Wrong");
+        }
+    }
+    @GetMapping("/api/auth/doctors")
+    public  ResponseEntity<?> getDoctorUsers(){
+        try{
+            List<User> data = userService.getDoctorUsers();
+            return ResponseEntity.ok(new BaseResponseDto("Success",data));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went Wrong");
         }
     }
     private String getProfileImage(byte[] imageData) {
@@ -136,11 +154,10 @@ public class UserController {
 
 
     @GetMapping("/api/auth/users/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
+    public ResponseEntity<User> getUserById(@PathVariable("id") Long id) {
         Optional<User> user = userService.getUserById(id);
         if (user.isPresent()) {
-            UserDto userDto = new UserDto(user.get());
-            return ResponseEntity.ok(userDto);
+            return ResponseEntity.ok(user.get());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -155,14 +172,11 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
-
-
     @PutMapping("/api/auth/users/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id, @RequestBody UserDto userDto) {
-        User updatedUser = userService.updateUser(id, userDto);
+    public ResponseEntity<User> updateUser(@PathVariable("id") Long id, @RequestBody User user) {
+        User updatedUser = userService.updateUser(id, user);
         if (updatedUser != null) {
-            UserDto updatedUserDto = new UserDto(updatedUser);
-            return ResponseEntity.ok(updatedUserDto);
+            return ResponseEntity.ok(updatedUser);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -217,7 +231,6 @@ public class UserController {
 
             // hash map is used to store the otp
             userOtpMap.put(email, otp);
-
             return new ResponseEntity<>("OTP sent successfully",HttpStatus.ACCEPTED);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found");

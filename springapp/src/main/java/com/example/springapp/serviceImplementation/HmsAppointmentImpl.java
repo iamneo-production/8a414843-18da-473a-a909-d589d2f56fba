@@ -10,8 +10,10 @@ import com.example.springapp.service.HmsAppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+
 @Service
 
 public class HmsAppointmentImpl implements HmsAppointmentService {
@@ -34,15 +36,14 @@ public class HmsAppointmentImpl implements HmsAppointmentService {
 //    }
 
     @Override
-    public List<HmsAppointment> findAllAppointment(){
+    public List<HmsAppointment> findAllAppointment() {
         return (List<HmsAppointment>) appointmentRepository.findAll();
     }
 
 
-
     @Override
     public void deleteAppointment(Long id) {
-        if(!appointmentRepository.existsById(id)) {
+        if (!appointmentRepository.existsById(id)) {
             throw new EntityNotFoundException(id);
         }
 
@@ -54,36 +55,53 @@ public class HmsAppointmentImpl implements HmsAppointmentService {
         return appointmentRepository.findByDoctorIdAndAppointmentStatus(doctorId, appointmentStatus);
     }
 
+    @Override
+    public List<HmsAppointment> appointmentAppointmentStatus(String appointmentStatus) {
+        return appointmentRepository.findByAppointmentStatus(appointmentStatus);
+    }
 
-//
+
+
+@Override
+    public List<HmsAppointment> appointmentPendingAcceptedPrescribed(Long patientId,String appointmentStatus) {
+        if(Objects.equals(appointmentStatus, "completed")){
+            return appointmentRepository.findByPatientIdAndAppointmentStatus(patientId,appointmentStatus);
+        }else {
+            List<String> appointmentStatusList = Arrays.asList("pending", "accepted", "prescribed");
+            return appointmentRepository.findByPatientIdAndAppointmentStatusIn(patientId, appointmentStatusList);
+        }
+    }
+
+
+
 
     @Override
     public HmsAppointment updateAppointmentById(Long id, HmsAppointmentRequestDto updatedAppointment) {
 
-        HmsAppointment hmsAppointment=appointmentRepository.findById(id).orElseThrow();
+        HmsAppointment hmsAppointment = appointmentRepository.findById(id).orElseThrow();
 
-        if (updatedAppointment.getDoctorId() != null ) {
-            User doctor=userRepository.findById(updatedAppointment.getDoctorId()).orElseThrow();
+        if (updatedAppointment.getDoctorId() != null) {
+            User doctor = userRepository.findById(updatedAppointment.getDoctorId()).orElseThrow();
             hmsAppointment.setDoctor(doctor);
 
         }
-        if (updatedAppointment.getPatientId() != null ) {
-            User patient=userRepository.findById(updatedAppointment.getPatientId()).orElseThrow();
+        if (updatedAppointment.getPatientId() != null) {
+            User patient = userRepository.findById(updatedAppointment.getPatientId()).orElseThrow();
             hmsAppointment.setDoctor(patient);
         }
-        if (updatedAppointment.getDate() != null ) {
+        if (updatedAppointment.getDate() != null) {
             hmsAppointment.setDate(updatedAppointment.getDate());
 
         }
-        if (updatedAppointment.getTime() != null ) {
+        if (updatedAppointment.getTime() != null) {
             hmsAppointment.setTime(updatedAppointment.getTime());
 
         }
-        if (updatedAppointment.getIssue() != null ) {
+        if (updatedAppointment.getIssue() != null) {
             hmsAppointment.setIssue(updatedAppointment.getIssue());
 
         }
-        if (updatedAppointment.getAppointmentStatus() != null ) {
+        if (updatedAppointment.getAppointmentStatus() != null) {
             hmsAppointment.setAppointmentStatus(updatedAppointment.getAppointmentStatus());
         }
 
@@ -91,10 +109,11 @@ public class HmsAppointmentImpl implements HmsAppointmentService {
 
     }
 
+
     public HmsAppointment getAppointmentById(Long id) {
         // TODO Auto-generated method stub
         return appointmentRepository.findById(id)
-                .orElseThrow(()->new EntityNotFoundException(id));
+                .orElseThrow(() -> new EntityNotFoundException(id));
 
     }
 

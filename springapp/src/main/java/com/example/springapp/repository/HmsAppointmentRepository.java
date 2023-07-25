@@ -9,8 +9,15 @@ import java.util.List;
 public interface HmsAppointmentRepository extends JpaRepository<HmsAppointment, Long> {
     public List<HmsAppointment> findByDoctorIdAndAppointmentStatus(Long doctorId, String appointmentStatus);
 
-    //public List<HmsAppointment> findByDate(LocalDate today);
+    List<HmsAppointment> findByAppointmentStatus(String appointmentStatus);
 
-    //int countByDate(LocalDate today);
+    
 
+
+
+
+
+    List<HmsAppointment> findByPatientIdAndAppointmentStatusIn(Long patientId, List<String> appointmentStatusList);
+
+    List<HmsAppointment> findByPatientIdAndAppointmentStatus(Long patientId,String appointmentStatus);
 }

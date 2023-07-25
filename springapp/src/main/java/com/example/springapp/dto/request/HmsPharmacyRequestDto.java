@@ -99,7 +99,7 @@ public class HmsPharmacyRequestDto {
 
                 ", appointmentId=" + appointmentId +
                 ", medicineId=" + medicineId +
-                ", medicineId=" + quantity +
+                ", quantity=" + quantity +
                 ", prescribed_days=" + prescribedDays +
                 ", morning=" + morning +
                 ", noon=" + noon +

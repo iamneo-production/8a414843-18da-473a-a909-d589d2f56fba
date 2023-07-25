@@ -15,10 +15,10 @@ import { useState } from "react";
 import CustomTable from "../../../components/customTable/index";
 import PrescriptionModal from "../Modals/prescriptionModal";
 
-
 export default function Appointments() {
   const [rowData, setRowData] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [appointmentData, setAppointmentData] = useState({});
 
   const colDef = [
     {
@@ -55,9 +55,16 @@ export default function Appointments() {
       accessor: "actions",
       title: "Actions",
       textAlignment: "center",
-      render: (data) => <Button onClick={()=>{
-        setModalOpen(true)
-      }}>Add Prescription</Button>,
+      render: (data) => (
+        <Button
+          onClick={() => {
+            setAppointmentData(data);
+            setModalOpen(true);
+          }}
+        >
+          Add Prescription
+        </Button>
+      ),
     },
   ];
 
@@ -142,12 +149,19 @@ export default function Appointments() {
     // Add more records here...
   ];
 
+
   return (
     <>
       <CustomTable records={records} coloumnDef={colDef} />
-      {modalOpen && <PrescriptionModal open={modalOpen} close={()=>{
-        setModalOpen(false)
-      }}/>}
+      {modalOpen && (
+        <PrescriptionModal
+          open={modalOpen}
+          close={() => {
+            setModalOpen(false);
+          }}
+          appointmentData={appointmentData}
+        />
+      )}
     </>
   );
 }
