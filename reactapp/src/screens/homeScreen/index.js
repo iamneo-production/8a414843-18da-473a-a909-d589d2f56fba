@@ -1,7 +1,4 @@
 import { useState } from "react";
-import CustomHeader from "../../header";
-import BannerCarousel from "../../components/carousel/temp";
-import CustomCarousel from "../../components/carousel";
 import {
     Text,
     Image,
@@ -17,6 +14,9 @@ import {
     Avatar
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import CustomHeader from "../../header";
+import BannerCarousel from "../../components/carousel/temp";
+import CustomCarousel from "../../components/carousel";
 import VaccinationResearch from "../../assests/VaccinationResearch .svg"
 import CustomFooter from '../../components/footer/index'
 import SignUp from "./auth/signUp";
@@ -195,7 +195,7 @@ export default function HomeScreen() {
                                 <Grid.Col xs={6} lg={6}>
                                     <Image  src={VaccinationResearch} />
                                 </Grid.Col>
-                                <Grid.Col xs={6} lg={6}>
+                                <Grid.Col xs={6} lg={6} >
                                     <Title style={{ fontFamily: "sans-serif", fontSize: "56px", color: "rgba(128, 128, 128, 1)", margin: "20px" }}>
                                         Ask Your Queries
                                     </Title>
@@ -203,15 +203,16 @@ export default function HomeScreen() {
                                         Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                                         Lorem Ipsum has been the industry's standard dummy text ever since.
                                     </Text>
+                                    <Divider/>
                                     <Container>
-                                        <TextInput my="md" px="120px" style={{ height: "6vh" }} placeholder="Enter Your Mail" {...form.getInputProps('email')} />
-                                        <Select my="md" px="120px" style={{ height: "6vh" }} placeholder="Pick Your Role" data={[
+                                        <TextInput mt="md" px="80px" style={{ height: "6vh" }} placeholder="Enter Your Mail" {...form.getInputProps('email')} />
+                                        {/* <Select my="md" px="120px" style={{ height: "6vh" }} placeholder="Pick Your Role" data={[
                                             { value: 'Patient', label: 'Patient' },
                                             { value: 'Doctor', label: 'Doctor' },
                                             { value: 'Staff', label: 'Staff' },
                                         ]}
-                                            {...form.getInputProps('Role')} />
-                                        <Textarea my="md" px="120px" style={{ height: "10vh" }} placeholder="Enter Your Queries" minRows={2} {...form.getInputProps('Message')}></Textarea>
+                                            {...form.getInputProps('Role')} /> */}
+                                        <Textarea mt="md" px="80px" style={{ height: "10vh" }} placeholder="Enter Your Queries" minRows={2} {...form.getInputProps('Message')}></Textarea>
                                         <button style={{ padding: "10px 20px", borderRadius: "7px", textDecoration: "none", borderColor: "rgba(139, 127, 194, 1)", color: "white", position: "relative", overflow: "hidden", background: "rgba(139, 127, 194, 1)", cursor: "pointer", left: "43%" }}>Send</button>
                                     </Container>
                                 </Grid.Col>
@@ -239,8 +240,8 @@ export default function HomeScreen() {
             {
                 active === 3 &&   <div>
                     <AboutUspage setActive={setActive} active={active}/>
-                    <GridAsymmetrical/>
                     <AboutUspages/>
+                    <GridAsymmetrical/>
                     </div>
                 
             }

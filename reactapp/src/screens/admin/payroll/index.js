@@ -42,7 +42,9 @@ export default function SampleTable() {
             
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.id}</Text>
+                    <Text>
+                        {data?.id}
+                    </Text>
                 </Group>
                 
   
@@ -55,7 +57,9 @@ export default function SampleTable() {
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.firstName}</Text>
+                    <Text>
+                        {data?.firstName}
+                    </Text>
                 </Group>
   
             ),
@@ -67,7 +71,9 @@ export default function SampleTable() {
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.lastName}</Text>
+                    <Text>
+                        {data?.lastName}
+                    </Text>
                 </Group>
   
             ),
@@ -79,7 +85,9 @@ export default function SampleTable() {
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.email}</Text>
+                    <Text>
+                        {data?.email}
+                    </Text>
                 </Group>
             ),
             
@@ -91,7 +99,9 @@ export default function SampleTable() {
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.age}</Text>
+                    <Text>
+                        {data?.age}
+                    </Text>
                 </Group>
             ),
             
@@ -103,7 +113,9 @@ export default function SampleTable() {
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.gender}</Text>
+                    <Text>
+                        {data?.gender}
+                    </Text>
                 </Group>
             ),            
         },        
@@ -114,7 +126,9 @@ export default function SampleTable() {
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.address}</Text>
+                    <Text>
+                        {data?.address}
+                    </Text>
                 </Group>
             ),  
         },
@@ -125,7 +139,9 @@ export default function SampleTable() {
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.phone}</Text>
+                    <Text>
+                        {data?.phone}
+                    </Text>
                 </Group>
             ),
         },      
@@ -136,7 +152,9 @@ export default function SampleTable() {
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.salary}</Text>
+                    <Text>
+                        {data?.salary}
+                    </Text>
                 </Group>
                 ),      
         },
@@ -147,7 +165,9 @@ export default function SampleTable() {
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.specialist}</Text>
+                    <Text>
+                        {data?.specialist}
+                    </Text>
                 </Group>
                 ),
         },       
@@ -156,7 +176,7 @@ export default function SampleTable() {
             title: <Text mr="xs">Actions</Text>,
             textAlignment: "center",
             render: (data) => {
-                console.log("data", data);
+              
 
                 return (
                     <Menu position="bottom-start" shadow="xl" width={160}>
@@ -169,13 +189,15 @@ export default function SampleTable() {
                             </Button>
                         </Menu.Target>
                         <Menu.Dropdown>
-                            <Menu.Item  onClick={() => handlePayDoctor(data.id)}
+                            <Menu.Item  onClick={() => handlePayDoctor(data)}
                                 icon={<IconMoneybag size={19} style={{ color: "#081226" }} />}
-                                style={{
+                                style={
+                                    {
                                     color: "black",
                                     fontSize: 15,
                                     fontWeight: "500",
-                                }}
+                                }
+                            }
                             >
                                 pay
                             </Menu.Item>
@@ -184,11 +206,13 @@ export default function SampleTable() {
                                         open();
                                          }}
                                 icon={<IconEdit size={17} style={{ color: "#081226" }} />}
-                                style={{
+                                style={
+                                    {
                                     color: "black",
                                     fontSize: 15,
                                     fontWeight: "500",
-                                }}
+                                }
+                            }
                             >
                                 Edit
                             </Menu.Item>
@@ -198,11 +222,13 @@ export default function SampleTable() {
                     
                                 }}
                                 icon={<IconTrash color="red" size={16} />}
-                                style={{
+                                style={
+                                    {
                                     color: "black",
                                     fontSize: 15,
                                     fontWeight: "500",
-                                }}
+                                }
+                            }
                             >
                                 Delete
                             </Menu.Item>
@@ -222,7 +248,9 @@ export default function SampleTable() {
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.id}</Text>
+                    <Text>
+                        {data?.id}
+                    </Text>
                 </Group>
   
             ),
@@ -234,12 +262,13 @@ export default function SampleTable() {
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.firstName}</Text>
+                    <Text>
+                        {data?.firstName}
+                    </Text>
                 </Group>
   
             ),
         },
-    
         {
             accessor: "lastName",
             title: "LastName",
@@ -247,11 +276,12 @@ export default function SampleTable() {
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.lastName}</Text>
+                    <Text>
+                        {data?.lastName}
+                    </Text>
                 </Group>
                 
-            ),
-           
+            ),  
         },
         {
             accessor: "email",
@@ -260,11 +290,12 @@ export default function SampleTable() {
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.email}</Text>
+                    <Text>
+                        {data?.email}
+                    </Text>
                 </Group>
                 
-            ),
-           
+            ),   
         },
         {
             accessor: "age",
@@ -273,11 +304,12 @@ export default function SampleTable() {
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.age}</Text>
+                    <Text>
+                        {data?.age}
+                    </Text>
                 </Group>
                 
-            ),
-           
+            ), 
         },
         {
             accessor: "gender",
@@ -286,13 +318,13 @@ export default function SampleTable() {
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.gender}</Text>
+                    <Text>
+                        {data?.gender}
+                    </Text>
                 </Group>
                 
-            ),
-           
+            ), 
         },
-       
         {
             accessor: "address",
             title: "Address",
@@ -300,11 +332,12 @@ export default function SampleTable() {
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.address}</Text>
+                    <Text>
+                        {data?.address}
+                    </Text>
                 </Group>
                 
-            ),
-           
+            ),  
         },
         {
             accessor: "phone",
@@ -313,15 +346,14 @@ export default function SampleTable() {
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.phone}</Text>
+                    <Text>
+                        {data?.phone}
+                    </Text>
                 </Group>
                 
             ),
            
         },
-
-        
-        
         {
             accessor: "salary",
             title: "Salary",
@@ -329,19 +361,19 @@ export default function SampleTable() {
             textAlignment: "center",
             render: (data) => (
                 <Group position="center">
-                    <Text>{data?.salary}</Text>
+                    <Text>
+                        {data?.salary}
+                    </Text>
                 </Group>),
             
         },
-        
-       
         {
             accessor: "actions",
             title: <Text mr="xs">Actions</Text>,
             textAlignment: "center",
             render: (data) => {
     
-                console.log("data", data);
+               
                 
 
                 return (
@@ -359,13 +391,15 @@ export default function SampleTable() {
                 
                             
                             <Menu.Item 
-                            
+                                onClick={() => handlePay(data)}
                                 icon={<IconMoneybag size={19} style={{ color: "#081226" }} />}
-                                style={{
+                                style={
+                                    {
                                     color: "black",
                                     fontSize: 15,
                                     fontWeight: "500",
-                                }}
+                                }
+                            }
                             >
                                 pay
                             </Menu.Item>
@@ -374,11 +408,13 @@ export default function SampleTable() {
                                 onClick={()=> {setSelectedIndex(data); 
                                     open();}}
                                 icon={<IconEdit size={17} style={{ color: "#081226" }} />}
-                                style={{
+                                style={
+                                    {
                                     color: "black",
                                     fontSize: 15,
                                     fontWeight: "500",
-                                }}
+                                }
+                            }
                             >
                                 Edit
                             </Menu.Item>
@@ -387,11 +423,13 @@ export default function SampleTable() {
                                  onClick={()=> {handleDelete(data); 
                                    }}
                                 icon={<IconTrash color="red" size={16} />}
-                                style={{
+                                style={
+                                    {
                                     color: "black",
                                     fontSize: 15,
                                     fontWeight: "500",
-                                }}
+                                }
+                            }
                             >
                                 Delete
                             </Menu.Item>
@@ -403,32 +441,65 @@ export default function SampleTable() {
     ];
 
     const getDoctors =async() =>{
-        await post(EndPoints.getDoctors,{role:'ROLE_DOCTOR'}).then((response)=>{
+        await post(EndPoints.getDoctors,{role:'ROLE_DOCTOR'}).then((response)=>
+        {
             setDoctors(response.data);
             console.log(response);
-        }).catch(error =>{
+        }
+        ).catch(error =>{
             console.log(error);
-        })
+        }
+        )
         
     }
 
     const getStaff =async() =>{
-        await post(EndPoints.getDoctors,{role:'ROLE_STAFF'}).then((response)=>{
+        await post(EndPoints.getDoctors,{role:'ROLE_STAFF'}).then((response)=>
+        {
             setStaff(response.data);
             console.log(response);
-        }).catch(error =>{
+        }
+        ).catch(error =>{
             console.log(error);
-        })
+        }
+        )
        
     }
 
     const [selectedNotification, setSelectedNotification] = useState(null);
-    const handlePayDoctor = (Id) => {
-      setSelectedNotification({
+    const handlePayDoctor = async(Id) => {
+    console.log("fromRegister",Id)
+
+    await post(EndPoints.salaryPay,Id).then((response)=>{
+      console.log(response);
+    }).catch(error =>{
+      console.log(error);
+    })
+      setSelectedNotification(
+        {
         color: 'green',
         message: `Salary credited successfully for Doctor ${Id}.`,
-      });
+      }
+      );
     };
+
+    const handlePay = async(Id) => {
+        console.log("fromRegister",Id)
+    
+        await post(EndPoints.salaryPay,Id).then((response)=>{
+          console.log(response);
+        }).catch(error =>{
+          console.log(error);
+        })
+          setSelectedNotification(
+            {
+            color: 'green',
+            message: `Salary credited successfully for staff ${Id}.`,
+          }
+          );
+        };
+
+
      const handleDelete = async(data)=>{
         console.log("FromDeleteMethod",);
        
@@ -439,8 +510,9 @@ export default function SampleTable() {
         })
         getDoctors();
         getStaff();
+        window.location.reload();
      
-    }
+    };
 
     useEffect(()=>{
         getDoctors();
@@ -452,7 +524,8 @@ export default function SampleTable() {
             return () => clearTimeout(timerId);
         }
       
-    },[selectedNotification])
+    },[selectedNotification]
+    )
 
     
     const handleSalaryUpdate = async() => {
@@ -462,8 +535,11 @@ export default function SampleTable() {
         }).catch(error =>{
             console.log(error);
         })
+
         close();
+         window.location.reload();
     };
+    
     
 
     const form = useForm({
@@ -472,116 +548,80 @@ export default function SampleTable() {
         },
     });
 
-  const [idSearchInput, setIdSearchInput] = useState('');
-  const [firstNameSearchInput, setFirstNameSearchInput] = useState('');
-  const [genderSearchInput, setGenderSearchInput] = useState('');
-  const [phoneSearchInput, setPhoneSearchInput] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
 
 
-  const handleIdSearch = (e) => {
-    setIdSearchInput(e.target.value);
-  };
-
-  const handleFirstNameSearch = (e) => {
-    setFirstNameSearchInput(e.target.value.toLowerCase());
-  };
-
-  const handleGenderSearch = (e) => {
-    setGenderSearchInput(e.target.value.toLowerCase());
-  };
-
-  const handlePhoneSearch = (e) => {
-    setPhoneSearchInput(e.target.value);
-  };
-
-  
     return (
 
-        
         <Grid>
-          
           <Grid.Col xs={12} lg={12}>
            
-            <Modal opened={opened} onClose={close} title="Salary Update" centered>
-                <form onSubmit={form.onSubmit(() => {
-                    handleSalaryUpdate()
-                  })}>
-                    <TextInput
-                    placeholder="Salary"
-                    mt="md"
-                    {...form.getInputProps('salary')}
-                    />
-                    <Grid.Col xs={12} lg={12}></Grid.Col>
-                <Button style={{ background: "rgba(139, 127, 194, 1)" }} type="submit"> Update </Button>
-                </form>
-            </Modal>
+        <Modal opened={opened} onClose={close} title="Salary Update" centered>
+            <form onSubmit={form.onSubmit(() => {
+                handleSalaryUpdate()
+                }
+            )
+        }
+        >
+        <TextInput
+        placeholder="Salary"
+         mt="md"
+        {...form.getInputProps('salary')}
+        />
+        <Grid.Col xs={12} lg={12}></Grid.Col>
+        <Button style={{ background: "rgba(139, 127, 194, 1)" }} type="submit"> Update </Button>
+        </form>
+        </Modal>
 
-            <Box m="md">
-            <Text ta="center" size="xl" style={{ marginTop: "15px", fontWeight: "bold", color: "#BF94E4" }}>
-                Payroll          
-                </Text>
-                <Grid.Col xs={12} lg={12}></Grid.Col>
+        <Box m="md">
+        <Text ta="center" size="xl" style={{ marginTop: "15px", fontWeight: "bold", color: "#BF94E4" }}>
+             Payroll          
+        </Text>
+        <Grid.Col xs={12} lg={12}></Grid.Col>
                 
-            <Tabs value={activeTab} onTabChange={setActiveTab}>
-      <Tabs.List>
-        <Tabs.Tab value="first">Doctor</Tabs.Tab>
-        <Tabs.Tab value="second">Staff</Tabs.Tab>
-      </Tabs.List>
-      <Grid>
-      <Grid.Col xs={3} lg={3}>
-      <TextInput
-            placeholder="Search by ID"
-            mt="md"
-            value={idSearchInput}
-            onChange={handleIdSearch}
-          />
-          </Grid.Col>
-          <Grid.Col xs={3} lg={3}>
-          <TextInput
-            placeholder="Search by First Name"
-            mt="md"
-            value={firstNameSearchInput}
-            onChange={handleFirstNameSearch}
-          />
-          </Grid.Col>
-          <Grid.Col xs={3} lg={3}>
-          <TextInput
-            placeholder="Search by Gender"
-            mt="md"
-            value={genderSearchInput}
-            onChange={handleGenderSearch}
-          />
-          </Grid.Col>
-          <Grid.Col xs={3} lg={3}>
-           <TextInput
-            placeholder="Search by Phone"
-            mt="md"
-            value={phoneSearchInput}
-            onChange={handlePhoneSearch}
-          />
-      </Grid.Col>
-      </Grid>
-
-     
-      <Grid.Col xs={12} lg={12}></Grid.Col>
-        <Tabs.Panel value="first">
-        <CustomTable coloumnDef={colDef} records={doctors.filter(doctor => 
-                doctor.id.toString().includes(idSearchInput) &&
-                doctor.firstName.toLowerCase().includes(firstNameSearchInput) &&
-                doctor.gender.toLowerCase().includes(genderSearchInput) &&
-                doctor.phone.includes(phoneSearchInput)
-              )} />
-        </Tabs.Panel>
-        <Tabs.Panel value="second">
-        <CustomTable coloumnDef={colDef2} records={staff.filter(staffMember => 
-                staffMember.id.toString().includes(idSearchInput) &&
-                staffMember.firstName.toLowerCase().includes(firstNameSearchInput) &&
-                staffMember.gender.toLowerCase().includes(genderSearchInput)  &&
-                staffMember.phone.includes(phoneSearchInput)
-              )} />
-        </Tabs.Panel>
-      
-        </Tabs>
+        <Tabs value={activeTab} onTabChange={setActiveTab}>
+        <Tabs.List>
+        <Tabs.Tab value="first" icon={<IconMoneybag size="0.8rem" />}>
+            Doctor
+        </Tabs.Tab>
+        <Tabs.Tab value="second" icon={<IconMoneybag size="0.8rem" />}>
+            Staff
+        </Tabs.Tab>
+        </Tabs.List>
+        <Grid.Col xs={12} lg={12}></Grid.Col>
+<Tabs.Panel value="first">
+    <TextInput
+        placeholder="Search by Id, FirstName, or Phone..."
+        value={searchQuery}
+        onChange={(event) => setSearchQuery(event.target.value)}
+    />
+     <Grid.Col xs={12} lg={12}></Grid.Col>
+    <CustomTable
+        coloumnDef={colDef}
+        records={doctors.filter((record) =>
+            Object.values(record).some((value) =>
+                String(value).toLowerCase().includes(searchQuery.toLowerCase())
+            )
+        )}
+    />
+</Tabs.Panel>
+<Tabs.Panel value="second">
+    <TextInput
+        placeholder="Search by Id, FirstName, or Phone..."
+        value={searchQuery}
+        onChange={(event) => setSearchQuery(event.target.value)}
+    />
+     <Grid.Col xs={12} lg={12}></Grid.Col>
+    <CustomTable
+        coloumnDef={colDef2}
+        records={staff.filter((record) =>
+            Object.values(record).some((value) =>
+                String(value).toLowerCase().includes(searchQuery.toLowerCase())
+            )
+        )}
+    />
+</Tabs.Panel>
+</Tabs>
 
         {selectedNotification && (
           <Notification
@@ -593,8 +633,8 @@ export default function SampleTable() {
           </Notification>
         )}
             </Box>
-           
             </Grid.Col>
+            
         </Grid>
     );
 }

@@ -106,6 +106,16 @@ public class UserController {
         }
 
     }
+    @PostMapping("/api/role-list-count")
+    public ResponseEntity<?> getUserCountByRole(@RequestBody Map<String, String> requestBody) {
+        try {
+            String role = requestBody.get("roles");
+            int count = userService.getUserCountByRole(role);
+            return ResponseEntity.ok(new BaseResponseDto("Success", count));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new BaseResponseDto("Something went wrong"));
+        }
+    }
 
     @GetMapping("/api/auth/users")
     public ResponseEntity<?>  getAllUsers(){
@@ -114,6 +124,15 @@ public class UserController {
             return ResponseEntity.ok(new BaseResponseDto("Success",data));
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something Went Wrong");
+        }
+    }
+    @GetMapping("/api/auth/doctors")
+    public  ResponseEntity<?> getDoctorUsers(){
+        try{
+            List<User> data = userService.getDoctorUsers();
+            return ResponseEntity.ok(new BaseResponseDto("Success",data));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went Wrong");
         }
     }
     private String getProfileImage(byte[] imageData) {
@@ -149,7 +168,6 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
-
     @PutMapping("/api/auth/users/{id}")
     public ResponseEntity<User> updateUser(@PathVariable("id") Long id, @RequestBody User user) {
         User updatedUser = userService.updateUser(id, user);
@@ -209,7 +227,6 @@ public class UserController {
 
             // hash map is used to store the otp
             userOtpMap.put(email, otp);
-
             return new ResponseEntity<>("OTP sent successfully",HttpStatus.ACCEPTED);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found");
@@ -243,8 +260,8 @@ public class UserController {
     public ResponseEntity<?> sendMailPay(@RequestBody Map<String, String> requestBody) {
         String email = requestBody.get("email");
 
-        if (userService.checkuserNameExists(email)) {
-
+        if (userService.checkuserNameExists(email))
+        {
             userService.sendMailPay(email);
 
 

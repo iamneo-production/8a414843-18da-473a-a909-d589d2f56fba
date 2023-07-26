@@ -12,6 +12,7 @@ import {
   rem,
   
 } from '@mantine/core';
+import bgcontacthms from "../../assests/bgcontacthms.svg"
 
 
 import { IconSun, IconPhone, IconMapPin, IconAt, IconClock, } from '@tabler/icons-react';
@@ -19,10 +20,11 @@ import React from 'react';
 
 const useStyles = createStyles((theme) => ({
 
-  wrapper: {
+  wrapper:
+   {
     minHeight: 400,
     boxSizing: 'border-box',
-    backgroundImage: "url('https://neetable.com/img/blog/blog-inner/cost-to-develop-a-hospital-management-system/cost-to-develop-a-hospital-management-system.jpg')",
+    backgroundImage:  `url(${bgcontacthms})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     borderRadius: theme.radius.md,
@@ -33,13 +35,15 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
-  title: {
+  title: 
+  {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     color:theme.colors.black,
     lineHeight: 1,
   },
 
-  description: {
+  description: 
+  {
     color: theme.colors.black,
     maxWidth: rem(300),
 
@@ -48,14 +52,16 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
-  form: {
+  form:
+   {
     backgroundColor: theme.white,
     padding: theme.spacing.xl,
     borderRadius: theme.radius.md,
     boxShadow: theme.shadows.lg,
   },
 
-  social: {
+  social:
+   {
     color: theme.white,
 
     '&:hover': {
@@ -63,7 +69,8 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
-  input: {
+  input:
+   {
     backgroundColor: theme.white,
     borderColor: theme.colors.gray[4],
     color: theme.black,
@@ -73,20 +80,26 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
-  inputLabel: {
+  inputLabel:
+   {
     color: theme.black,
   },
 
-  control: {
+  control: 
+  {
     backgroundColor: theme.colors[theme.primaryColor][6],
   },
+  Button:
+  {
+    buttonColor:  '#ADD8E6',
+  }
 
-}));
+}
+));
 
 
 export function ContactUs() {
   const { classes } = useStyles();
-
 
   return (
     <div className={classes.wrapper}>
@@ -100,29 +113,49 @@ export function ContactUs() {
             <div className={classes.contactDetail}>
               <IconAt size="1.4rem" stroke={1.5} color="blue" className={classes.social} />
               
-              <Text >Email</Text>
-              <Text >hello@mantine.dev</Text>
+              <Text>
+                Email
+              </Text>
+              <Text >
+                hello@mantine.dev
+              </Text>
             
             </div>
             <div className={classes.contactDetail}>
               <IconPhone size="1.4rem" stroke={1.5} color="blue" className={classes.social} />
-              <Text>Phone</Text>
-              <Text>+49 (800) 335 35 35</Text>
+              <Text>
+                Phone
+              </Text>
+              <Text>
+                +49 (800) 335 35 35
+              </Text>
             </div>
             <div className={classes.contactDetail}>
               <IconMapPin size="1.4rem" stroke={1.5} color="blue" className={classes.social} />
-              <Text>Address</Text>
-              <Text>844 Morris Park avenue</Text>
+              <Text>
+                Address
+              </Text>
+              <Text>
+                844 Morris Park avenue
+              </Text>
             </div>
             <div className={classes.contactDetail}>
               <IconClock size="1.4rem" stroke={1.5} color="blue" className={classes.social} />
-              <Text>Working hours</Text>
-              <Text>8 a.m. – 11 p.m.</Text>
+              <Text>
+                Working hours
+              </Text>
+              <Text>
+                8 a.m. – 11 p.m.
+              </Text>
             </div>
             <div className={classes.contactDetail}>
               <IconSun size="1.4rem" stroke={1.5}  color="blue" className={classes.social} />
-              <Text>Working days</Text>
-              <Text>Monday – Friday</Text>
+              <Text>
+                Working days
+              </Text>
+              <Text>
+                Monday – Friday
+              </Text>
             </div>
           </div>
           
@@ -150,7 +183,7 @@ export function ContactUs() {
             />
 
             <Group position="left" mt="md">
-              <Button type="submit" className={classes.control}>
+              <Button type="submit" className={classes.control}  color={classes.buttonColor}>
                 Send message
               </Button>
             </Group>

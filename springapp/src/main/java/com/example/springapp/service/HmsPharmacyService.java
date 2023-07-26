@@ -10,9 +10,12 @@ public interface HmsPharmacyService {
 
     public List<HmsPharmacy> fetchPharmacyList();
 
+
     public void deletePharmacy(Long pharmacyId);
 
     public List<HmsPharmacy> updatePharmacy(Long id, List<HmsPharmacyRequestDto> updatedPharmacy);
 
     public HmsPharmacy getPharmacyById(Long id);
+
+    List<HmsPharmacy> getPharmacyByAppointmentId(Long appointmentId);
 }

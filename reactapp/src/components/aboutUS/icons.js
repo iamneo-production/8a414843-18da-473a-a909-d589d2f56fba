@@ -11,27 +11,39 @@ export function GridAsymmetrical() {
         
         <Grid.Col xs={6} style={{ minHeight: rem(80), backgroundColor: '#ADD8E6',textAlign: "center"}}>
         <IconUser size={40} />
-          <Text>User</Text>
+          <Text>
+            User
+            </Text>
         </Grid.Col>
-        <Grid.Col xs={6} style={{ minHeight: rem(80),  backgroundColor: "rgba(139, 127, 194, 1)",textAlign: "center"}} >
+        <Grid.Col xs={6} style={{ minHeight: rem(80),  backgroundColor: '#ADD8E6',textAlign: "center"}} >
         <IconStethoscope size={40} />
-          <Text>Stethoscope</Text>
+          <Text>
+            Stethoscope
+            </Text>
         </Grid.Col >
-        <Grid.Col xs={6} style={{ minHeight: rem(80), backgroundColor: "rgba(139, 127, 194, 1)",textAlign: "center"}}>
+        <Grid.Col xs={6} style={{ minHeight: rem(80), backgroundColor: '#ADD8E6',textAlign: "center"}}>
         <IconPills size={40} />
-          <Text>Pills</Text>
+          <Text>
+            Pills
+            </Text>
         </Grid.Col>
         <Grid.Col xs={6} style={{ minHeight: rem(80), backgroundColor: '#ADD8E6',textAlign: "center"}}>
         <IconThermometer size={40} />
-          <Text>Thermometer</Text>
+          <Text>
+            Thermometer
+            </Text>
         </Grid.Col>
         <Grid.Col xs={6} style={{ minHeight: rem(80),backgroundColor: '#ADD8E6',textAlign: "center" }}>
         <IconBandage size={40} />
-          <Text>Bandage</Text>
+          <Text>
+            Bandage
+            </Text>
         </Grid.Col>
-        <Grid.Col xs={6} style={{ minHeight: rem(80), backgroundColor: "rgba(139, 127, 194, 1)",textAlign: "center" }}>
+        <Grid.Col xs={6} style={{ minHeight: rem(80), backgroundColor: '#ADD8E6',textAlign: "center" }}>
         <IconMicroscope size={40} />
-          <Text>Microscope</Text>
+          <Text>
+            Microscope
+            </Text>
         </Grid.Col>
       </Grid>
     </Container>

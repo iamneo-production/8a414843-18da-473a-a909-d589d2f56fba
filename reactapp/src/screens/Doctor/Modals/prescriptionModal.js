@@ -19,7 +19,7 @@ import EndPoints from "../../../api/endPoints";
 import { get, post } from "../../../api/index";
 
 export default function PrescriptionModal(props) {
-  const { open, close, appointmentData } = props;
+  const { open, close, appointmentData, getFunction } = props;
   const [medicineList, setMedicineList] = useState([]);
   const [noOfDays, setNoOfDays] = useState(null);
 
@@ -51,24 +51,27 @@ export default function PrescriptionModal(props) {
     for (let i = 0; i < prev.length; i++) {
       prev[i].appointmentId = appointmentData?.id;
       prev[i].prescribedDays = Number(noOfDays);
-      let count=0;
-      if(prev[i].morning){
-        count+=1;
+      let count = 0;
+      if (prev[i].morning) {
+        count += 1;
       }
-      if(prev[i].noon){
-        count+=1
+      if (prev[i].noon) {
+        count += 1;
       }
-      if(prev[i].night){
-        count+=1
+      if (prev[i].night) {
+        count += 1;
       }
-      prev[i].quantity = count*Number(noOfDays);
+      prev[i].quantity = count * Number(noOfDays);
     }
     console.log("dwdq", prev);
-    await post(EndPoints.createPharmacy,prev).then((response)=>{
-        console.log(response.data);
-      }).catch(error =>{
-        console.log(error);
+    await post(EndPoints.createPharmacy, prev)
+      .then((response) => {
+        getFunction();
       })
+      .catch((error) => {
+        console.log(error);
+      });
+    close();
   }
 
   useEffect(() => {

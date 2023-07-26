@@ -94,6 +94,9 @@ public class UserService implements UserDetailsService {
     public List<User> getAllUser(){
         return userRepository.findAll();
     }
+    public  List<User> getDoctorUsers(){
+        return  userRepository.findByRoles("ROLE_DOCTOR");
+    }
 
     public List<User> getUserByRole(String role){
         System.out.println("Service"+role);
@@ -198,7 +201,6 @@ public class UserService implements UserDetailsService {
         String body = "Thank you for registering. Your Book Your Appointments to Doctors to stay Healthy";
 
         try {
-
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setTo(email);
@@ -213,7 +215,6 @@ public class UserService implements UserDetailsService {
             e.printStackTrace();
         }
     }
-
     public String generateRandomPassword() {
         // Generate a random password
         String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%/";
@@ -304,17 +305,17 @@ public class UserService implements UserDetailsService {
 
 
         try {
-            // Create a new email message
+
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setTo(email);
             helper.setSubject(subject);
             String htmlContent = "<html><body>";
-            htmlContent += "<p>Dear recipient,</p>";
+            htmlContent += "<p>Dear Employee,</p>";
             htmlContent += "<p>we are sure about that your salary had credited to your bank account and please make sure of the salary credition, " +
                     "I hope you will be happy and keep smile and enjoy</p>";
             htmlContent += "<p>Best regards,</p>";
-            htmlContent += "<p>Your Name</p>";
+            htmlContent += "<p>Admin</p>";
             htmlContent += "</body></html>";
 
             helper.setText(htmlContent, true);
@@ -329,4 +330,8 @@ public class UserService implements UserDetailsService {
     }
 
 
+    
+    public int getUserCountByRole(String roles) {
+        return userRepository.countByRolesContaining(roles);
+    }
 }

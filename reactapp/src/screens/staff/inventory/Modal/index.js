@@ -1,61 +1,129 @@
-import {
-    NumberInput,
-    TextInput,
-    Select,
-} from '@mantine/core';
-import { useForm } from '@mantine/form';
-
-
+import { NumberInput, TextInput, Select } from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { DateInput } from "@mantine/dates";
+import { post, put } from "../../../../api/index";
+import EndPoints from "../../../../api/endPoints";
 
 export default function ModifyAndCreateModal(props) {
+  const { records, onClose, getInventory } = props;
 
-    const {records, onClose, onSubmit} = props
+  console.log('getInventory',getInventory);
 
-    const form = useForm({
-        initialValues: {
-            ProductName : records?.ProductName,
-            ItemNumber : records?.ItemNumber,
-            Manufacturer : records?.Manufacturer,
-            Usage: records?.Usage,
-            Category : records?.Category,
-            Price : records?.Price,
-            Quanity : 0,
-            ExpiryDate : records?.ExpiryDate,
-        },
-        validate: {
-            price: (value) => (value > 0 ? null : 'Enter the correct value' ),
-            quanity: (value) => (value > 0 ? null : 'Enter the correct value' ),
-        },
-    });
- 
-    const handleSubmit = () => {
-        onSubmit(form.values);
-        onClose();
-      };
+  const form = useForm({
+    initialValues: {
+      medicineName: records?.medicineName !== null ? records?.medicineName : "",
+      usages: records?.usages !== null ? records?.usages : "",
+      category: records?.category !== null ? records?.category : "",
+      price: records?.price !== null ? records?.price : "",
+      quantity: records?.quantity !== null ? records?.quantity : "",
+      expiry_date: records?.expiry_date !== null ? records?.expiry_date : "",
+    },
+    validate: {
+      price: (value) => (value > 0 ? null : "Enter the correct value"),
+      quanity: (value) => (value > 0 ? null : "Enter the correct value"),
+    },
+  });
 
-    return (
+  const handleSubmit = async () => {
+    const data = form.values;
+    if (records === undefined) {
+      await post(`${EndPoints.addInventory}`, data)
+        .then((response) => {
+          console.log('dwdwdd');
+          getInventory();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      await put(`${EndPoints.updateInventory}/${records.id}`, data)
+        .then((response) => {
+          getInventory();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    onClose();
+  };
 
-        <form onSubmit={(e) => e.preventDefault()}>
-            
-            <TextInput style={{ height: "6vh",marginBottom:"20px"}} label="Product Name" placeholder="Product Name" {...form.getInputProps('ProductName')} />
-            <TextInput style={{ height: "6vh",marginBottom:"20px"}} label="Item Number"  {...form.getInputProps('ItemNumber')} />
-            <TextInput style={{ height: "6vh",marginBottom:"20px"}} label="Manufacturer" placeholder="Manufacturer" {...form.getInputProps('Manufacturer')} />
-            <TextInput style={{ height: "6vh",marginBottom:"20px"}} label="Usage" placeholder="Usage" {...form.getInputProps('Usage')} />
-            <Select style={{ height: "6vh",marginBottom:"20px"}} label="Category" placeholder="Category" data={[
-                { value: 'Tablet', label: 'Tablet' },
-                { value: 'Syrup', label: 'Syrup' },
-                { value: 'Cream', label: 'Cream' },
-            ]}
-
-
-            {...form.getInputProps('Category')} />
-            <TextInput style={{ height: "6vh",marginBottom:"20px",width:"50%",display:"inline-block",paddingRight:"5px"}} label="Price (per unit)" placeholder="Price" {...form.getInputProps('Price')} />
-            <NumberInput style={{ height: "6vh",marginBottom:"20px",width:"50%",display:"inline-block",paddingLeft:"5px"}} label="Quantity" {...form.getInputProps('Quanity')}/>
-            <TextInput type='date' style={{ height: "6vh",marginBottom:"20px"}} label="Expiry Date" placeholder="Expiry Date" {...form.getInputProps('ExpiryDate')}/>
-            <button 
-            // onClick={handleSubmit}
-             style={{marginTop:"20px", padding: "10px 20px", borderRadius: "7px",border:"none",color: "white", position: "relative", background: "rgba(139, 127, 194, 1)", cursor: "pointer", left: "82%" }}>Save</button> 
-        </form>
-            
-    )
+  return (
+    <form
+      style={{ margin: "10px", padding: "10px" }}
+      onSubmit={form.onSubmit((values) => {
+        console.log(values);
+        handleSubmit();
+      })}
+    >
+      <TextInput
+        style={{ height: "7vh", marginBottom: "20px" }}
+        label="Medicine Name"
+        placeholder="Medicine Name"
+        {...form.getInputProps("medicineName")}
+      />
+      <TextInput
+        style={{ height: "7vh", marginBottom: "20px" }}
+        label="Usage"
+        placeholder="Usage"
+        {...form.getInputProps("usages")}
+      />
+      <Select
+        style={{ height: "7vh", marginBottom: "20px" }}
+        label="Category"
+        placeholder="Category"
+        data={[
+          { value: "Tablet", label: "Tablet" },
+          { value: "Syrup", label: "Syrup" },
+          { value: "Cream", label: "Cream" },
+          { value: "general", label: "general" },
+        ]}
+        {...form.getInputProps("category")}
+      />
+      <TextInput
+        style={{
+          height: "7vh",
+          marginBottom: "20px",
+          width: "50%",
+          display: "inline-block",
+          paddingRight: "5px",
+        }}
+        label="Price (per unit)"
+        placeholder="Price"
+        {...form.getInputProps("price")}
+      />
+      <NumberInput
+        style={{
+          height: "7vh",
+          marginBottom: "20px",
+          width: "50%",
+          display: "inline-block",
+          paddingLeft: "5px",
+        }}
+        label="Quantity"
+        {...form.getInputProps("quantity")}
+      />
+      <DateInput
+        style={{ height: "7vh", marginBottom: "20px" }}
+        label="Expiry Date"
+        placeholder="Expiry Date"
+        {...form.getInputProps("expiryDate")}
+      />
+      <button
+        onClick={handleSubmit}
+        style={{
+          marginTop: "20px",
+          padding: "10px 20px",
+          borderRadius: "7px",
+          border: "none",
+          color: "white",
+          position: "relative",
+          background: "rgba(139, 127, 194, 1)",
+          cursor: "pointer",
+          left: "82%",
+        }}
+      >
+        Add
+      </button>
+    </form>
+  );
 }

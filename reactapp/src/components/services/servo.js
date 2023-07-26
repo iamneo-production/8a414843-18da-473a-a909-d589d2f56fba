@@ -13,11 +13,17 @@ import {
   import {  IconCircleDotted, IconFileCode,IconSettingsExclamation,IconCornerDownLeftDouble, } from '@tabler/icons-react';
   
   const useStyles = createStyles((theme) => ({
-    wrapper: {
+    container:
+     {
+      textAlign: 'justify',
+    },
+    wrapper: 
+    {
       padding: `calc(${theme.spacing.xl} * 2) ${theme.spacing.xl}`,
     },
   
-    title: {
+    title: 
+    {
       fontFamily: `Greycliff CF, ${theme.fontFamily}`,
       fontSize: rem(36),
       fontWeight: 900,
@@ -78,18 +84,25 @@ import {
     return (
       <div className={classes.wrapper}>
         <Grid gutter={80}>
-        <Grid.Col xs={12} lg={12}> </Grid.Col >
+        <Grid.Col xs={12} lg={12}> 
+        </Grid.Col >
         
           <Col span={12} md={5}>
             <Title className={classes.title} order={2}>
             Hospital Development Services
             </Title>
+            <div className={classes.container}>
             <Text c="dimmed">
-            Product Development ServicesAdroit Infosystems is a leading healthcare software development company. We develop high quality, reliable and cost-effective healthcare software.
-
+            The healthcare industry is all dependent on people – present and future patients. 
+            It is a fact that competition arises whenever it comes to delivering services. 
+            So, healthcare  facilities can’t depend on patients being proactive in their health management.Healthcare mobile app development enables healthcare providers and clinicians to stay connected with their patients. 
+            The need for virtual health has grown rapidly during the pandemic. Today, healthcare software solutions are required for people to conveniently get healthcare services.
+            With the software in the healthcare industry, patients can schedule appointments, get online consultations, and do much more.
+            Therefore, healthcare software projects are becoming a priority for medical professionals who want to stay ahead in the industry.
             </Text>
+            </div>
   
-            <Card
+            {/* <Card
              
               color='blue'
               size="lg"
@@ -97,14 +110,13 @@ import {
               mt="xl"
             >
               Services Implementation
-              </Card>
+              </Card> */}
           </Col>
           <Col span={12} md={7}>
             <SimpleGrid cols={2} spacing={30} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
               {items}
             </SimpleGrid>
           </Col>
-          <Grid.Col xs={12} lg={12}> </Grid.Col >
           
         </Grid>
       </div>

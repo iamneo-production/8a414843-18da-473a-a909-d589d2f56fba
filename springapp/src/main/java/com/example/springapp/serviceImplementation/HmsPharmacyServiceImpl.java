@@ -39,7 +39,7 @@ public class HmsPharmacyServiceImpl implements HmsPharmacyService {
 
     @Override
     public List<HmsPharmacy> fetchPharmacyList() {
-        return pharmacyRepository.findAll();
+        return pharmacyRepository.findAllByStatusTrue();
     }
 
     @Override
@@ -48,8 +48,9 @@ public class HmsPharmacyServiceImpl implements HmsPharmacyService {
         if (!pharmacyRepository.existsById(pharmacyId)) {
             throw new EntityNotFoundException(pharmacyId);
         }
-
-        pharmacyRepository.deleteById(pharmacyId);
+        HmsPharmacy pharmacy=pharmacyRepository.findById(pharmacyId).orElseThrow();
+        pharmacy.setStatus(false);
+        pharmacyRepository.save(pharmacy);
     }
 
 
@@ -123,6 +124,14 @@ public class HmsPharmacyServiceImpl implements HmsPharmacyService {
     }
 
 
+    public List<HmsPharmacy> getPharmacyByAppointmentId(Long appointmentId) {
+        // TODO Auto-generated method stub
+        HmsAppointment appointment = appointmentRepository.findById(appointmentId).orElseThrow();
+
+        return pharmacyRepository.findAllByAppointment(appointment);
+
+
+    }
 
     public HmsPharmacy getPharmacyById(Long id) {
         // TODO Auto-generated method stub

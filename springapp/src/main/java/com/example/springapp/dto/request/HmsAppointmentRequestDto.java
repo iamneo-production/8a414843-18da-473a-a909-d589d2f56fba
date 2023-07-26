@@ -62,4 +62,16 @@ public class HmsAppointmentRequestDto {
     public void setAppointmentStatus(String appointmentStatus) {
         this.appointmentStatus = appointmentStatus;
     }
+
+    @Override
+    public String toString() {
+        return "HmsAppointmentRequestDto{" +
+                "patientId=" + patientId +
+                ", doctorId=" + doctorId +
+                ", date=" + date +
+                ", time=" + time +
+                ", issue='" + issue + '\'' +
+                ", appointmentStatus='" + appointmentStatus + '\'' +
+                '}';
+    }
 }

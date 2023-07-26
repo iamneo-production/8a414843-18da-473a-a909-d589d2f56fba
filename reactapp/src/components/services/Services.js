@@ -34,7 +34,8 @@ const mockdata = [
 ];
 
 const useStyles = createStyles((theme) => ({
-  title: {
+  title: 
+  {
     fontSize: rem(34),
     fontWeight: 900,
 
@@ -43,11 +44,13 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
-  description: {
+  description:
+   {
     maxWidth: 600,
     margin: 'auto',
 
-    '&::after': {
+    '&::after': 
+    {
       content: '""',
       display: 'block',
       backgroundColor: theme.fn.primaryColor(),
@@ -59,13 +62,15 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
-  card: {
+  card: 
+  {
     border: `${rem(1)} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
     }`,
   },
 
-  cardTitle: {
+  cardTitle:
+   {
     '&::after': {
       content: '""',
       display: 'block',
@@ -97,8 +102,10 @@ export function FeaturesCards() {
       backgroundColor: '#ADD8E6', // Replace with the desired background color
     }}>
       <Grid>
-      <Grid.Col xs={12} lg={12}> </Grid.Col >
-      <Grid.Col xs={12} lg={12}> </Grid.Col >
+      <Grid.Col xs={12} lg={12}> 
+      </Grid.Col >
+      <Grid.Col xs={12} lg={12}> 
+      </Grid.Col >
       
       
       </Grid>
@@ -121,5 +128,6 @@ export function FeaturesCards() {
         {features}
       </SimpleGrid>
     </Container>
+    
   );
 }

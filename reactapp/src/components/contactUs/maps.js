@@ -20,10 +20,14 @@ export default function Mappings(){
       
         
         <Grid>
-             <Grid.Col xs={12} lg={12}></Grid.Col>
-             <Grid.Col xs={12} lg={12}></Grid.Col>
-             <Grid.Col xs={12} lg={12}></Grid.Col>
-             <Grid.Col xs={2} lg={2}></Grid.Col>
+             <Grid.Col xs={12} lg={12}>
+             </Grid.Col>
+             <Grid.Col xs={12} lg={12}>
+             </Grid.Col>
+             <Grid.Col xs={12} lg={12}>
+             </Grid.Col>
+             <Grid.Col xs={2}  lg={2}>
+             </Grid.Col>
              
         <Grid.Col xs={4} lg={4}>
 <Card shadow="sm" padding="lg" radius="md" withBorder>
@@ -35,7 +39,7 @@ export default function Mappings(){
               loading="lazy"
             >
                 
-            </iframe>
+ </iframe>
 
 </Card.Section>
 
@@ -53,10 +57,22 @@ Chennai Branch
 <Text size="sm" >
 
 <div>
-    <Text><IconAt size="1.4rem" stroke={1.5}/>Email: gowthamvm08@gmail.com</Text>
-    <Text><IconPhone size="1.4rem" stroke={1.5}/>Mobile: 8870226563</Text>
-    <Text><IconClock size="1.4rem" stroke={1.5}/>Working Hours: 8AM - 9PM</Text>
-    <Text><IconSun size="1.4rem" stroke={1.5}/>Working Days: Mon - Fri</Text>
+    <Text>
+      <IconAt size="1.4rem" stroke={1.5}/>
+    Email: gowthamvm08@gmail.com
+    </Text>
+    <Text>
+      <IconPhone size="1.4rem" stroke={1.5}/>
+    Mobile: 8870226563
+    </Text>
+    <Text><
+      IconClock size="1.4rem" stroke={1.5}/>
+    Working Hours: 8AM - 9PM
+    </Text>
+    <Text>
+      <IconSun size="1.4rem" stroke={1.5}/>
+      Working Days: Mon - Fri
+      </Text>
 </div>
 </Text>
 </Card>
@@ -90,18 +106,33 @@ Coimbatore Branch
 
 <Text size="sm" >
 <div>
-    <Text ><IconAt size="1.4rem" stroke={1.5}/>Email: gowthamvm08@gmail.com</Text>
-    <Text><IconPhone size="1.4rem" stroke={1.5}/>Mobile: 8870226563</Text>
-    <Text><IconClock size="1.4rem" stroke={1.5}/>Working Hours: 8AM - 9PM</Text>
-    <Text><IconSun size="1.4rem" stroke={1.5}/>Working Days: Mon - Fri</Text>
+    <Text >
+      <IconAt size="1.4rem" stroke={1.5}/>
+      Email: gowthamvm08@gmail.com
+      </Text>
+    <Text>
+      <IconPhone size="1.4rem" stroke={1.5}/>
+      Mobile: 8870226563
+      </Text>
+    <Text>
+      <IconClock size="1.4rem" stroke={1.5}/>
+      Working Hours: 8AM - 9PM
+      </Text>
+    <Text>
+      <IconSun size="1.4rem" stroke={1.5}/>
+      Working Days: Mon - Fri
+      </Text>
 </div>
 </Text>
 </Card>
 
 </Grid.Col>
-<Grid.Col xs={12} lg={12}></Grid.Col>
-<Grid.Col xs={12} lg={12}></Grid.Col>
-<Grid.Col xs={2} lg={2}></Grid.Col>   
+<Grid.Col xs={12} lg={12}>
+</Grid.Col>
+<Grid.Col xs={12} lg={12}>
+</Grid.Col>
+<Grid.Col xs={2} lg={2}>
+</Grid.Col>   
 <Grid.Col xs={4} lg={4}>
 <Card shadow="sm" padding="lg" radius="md" withBorder>
 <Card.Section>
@@ -130,10 +161,22 @@ Bangalore Branch
 <Text size="sm" >
 
 <div>
-    <Text><IconAt size="1.4rem" stroke={1.5}/>Email: gowthamvm08@gmail.com</Text>
-    <Text><IconPhone size="1.4rem" stroke={1.5}/>Mobile: 8870226563</Text>
-    <Text><IconClock size="1.4rem" stroke={1.5}/>Working Hours: 8AM - 9PM</Text>
-    <Text><IconSun size="1.4rem" stroke={1.5}/>Working Days: Mon - Fri</Text>
+    <Text>
+      <IconAt size="1.4rem" stroke={1.5}/>
+      Email: gowthamvm08@gmail.com
+      </Text>
+    <Text>
+      <IconPhone size="1.4rem" stroke={1.5}/>
+      Mobile: 8870226563
+      </Text>
+    <Text>
+      <IconClock size="1.4rem" stroke={1.5}/>
+      Working Hours: 8AM - 9PM
+      </Text>
+    <Text>
+      <IconSun size="1.4rem" stroke={1.5}/>
+      Working Days: Mon - Fri
+      </Text>
 </div>
 </Text>
 </Card>
@@ -167,18 +210,33 @@ Hyderabad Branch
 
 <Text size="sm" >
 <div>
-    <Text ><IconAt size="1.4rem" stroke={1.5}/>Email: gowthamvm08@gmail.com</Text>
-    <Text><IconPhone size="1.4rem" stroke={1.5}/>Mobile: 8870226563</Text>
-    <Text><IconClock size="1.4rem" stroke={1.5}/>Working Hours: 8AM - 9PM</Text>
-    <Text><IconSun size="1.4rem" stroke={1.5}/>Working Days: Mon - Fri</Text>
+    <Text >
+      <IconAt size="1.4rem" stroke={1.5}/>
+      Email: gowthamvm08@gmail.com
+      </Text>
+    <Text>
+      <IconPhone size="1.4rem" stroke={1.5}/>
+      Mobile: 8870226563
+      </Text>
+    <Text>
+      <IconClock size="1.4rem" stroke={1.5}/>
+      Working Hours: 8AM - 9PM
+      </Text>
+    <Text>
+      <IconSun size="1.4rem" stroke={1.5}/>
+      Working Days: Mon - Fri
+      </Text>
 </div>
 </Text>
 </Card>
 
 </Grid.Col>
-<Grid.Col xs={12} lg={12}></Grid.Col>
-<Grid.Col xs={12} lg={12}></Grid.Col>
-<Grid.Col xs={12} lg={12}></Grid.Col>
+<Grid.Col xs={12} lg={12}>
+</Grid.Col>
+<Grid.Col xs={12} lg={12}>
+</Grid.Col>
+<Grid.Col xs={12} lg={12}>
+</Grid.Col>
 
 </Grid>
 
