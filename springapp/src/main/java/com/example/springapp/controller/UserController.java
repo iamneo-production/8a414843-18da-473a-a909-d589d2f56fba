@@ -264,13 +264,13 @@ public class UserController {
         {
             userService.sendMailPay(email);
 
-
             return new ResponseEntity<>("Payment sent successfully",HttpStatus.ACCEPTED);
-        } else {
+        }
+        else
+        {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found");
         }
     }
-
 
 
 }
