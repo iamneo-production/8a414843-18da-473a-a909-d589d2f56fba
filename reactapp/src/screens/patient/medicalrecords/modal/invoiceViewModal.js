@@ -41,7 +41,7 @@ export default function InvoiceViewModal(props) {
     useEffect(() => {
       // Simulated patient data
       const patientData = {
-        name: "Sangya",
+        name: "janani",
         mobileNumber: "6289789432",
         identityNumber: "191001002008",
       };

@@ -30,7 +30,7 @@ import {
 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 
-import InvoiceViewModal from "./modal/invoiceViewModal";
+//import InvoiceViewModal from "./modal/invoiceViewModal";
 import CustomTable from "../../../components/customTable";
 import { get } from "../../../api";
 import EndPoints from "../../../api/endPoints";
@@ -71,14 +71,14 @@ console.log("records",records);
      
     },
 
-    {
+{
       accessor: "date",
       title: "Date",
       textAlignment: "center",
       render: (data) => {
         console.log("wdw", data, data?.status, data?.status === "Active");
         return <Text>{data?.date}</Text>;
-      },
+      },    
     },
     {
       accessor: "appointmentStatus",
@@ -114,12 +114,12 @@ console.log("records",records);
   //   );
   return (
     <>
-      <InvoiceViewModal
+      {/* <InvoiceViewModal
         open={invoicemodal}
         close={() => {
           setInvoicemodal(false);
         }}
-      />
+      /> */}
 
       <Text
         ta="center"

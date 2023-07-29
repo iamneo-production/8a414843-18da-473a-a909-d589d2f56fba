@@ -96,7 +96,7 @@ export default function Table() {
     
     {
       accessor: "appointment.appointmentStatus",
-      title: "Amount",
+      title: "AmountStatus",
       textAlignment: "center",
     },
     {
@@ -108,8 +108,35 @@ console.log("dddd",data);
       },
     },
   ];
-
   const [searchValue, setSearchValue] = React.useState("");
+  const [filteredData, setFilteredData] = React.useState([]);
+
+  useEffect(() => {
+    // Filter billingData based on the searchValue
+    const filteredBillingData = billingData.filter((item) => {
+      const patientName = item?.appointment?.patient?.firstName?.toLowerCase() || "";
+      const doctorName = item?.appointment?.doctor?.firstName?.toLowerCase() || "";
+      const id = item?.id?.toString() || "";
+      const amount = item?.amount?.toString() || "";
+      const status = item?.paid ? "Paid" : "Not Paid";
+      const issuedDate = item?.date ? new Date(item.date).toISOString().split('T')[0] : "";
+      const completedStatus = item?.appointment?.appointmentStatus?.toLowerCase() || "";
+
+      const search = searchValue.toLowerCase();
+      return (
+        patientName.includes(search) ||
+        doctorName.includes(search) ||
+        id.includes(search) ||
+        amount.includes(search) ||
+        status.toLowerCase().includes(search) ||
+        issuedDate.includes(search) ||
+        completedStatus.includes(search)
+      );
+    });
+
+    setFilteredData(filteredBillingData);
+  }, [billingData, searchValue]);
+
 
   // const filteredRecords = React.useMemo(() => {
   //   if (!searchValue) {
@@ -174,7 +201,7 @@ console.log("dddd",data);
         {/* 219 line -- table border */}
         <CustomTable
           coloumnDef={colDef}
-          records={billingData}
+          records={filteredData}
           fetching={loading}
         />
       </Box>
