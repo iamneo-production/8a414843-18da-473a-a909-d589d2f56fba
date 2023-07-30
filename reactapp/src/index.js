@@ -7,6 +7,8 @@ import AppWrapper from './Appwrapper';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 
 import { store , persistor} from "./provider/configureStore"
 
@@ -16,7 +18,10 @@ root.render(
     <AppWrapper>
     <Provider store={store}>
     <PersistGate loading={<h1>Loading...</h1>} persistor={persistor}> 
-    <App />
+    <MantineProvider withNormalizeCSS withGlobalStyles>
+      <Notifications position='top-right'/>
+      <App />
+    </MantineProvider>
     </PersistGate>
     </Provider>
     </AppWrapper>
