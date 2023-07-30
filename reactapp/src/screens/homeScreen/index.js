@@ -27,7 +27,18 @@ import Dermatology from '../../assests/Dermatology.jpg'
 import Surgeon from '../../assests/Surgeon.jpg'
 import Neurologist from '../../assests/Neurologist.jpg'
 import Cardiology from '../../assests/Cardiology physician.jpg'
-
+import { FooterSocial } from "../../components/footer/footerSocial";
+import AboutUspage from "../../components/aboutUS/AboutUsPage";
+import { ContactUs } from "../../components/contactUs/ContactUsPage";
+import { FeaturesImages } from "../../components/contactUs/help";
+import AboutUspages from "../../components/aboutUS";
+import Mappings from "../../components/contactUs/maps";
+import { FeaturesCards } from "../../components/services/Services";
+import { FeaturesTitle } from "../../components/services/servo";
+import { GridAsymmetrical } from "../../components/aboutUS/icons";
+import Blog from "../../components/services/blog";
+import Cards from "../../components/aboutUS/cards ";
+import Values from "../../components/contactUs/values";
 
 const containerStyle = {
     display: 'flex',
@@ -215,18 +226,58 @@ export default function HomeScreen() {
                     <Grid.Col xs={1} lg={1}/>
                 </Grid>
             </Container>
+
+
             </div>
+            
             }
+            {
+                active === 2 &&   <div>
+                    <FeaturesTitle setActive={setActive} active={active}/>
+                    <Blog/>
+                    <FeaturesCards/>
+            
+                    </div>
+                
+            }
+           
+            {
+                active === 3 &&   <div>
+                    <AboutUspage setActive={setActive} active={active}/>
+                    <Cards/>
+                    <AboutUspages/>
+                    <GridAsymmetrical/>
+                    </div>
+                
+            }
+            {
+                active === 4 &&  <div>
+                     <FeaturesImages setActive={setActive} active={active} /> 
+                     <Values/>
+                     <ContactUs/>
+                     <Mappings/>
+                </div>
+            }
+          
             {
                 active === 6 && <SignUp />
             }
             {
                 active === 5 && <SignIn />
             }
-            <Divider mt="md" />
+           
+            <Divider color="gray" style={{marginTop:"10px"}} />
+            
+            
+            
+
             <div>
-                <CustomFooter setActive={setActive} active={active} />
-            </div>
+              
+            {/* <CustomFooter/> */}
+           
+            <CustomFooter setActive={setActive} active={active} />
+            
+        </div>
 
 
         </>
