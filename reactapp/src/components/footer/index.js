@@ -13,6 +13,7 @@ import Logo from "../../assests/hospitalLogo.svg"
 import Phone from "../../assests/phone.svg"
 import Email from "../../assests/mail.svg"
 import Location from "../../assests/location.svg"
+import { FooterSocial } from './footerSocial';
 
 
 export default function CustomFooter(props) {
@@ -22,38 +23,42 @@ export default function CustomFooter(props) {
 
             <Box p="md" sx={{
                 // position: 'fixed', width: '100%',
-                // backgroundColor:'#ADD8E6',
-                zIndex: 2
+                backgroundColor:'#ADD8E6',
+                zIndex: 2,
+                
             }}>
                 {/* <Header height={60} px="md"> */}
                 <Flex direction="row" justify="space-between">
                     <div style={{ display: 'flex', }}>
                         <Image width={20} height={20} src={Logo} />
-                        <Text pl="xs" fw={500} style={{ dropShadow: "0px 4px 4px 0px #000000 25%" }}>Raja Hospital</Text>
+                        <Text pl="xs" fw={500} style={{ dropShadow: "0px 4px 4px 0px #000000 25%" }}>MediLab Hospital</Text>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
 
-                        <Text pb="md" px="sm" fw={700} >Quick Links</Text>
-                        <Text px="sm" fw={500} >Home</Text>
-                        <Text px="sm" fw={500} >Services</Text>
-                        <Text px="sm" fw={500} >About us</Text>
-                        <Text px="sm" fw={500} >Contact us</Text>
+                        <Text pb="md" px="sm" fw={700} >Top Features</Text>
+                        <Text px="sm" fw={500} >OPD & IPD Management</Text>
+                        <Text px="sm" fw={500} >Appointments</Text>
+                        <Text px="sm" fw={500} >Online Payments</Text>
+                        <Text px="sm" fw={500} >Website for Hospital</Text>
+                        <Text px="sm" fw={500} >Doctor Portal</Text>
+                        <Text px="sm" fw={500} >Patient Portal</Text>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
 
-                        <Text pb="md" px="sm" fw={700} >Hours</Text>
-                        <Text px="sm" fw={500} >Monday <span style={{ margingLeft: '10%' }}>9:00-18:00</span></Text>
-                        <Text px="sm" fw={500} >Tuesday <span style={{ margingLeft: '2%' }}>9:00-18:00</span></Text>
-                        <Text px="sm" fw={500} >Wednesday <span style={{ margingLeft: '2%' }}>9:00-18:00</span></Text>
-                        <Text px="sm" fw={500} >Thursday <span style={{ margingLeft: '2%' }}>9:00-18:00</span></Text>
-                        <Text px="sm" fw={500} >Friday <span style={{ margingLeft: '2%' }}>9:00-18:00</span></Text>
+                        <Text pb="md" px="sm" fw={700} >Solutions</Text>
+                        <Text px="sm" fw={500} >Hospital Software</Text>
+                        <Text px="sm" fw={500} >Clinic Software </Text>
+                        <Text px="sm" fw={500} >EHR EMR Software </Text>
+                        <Text px="sm" fw={500} >Practice Management Software </Text>
+                        <Text px="sm" fw={500} >Dental Clinic Software</Text>
+                        <Text px="sm" fw={500} >Aesthetics Clinic Software</Text>
 
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <Text pb="md" px="sm" fw={700} >Contacts</Text>
+                        <Text pb="md" px="sm" fw={700} >Get in Touch</Text>
                         <div style={{ display: 'flex', }}>
                             <Image height={15} width={15} src={Phone} />
-                            <Text pb="md" px="sm" fw={500} >000000</Text>
+                            <Text pb="md" px="sm" fw={500} >8870226563</Text>
                         </div>
 
                         <div style={{ display: 'flex', }}>
@@ -76,8 +81,9 @@ export default function CustomFooter(props) {
                         >SignIn</Button>
                         <Button size="xs" radius="10px" style={{ background: "linear-gradient(#9083D5, #807593)" }}>SignUp</Button>
                     </div> */}
-
+                 
                 </Flex>
+                <FooterSocial/>
 
                 {/* </Header> */}
 

@@ -8,8 +8,10 @@ const EndPoints = {
     updateUserDetails:"/api/auth/users",
     updateUserProfile:"/api/auth/profile",
     doctorAppointment:"/api/doctor-appointment",
-    inventoryList:'/api/inventory',
+    inventoryList:'/api/inventory',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
     createPharmacy:'/api/pharmacy',
+    getDoctors:'/api/role-list',
+    deleteUsers:'/api/auth/users',
     updateInventory:"/api/inventory",
     addInventory:"/api/inventory",
     deleteInventory:"/api/inventory",
@@ -26,7 +28,8 @@ const EndPoints = {
     getRolesCount:'/api/role-list-count',
     updateAppointment:'/api/appointment',
     createBilling:'/api/billing',
-    allBilling:'/api/billing'
+    allBilling:'/api/billing',
+    salaryPay:"/api/auth/pay",
 }
 
 export default EndPoints
