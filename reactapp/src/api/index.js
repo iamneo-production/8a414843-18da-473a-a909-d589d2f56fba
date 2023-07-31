@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: 'https://8080-baabeefaeaddfaaefdcadeaeaadbdbabf.project.examly.io/',
 });
 
 // Default error handler
