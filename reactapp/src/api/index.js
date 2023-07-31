@@ -6,7 +6,7 @@ const token=localStorage.getItem("token")
 console.log('token',token);
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: 'https://ide-ecbfbfbcfaaaefdcadeaeaadbdbabf.project.examly.io/proxy/8080',
 });
 
 // Default error handler
