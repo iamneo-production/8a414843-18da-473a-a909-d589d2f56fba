@@ -1,0 +1,8 @@
+.classpath
+.project
+.settings/
+reactapp/.idea/
+reactapp/.vscode/
+target/
+.idea
+done
