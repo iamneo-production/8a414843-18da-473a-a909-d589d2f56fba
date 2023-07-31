@@ -7,7 +7,7 @@ function DoctorCard({ doctorName, online }) {
       <Grid gutter="md" align="center">
         <Grid.Col span={10}>
           <Text size="lg" weight={500} style={{ marginBottom: '8px' }}>
-            Doctor's Name{/* {doctorName} */}
+            {doctorName}
           </Text>
           <Text size="sm" style={{ marginBottom: '8px' }}>
             {"online" ? (
