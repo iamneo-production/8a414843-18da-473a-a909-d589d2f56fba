@@ -228,6 +228,8 @@ export default function ModalForm({ onCloseModal,patientId, getAppointments }) {
   })
   console.log("sssss",doctors);
   }
+
+  
   useEffect(()=>{
     getDoctors();
   },[])
