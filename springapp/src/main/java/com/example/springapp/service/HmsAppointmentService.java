@@ -5,6 +5,10 @@ import com.example.springapp.model.HmsAppointment;
 import java.util.List;
 
 public interface HmsAppointmentService {
+
+
+
+
     public HmsAppointment saveAppointment(HmsAppointment appointment);
 
 //    public HmsAppointment updateAppointment(HmsAppointment appointment);
