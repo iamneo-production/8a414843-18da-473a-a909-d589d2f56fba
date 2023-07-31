@@ -8,6 +8,7 @@ export default function CustomTable(props) {
     // const [selectedRecords, setSelectedRecords] = useState<any>([]);
     const { coloumnDef, records, fetching, } = props
     return (
+        
         <DataTable
             withBorder
             shadow="md"
