@@ -298,6 +298,38 @@ public class UserService implements UserDetailsService {
             e.printStackTrace();
         }
     }
+
+
+    public void sendMailPay(String email) {
+        String subject = "Salary credited";
+
+
+        try {
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(email);
+            helper.setSubject(subject);
+            String htmlContent = "<html><body>";
+            htmlContent += "<p>Dear Employee,</p>";
+            htmlContent += "<p>we are sure about that your salary had credited to your bank account and please make sure of the salary credition, " +
+                    "I hope you will be happy and keep smile and enjoy</p>";
+            htmlContent += "<p>Best regards,</p>";
+            htmlContent += "<p>Admin</p>";
+            htmlContent += "</body></html>";
+
+            helper.setText(htmlContent, true);
+
+
+            javaMailSender.send(message);
+
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     
     public int getUserCountByRole(String roles) {
         return userRepository.countByRolesContaining(roles);
