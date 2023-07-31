@@ -93,15 +93,31 @@ export default function DoctorDashboard() {
       });
       setLoading(false)
   };
+
+  const [patientCount,setPatientCount] = useState(null);
+
+
+  const count = async() => {
+    await post(EndPoints.getRolesCount,{roles:'ROLE_PATIENT'}).then((response)=>{
+      setPatientCount(response.data);
+      console.log(response);
+  }).catch(error =>{
+      console.log(error);
+  })
+  }
+
+
   useEffect(() => {
+    count();
     getUsers();
   }, []);
+  const fullName = `${user?.firstName} ${user?.lastName}`;
 
   return (
     <div>
       <Grid grow gutter="sm">
         <Grid.Col style={{ fontWeight: "bold" }} span={12}>
-          Welcome Doctor
+          Welcome {user?.firstName} {user?.lastName},
         </Grid.Col>
         <Grid.Col span={4}>
           <Card shadow="sm" padding="md" radius="lg">
@@ -112,7 +128,7 @@ export default function DoctorDashboard() {
                     Total Patients
                   </Text>
                   <Text size="xl" weight={500}>
-                    20{/* {totalPatients} */}
+                    {patientCount}
                   </Text>
                 </Grid.Col>
                 <Grid.Col span={1} style={{ textAlign: "right" }}>
@@ -150,7 +166,7 @@ export default function DoctorDashboard() {
           </Card>
         </Grid.Col>
         <Grid.Col span={4}>
-          <DoctorCard />
+          <DoctorCard doctorName={fullName} />
         </Grid.Col>
         <Grid.Col span={6}>
           {/* <Calendar/> */}

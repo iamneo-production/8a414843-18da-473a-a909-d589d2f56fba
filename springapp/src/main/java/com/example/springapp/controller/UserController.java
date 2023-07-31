@@ -200,6 +200,8 @@ public class UserController {
             }
             return new ResponseEntity<>(errMap, HttpStatus.BAD_REQUEST);
         }
+
+        Optional<User> user1 = userService.getIndividualUser(user.getEmail());
         // Check if the user exists
         if (userService.checkuserNameExists(user.getEmail())) {
             // the Password matches the user's current password
@@ -208,9 +210,9 @@ public class UserController {
                 boolean passwordResetSuccessful = userService.resetPassword(user.getEmail(), user.getNewPassword());
 
                 if (passwordResetSuccessful) {
-
                     userService.sendEmailResetPassword(user.getEmail(), user.getNewPassword());
-                    return new  ResponseEntity<>("Password has been Successfully reset",HttpStatus.ACCEPTED);
+                    return ResponseEntity.ok(new BaseResponseDto("Password changed succesfully",user1.get()));
+                 //   return new  ResponseEntity<>("Password has been Successfully reset",HttpStatus.ACCEPTED);
                 } else {
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error resetting password");
                 }
@@ -224,14 +226,15 @@ public class UserController {
     @PostMapping("/api/auth/forget-password")
     public ResponseEntity<?> sendForgetPasswordEmail(@RequestBody Map<String, String> requestBody) {
         String email = requestBody.get("email");
-
         if (userService.checkuserNameExists(email)) {
             String otp = userService.generateRandomOTP();
             userService.sendOTPEmail(email, otp);
 
+            Optional<User> user = userService.getIndividualUser(email);
             // hash map is used to store the otp
             userOtpMap.put(email, otp);
-            return new ResponseEntity<>("OTP sent successfully",HttpStatus.ACCEPTED);
+            return ResponseEntity.ok(new BaseResponseDto("OTP sent successfully",user.get()));
+            //return new ResponseEntity<>("OTP sent successfully",HttpStatus.ACCEPTED);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found");
         }
@@ -244,22 +247,44 @@ public class UserController {
 
         String storedOTP = userOtpMap.get(email);
 
-        if (storedOTP != null && storedOTP.equals(otp)) {
+        Optional<User> user = userService.getIndividualUser(email);
 
-            boolean passwordResetSuccessful = userService.resetPassword(email, newPassword);
-
-            if (passwordResetSuccessful) {
-
-                userOtpMap.remove(email);
-                return new ResponseEntity<>("Password reset successfully",HttpStatus.ACCEPTED);
-            } else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error resetting password");
+        if(userService.checkuserNameExists(email)){
+            if (storedOTP != null && storedOTP.equals(otp)) {
+                boolean passwordResetSuccessful = userService.resetPassword(email, newPassword);
+                if (passwordResetSuccessful) {
+                    userOtpMap.remove(email);
+                    return ResponseEntity.ok(new BaseResponseDto("OTP sent successfully",user.get()));
+                    //return new ResponseEntity<>("Password reset successfully",HttpStatus.ACCEPTED);
+                } else {
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error resetting password");
+                }
+            }
+            else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid OTP");
             }
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid OTP");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Email");
+        }
+    }
+
+    @PostMapping("/api/auth/pay")
+    public ResponseEntity<?> sendMailPay(@RequestBody Map<String, String> requestBody) {
+        String email = requestBody.get("email");
+
+        if (userService.checkuserNameExists(email))
+        {
+            userService.sendMailPay(email);
+
+            return new ResponseEntity<>("Payment sent successfully",HttpStatus.ACCEPTED);
+        }
+        else
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found");
         }
     }
 
 
-
 }
+
+

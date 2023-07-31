@@ -6,6 +6,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface HmsAppointmentService {
+
+
+
+
     public HmsAppointment saveAppointment(HmsAppointment appointment);
 
 //    public HmsAppointment updateAppointment(HmsAppointment appointment);

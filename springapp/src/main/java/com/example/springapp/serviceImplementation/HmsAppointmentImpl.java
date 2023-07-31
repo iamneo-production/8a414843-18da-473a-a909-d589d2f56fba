@@ -8,8 +8,13 @@ import com.example.springapp.repository.HmsAppointmentRepository;
 import com.example.springapp.repository.UserRepository;
 import com.example.springapp.service.HmsAppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.security.PrivateKey;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -19,6 +24,8 @@ import java.util.Objects;
 public class HmsAppointmentImpl implements HmsAppointmentService {
 
 
+    @Autowired
+    private JavaMailSender javaMailSender;
     @Autowired
     private HmsAppointmentRepository appointmentRepository;
 
@@ -118,5 +125,17 @@ public class HmsAppointmentImpl implements HmsAppointmentService {
     }
 
 
-
+    public void sendEmailToPatient(String email, String subject, String body) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(email);
+            helper.setSubject(subject);
+            helper.setText(body, false);
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            // Handle the exception if needed
+        }
+    }
 }
