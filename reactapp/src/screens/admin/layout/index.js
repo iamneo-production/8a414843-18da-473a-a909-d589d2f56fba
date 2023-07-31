@@ -14,9 +14,9 @@ import {
 import LatestAppshell from '../../../components/appShell/latestAppshell'
 import Payroll from '../payroll/index'
 import AdminDashboard from '../dashboard/index';
-import ManageUserForm from '../ManageUsers/index';
-import Pharmacy from '../pharmacy/index';
-import Inventory from '../inventoryManagement/Inventory';
+import ManageUserForm from '../ManageUsers';
+import Pharmacy from '../../staff/pharmacyManagement/Pharmacy';
+import Inventory from '../../staff/inventory/index';
 const data = [
     { link: '/admin/home', label: 'Dashboard', icon: IconBellRinging },
     { link: '/admin/users', label: 'Users', icon: IconReceipt2 },
